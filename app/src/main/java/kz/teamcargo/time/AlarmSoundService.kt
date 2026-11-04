@@ -9,49 +9,101 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 
 class AlarmSoundService : Service() {
     private var player: MediaPlayer? = null
     private var ambient: AmbientAudioEngine? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private var rampTask: Runnable? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID).orEmpty()
         val label = intent?.getStringExtra(EXTRA_LABEL).orEmpty().ifBlank { "Пора просыпаться" }
         val profile = intent?.getStringExtra(EXTRA_SOUND_PROFILE).orEmpty().ifBlank { "rain" }
         val ramp = intent?.getIntExtra(EXTRA_RAMP_MINUTES, 10) ?: 10
+        val customUri = intent?.getStringExtra(EXTRA_CUSTOM_URI)?.let(Uri::parse)
+
         createChannel()
         startForeground(NOTIFICATION_ID, buildNotification(alarmId, label))
+
         if (player == null && ambient == null) {
-            if (profile == "system") startAlarmSound()
-            else runCatching {
-                ambient = AmbientAudioEngine(profile, ramp).also { it.start() }
-            }.onFailure { startAlarmSound() }
+            when (profile) {
+                "system" -> startAlarmSound(ramp)
+                "custom" -> if (customUri != null) startMedia(customUri, ramp, true) else startAmbient("rain", ramp)
+                else -> startAmbient(profile, ramp)
+            }
         }
         return START_NOT_STICKY
     }
 
-    private fun startAlarmSound() {
+    private fun startAmbient(profile: String, ramp: Int) {
+        runCatching {
+            ambient = AmbientAudioEngine(profile, ramp).also { it.start() }
+        }.onFailure { startAlarmSound(ramp) }
+    }
+
+    private fun startAlarmSound(ramp: Int) {
         val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
             ?: return
+        startMedia(uri, ramp, false)
+    }
+
+    private fun startMedia(uri: Uri, ramp: Int, fallbackToSystem: Boolean) {
         runCatching {
-            player = MediaPlayer().apply {
-                setAudioAttributes(AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build())
-                setDataSource(this@AlarmSoundService, uri)
-                isLooping = true
-                prepare()
-                start()
+            val media = MediaPlayer()
+            player = media
+            media.setAudioAttributes(AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build())
+            media.isLooping = true
+            media.setDataSource(this, uri)
+            media.setOnPreparedListener { prepared ->
+                prepared.setVolume(0.035f, 0.035f)
+                prepared.start()
+                scheduleMediaRamp(prepared, ramp)
             }
+            media.setOnErrorListener { failed, _, _ ->
+                runCatching { failed.release() }
+                if (player === failed) player = null
+                if (fallbackToSystem) startAlarmSound(ramp)
+                true
+            }
+            media.prepareAsync()
         }.onFailure {
-            player?.release()
+            player?.let { runCatching { it.release() } }
             player = null
+            if (fallbackToSystem) startAlarmSound(ramp)
         }
+    }
+
+    private fun scheduleMediaRamp(media: MediaPlayer, rampMinutes: Int) {
+        val duration = rampMinutes.coerceIn(0, 30) * 60_000L
+        if (duration == 0L) {
+            media.setVolume(1f, 1f)
+            return
+        }
+        val startedAt = SystemClock.elapsedRealtime()
+        val task = object : Runnable {
+            override fun run() {
+                if (player !== media) return
+                val fraction = ((SystemClock.elapsedRealtime() - startedAt).toFloat() / duration).coerceIn(0f, 1f)
+                val smooth = fraction * fraction * (3f - 2f * fraction)
+                val volume = 0.035f + 0.965f * smooth
+                runCatching { media.setVolume(volume, volume) }
+                if (fraction < 1f) handler.postDelayed(this, 1_000L)
+            }
+        }
+        rampTask = task
+        handler.post(task)
     }
 
     private fun createChannel() {
@@ -90,6 +142,8 @@ class AlarmSoundService : Service() {
     }
 
     override fun onDestroy() {
+        rampTask?.let(handler::removeCallbacks)
+        rampTask = null
         player?.let { media -> runCatching { media.stop(); media.release() } }
         player = null
         ambient?.stop()
@@ -103,6 +157,7 @@ class AlarmSoundService : Service() {
         const val EXTRA_LABEL = "kz.teamcargo.time.ALARM_LABEL"
         const val EXTRA_SOUND_PROFILE = "kz.teamcargo.time.SOUND_PROFILE"
         const val EXTRA_RAMP_MINUTES = "kz.teamcargo.time.RAMP_MINUTES"
+        const val EXTRA_CUSTOM_URI = "kz.teamcargo.time.CUSTOM_URI"
         const val NOTIFICATION_ID = 7001
     }
 }
