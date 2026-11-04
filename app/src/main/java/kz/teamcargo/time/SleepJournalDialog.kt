@@ -137,7 +137,7 @@ fun SleepJournalDialog(
                         style = MaterialTheme.typography.bodySmall
                     )
                     Text("Последние записи", style = MaterialTheme.typography.titleSmall)
-                    records.take(5).forEach { record ->
+                    records.forEach { record ->
                         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                             Row(modifier = Modifier.fillMaxWidth()) {
                                 Text(
