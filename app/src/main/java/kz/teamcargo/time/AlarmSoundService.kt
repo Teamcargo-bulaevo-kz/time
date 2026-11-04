@@ -93,7 +93,8 @@ class AlarmSoundService : Service() {
     }
 
     private fun stopVibration() {
-        stopVibration()
+        vibrator?.let { runCatching { it.cancel() } }
+        vibrator = null
     }
 
     private fun stopFlash() {
