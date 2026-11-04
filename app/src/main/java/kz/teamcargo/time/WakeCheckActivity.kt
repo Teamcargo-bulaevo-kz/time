@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
@@ -25,7 +26,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
+
+private data class MathQuestion(val left: Int, val right: Int, val operator: String, val answer: Int) {
+    val expression: String get() = "$left $operator $right = ?"
+}
+
+private fun makeMathQuestion(): MathQuestion {
+    val operator = listOf("+", "−", "×").random()
+    val left = if (operator == "×") (2..9).random() else (8..30).random()
+    val right = if (operator == "×") (2..9).random() else (2..left).random()
+    val answer = when (operator) {
+        "+" -> left + right
+        "−" -> left - right
+        else -> left * right
+    }
+    return MathQuestion(left, right, operator, answer)
+}
 
 class WakeCheckActivity : ComponentActivity() {
     private lateinit var alarmId: String
@@ -48,7 +67,10 @@ class WakeCheckActivity : ComponentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         stopService(android.content.Intent(this, AlarmSoundService::class.java))
-        val retryMinutes = AlarmStore(this).getAll().firstOrNull { it.id == alarmId }?.retryMinutes ?: 5
+        val alarm = AlarmStore(this).getAll().firstOrNull { it.id == alarmId }
+        val retryMinutes = alarm?.retryMinutes ?: 5
+        val configuredMode = alarm?.challengeMode ?: "schulte"
+        val mode = if (configuredMode == "random") listOf("schulte", "math").random() else configuredMode
         WakeCheckRetryScheduler.schedule(this, alarmId, retryMinutes)
 
         setContent {
@@ -56,6 +78,16 @@ class WakeCheckActivity : ComponentActivity() {
                 var numbers by remember { mutableStateOf((1..25).shuffled()) }
                 var target by remember { mutableStateOf(1) }
                 var completed by remember { mutableStateOf(false) }
+                var questionIndex by remember { mutableStateOf(0) }
+                var answerText by remember { mutableStateOf("") }
+                var feedback by remember { mutableStateOf("") }
+                val questions = remember { List(5) { makeMathQuestion() } }
+
+                fun completeChallenge() {
+                    completed = true
+                    WakeCheckRetryScheduler.cancel(this@WakeCheckActivity, alarmId)
+                    stopService(android.content.Intent(this@WakeCheckActivity, AlarmSoundService::class.java))
+                }
 
                 Surface(Modifier.fillMaxSize()) {
                     Column(
@@ -65,10 +97,36 @@ class WakeCheckActivity : ComponentActivity() {
                     ) {
                         Text("Проверка пробуждения", style = MaterialTheme.typography.headlineMedium)
                         Text(
-                            if (completed) "Задание выполнено" else "Найди числа по порядку: $target / 25",
+                            if (completed) "Задание выполнено" else if (mode == "math")
+                                "Реши 5 примеров · ${questionIndex + 1} / 5"
+                            else "Найди числа по порядку: $target / 25",
                             style = MaterialTheme.typography.titleMedium
                         )
-                        if (!completed) {
+
+                        if (!completed && mode == "math") {
+                            Text(questions[questionIndex].expression, style = MaterialTheme.typography.headlineLarge)
+                            OutlinedTextField(
+                                value = answerText,
+                                onValueChange = { answerText = it.filter { char -> char.isDigit() || char == '-' } },
+                                label = { Text("Ответ") },
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                            )
+                            if (feedback.isNotBlank()) Text(feedback, color = MaterialTheme.colorScheme.error)
+                            Button(
+                                onClick = {
+                                    if (answerText.toIntOrNull() == questions[questionIndex].answer) {
+                                        answerText = ""
+                                        feedback = ""
+                                        if (questionIndex == questions.lastIndex) completeChallenge()
+                                        else questionIndex += 1
+                                    } else {
+                                        feedback = "Неверно. Попробуй ещё раз."
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) { Text("Проверить ответ") }
+                        } else if (!completed) {
                             LazyVerticalGrid(
                                 columns = GridCells.Fixed(5),
                                 modifier = Modifier.fillMaxWidth().weight(1f),
@@ -79,11 +137,7 @@ class WakeCheckActivity : ComponentActivity() {
                                     Card(
                                         modifier = Modifier.aspectRatio(1f).clickable {
                                             if (number == target) {
-                                                if (number == 25) {
-                                                    completed = true
-                                                    WakeCheckRetryScheduler.cancel(this@WakeCheckActivity, alarmId)
-                                                    stopService(android.content.Intent(this@WakeCheckActivity, AlarmSoundService::class.java))
-                                                } else target += 1
+                                                if (number == 25) completeChallenge() else target += 1
                                             }
                                         }
                                     ) {
