@@ -38,6 +38,7 @@ Alarm:
 - vibrationEnabled: boolean
 - wakeCheckEnabled: boolean
 - repeatCheckMinutes: integer (1–30, default 5)
+- challengeMode: `schulte`, `math` или `random`
 
 Status:
 - apiVersion: integer
