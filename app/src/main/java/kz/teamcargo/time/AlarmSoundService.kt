@@ -5,6 +5,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.Manifest
+import android.content.pm.PackageManager
+import android.hardware.camera2.CameraManager
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -22,6 +27,10 @@ class AlarmSoundService : Service() {
     private var ambient: AmbientAudioEngine? = null
     private val handler = Handler(Looper.getMainLooper())
     private var rampTask: Runnable? = null
+    private var flashTask: Runnable? = null
+    private var flashCameraId: String? = null
+    private var flashOn = false
+    private var vibrator: Vibrator? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID).orEmpty()
@@ -29,9 +38,13 @@ class AlarmSoundService : Service() {
         val profile = intent?.getStringExtra(EXTRA_SOUND_PROFILE).orEmpty().ifBlank { "rain" }
         val ramp = intent?.getIntExtra(EXTRA_RAMP_MINUTES, 10) ?: 10
         val customUri = intent?.getStringExtra(EXTRA_CUSTOM_URI)?.let(Uri::parse)
+        val flashEnabled = intent?.getBooleanExtra(EXTRA_FLASH_ENABLED, false) ?: false
+        val vibrationEnabled = intent?.getBooleanExtra(EXTRA_VIBRATION_ENABLED, true) ?: true
 
         createChannel()
         startForeground(NOTIFICATION_ID, buildNotification(alarmId, label))
+        if (vibrationEnabled) startVibration()
+        if (flashEnabled) startFlash()
 
         if (player == null && ambient == null) {
             when (profile) {
@@ -41,6 +54,50 @@ class AlarmSoundService : Service() {
             }
         }
         return START_NOT_STICKY
+    }
+
+    private fun startVibration() {
+        val deviceVibrator = getSystemService(Vibrator::class.java) ?: return
+        if (!deviceVibrator.hasVibrator()) return
+        vibrator = deviceVibrator
+        runCatching {
+            deviceVibrator.vibrate(VibrationEffect.createWaveform(
+                longArrayOf(0, 650, 450, 650, 1600),
+                intArrayOf(0, 180, 0, 180, 0),
+                0
+            ))
+        }
+    }
+
+    private fun startFlash() {
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) return
+        val manager = getSystemService(CameraManager::class.java) ?: return
+        val cameraId = runCatching {
+            manager.cameraIdList.firstOrNull { id ->
+                manager.getCameraCharacteristics(id).get(android.hardware.camera2.CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+            }
+        }.getOrNull() ?: return
+        flashCameraId = cameraId
+        val task = object : Runnable {
+            override fun run() {
+                val id = flashCameraId ?: return
+                flashOn = !flashOn
+                runCatching { manager.setTorchMode(id, flashOn) }.onFailure { stopFlash() }
+                if (flashCameraId != null) handler.postDelayed(this, if (flashOn) 450L else 900L)
+            }
+        }
+        flashTask = task
+        handler.post(task)
+    }
+
+    private fun stopFlash() {
+        flashTask?.let(handler::removeCallbacks)
+        flashTask = null
+        flashCameraId?.let { id ->
+            runCatching { getSystemService(CameraManager::class.java)?.setTorchMode(id, false) }
+        }
+        flashCameraId = null
+        flashOn = false
     }
 
     private fun startAmbient(profile: String, ramp: Int) {
@@ -152,6 +209,9 @@ class AlarmSoundService : Service() {
     override fun onDestroy() {
         rampTask?.let(handler::removeCallbacks)
         rampTask = null
+        stopFlash()
+        vibrator?.let { runCatching { it.cancel() } }
+        vibrator = null
         player?.let { media -> runCatching { media.stop(); media.release() } }
         player = null
         ambient?.stop()
@@ -166,6 +226,8 @@ class AlarmSoundService : Service() {
         const val EXTRA_SOUND_PROFILE = "kz.teamcargo.time.SOUND_PROFILE"
         const val EXTRA_RAMP_MINUTES = "kz.teamcargo.time.RAMP_MINUTES"
         const val EXTRA_CUSTOM_URI = "kz.teamcargo.time.CUSTOM_URI"
+        const val EXTRA_FLASH_ENABLED = "kz.teamcargo.time.FLASH_ENABLED"
+        const val EXTRA_VIBRATION_ENABLED = "kz.teamcargo.time.VIBRATION_ENABLED"
         const val NOTIFICATION_ID = 7001
     }
 }
