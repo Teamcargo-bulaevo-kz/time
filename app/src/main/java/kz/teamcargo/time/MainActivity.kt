@@ -64,12 +64,21 @@ class MainActivity : ComponentActivity() {
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
+                var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
                 fun persist(updated: List<Alarm>) {
                     store.saveAll(updated)
                     scheduler.scheduleAll(updated)
                     alarms.clear()
                     alarms.addAll(updated)
+                }
+
+                val cameraPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+                    val alarmId = pendingFlashAlarmId
+                    if (granted && alarmId != null) {
+                        persist(alarms.map { if (it.id == alarmId) it.copy(flashEnabled = true) else it })
+                    }
+                    pendingFlashAlarmId = null
                 }
 
                 val musicPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -137,6 +146,29 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
                                                     TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
                                                     TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(arrayOf("audio/*")) }) { Text("Выбрать музыку") }
+                                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                                        Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                                                        Switch(
+                                                            checked = alarm.flashEnabled,
+                                                            onCheckedChange = { enabled ->
+                                                                if (enabled && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                                                    pendingFlashAlarmId = alarm.id
+                                                                    cameraPermission.launch(Manifest.permission.CAMERA)
+                                                                } else {
+                                                                    persist(alarms.map { if (it.id == alarm.id) it.copy(flashEnabled = enabled) else it })
+                                                                }
+                                                            }
+                                                        )
+                                                    }
+                                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                                        Text("Вибрация", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                                                        Switch(
+                                                            checked = alarm.vibrationEnabled,
+                                                            onCheckedChange = { enabled ->
+                                                                persist(alarms.map { if (it.id == alarm.id) it.copy(vibrationEnabled = enabled) else it })
+                                                            }
+                                                        )
+                                                    }
                                                     TextButton(onClick = { scheduler.cancel(alarm.id); persist(alarms.filterNot { it.id == alarm.id }) }) { Text("Удалить") }
                                                 }
                                                 Switch(
@@ -153,7 +185,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                             Text(
-                                "Сейчас реализовано сохранение и системное планирование. Звук, свет и задания добавляются следующими этапами.",
+                                "Свет и вибрация включаются отдельно для каждого будильника. Вспышка требует разрешения камеры.",
                                 style = MaterialTheme.typography.labelSmall
                             )
                         }
