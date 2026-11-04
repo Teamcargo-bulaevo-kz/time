@@ -119,6 +119,13 @@ fun SleepJournalDialog(
                 }
 
                 if (records.isNotEmpty()) {
+                    val recent = records.take(7)
+                    val averageMinutes = recent.map { it.durationMinutes }.average().toLong()
+                    val averageQuality = recent.map { it.quality }.average()
+                    Text(
+                        "Среднее за последние ${recent.size}: ${durationLabel(averageMinutes)} · качество ${"%.1f".format(Locale.getDefault(), averageQuality)}/5",
+                        style = MaterialTheme.typography.bodySmall
+                    )
                     Text("Последние записи", style = MaterialTheme.typography.titleSmall)
                     records.take(5).forEach { record ->
                         Row(modifier = Modifier.fillMaxWidth()) {
