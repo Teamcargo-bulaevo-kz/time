@@ -86,6 +86,7 @@ class MainActivity : ComponentActivity() {
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
                 var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
                 var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
+                var showVisualFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSleepJournal by remember { mutableStateOf(false) }
                 var showSleepCalculator by remember { mutableStateOf(false) }
@@ -186,6 +187,7 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
                                                     TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
                                                     TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
+                                                    TextButton(onClick = { showVisualFor = alarm }) { Text("Экран: " + visualStyleLabel(alarm.wakeVisualStyle)) }
                                                     TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(arrayOf("audio/*")) }) { Text("Выбрать музыку") }
                                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                                         Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
@@ -318,6 +320,38 @@ class MainActivity : ComponentActivity() {
                         dismissButton = { TextButton(onClick = { showRetryFor = null }) { Text("Отмена") } }
                     )
                 }
+
+                showVisualFor?.let { selected ->
+                    var style by remember(selected.id) { mutableStateOf(selected.wakeVisualStyle) }
+                    AlertDialog(
+                        onDismissRequest = { showVisualFor = null },
+                        title = { Text("Визуализация пробуждения") },
+                        text = {
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                listOf(
+                                    "sunrise" to "Рассвет — плавное золотистое свечение",
+                                    "pulse" to "Пульсация — мягкий световой ритм",
+                                    "waves" to "Волны — движущиеся световые кольца"
+                                ).forEach { option ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = style == option.first, onClick = { style = option.first })
+                                        Text(option.second)
+                                    }
+                                }
+                                Text("Без резких вспышек. Яркость экрана нарастает постепенно.",
+                                    style = MaterialTheme.typography.labelSmall)
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                persist(alarms.map { if (it.id == selected.id) it.copy(wakeVisualStyle = style) else it })
+                                showVisualFor = null
+                            }) { Text("Сохранить") }
+                        },
+                        dismissButton = { TextButton(onClick = { showVisualFor = null }) { Text("Отмена") } }
+                    )
+                }
+
                 showSoundFor?.let { selected ->
                     var profile by remember(selected.id) { mutableStateOf(selected.soundProfile) }
                     var ramp by remember(selected.id) { mutableStateOf(selected.rampMinutes.toFloat()) }
@@ -379,6 +413,12 @@ class MainActivity : ComponentActivity() {
         "math" -> "Математика"
         "random" -> "Случайное"
         else -> "Шульте"
+    }
+
+    private fun visualStyleLabel(style: String): String = when (style) {
+        "pulse" -> "Пульсация"
+        "waves" -> "Волны"
+        else -> "Рассвет"
     }
 
     private fun soundLabel(profile: String): String = when (profile) {
