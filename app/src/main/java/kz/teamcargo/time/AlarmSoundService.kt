@@ -82,7 +82,7 @@ class AlarmSoundService : Service() {
     }
 
     override fun onDestroy() {
-        player?.runCatching { stop(); release() }
+        player?.let { media -> runCatching { media.stop(); media.release() } }
         player = null
         super.onDestroy()
     }
