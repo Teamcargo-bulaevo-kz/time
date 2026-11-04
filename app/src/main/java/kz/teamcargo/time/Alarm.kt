@@ -15,7 +15,8 @@ data class Alarm(
     val rampMinutes: Int = 10,
     val customSoundUri: String? = null,
     val flashEnabled: Boolean = false,
-    val vibrationEnabled: Boolean = true
+    val vibrationEnabled: Boolean = true,
+    val retryMinutes: Int = 5
 ) {
     fun timeText(): String = "%02d:%02d".format(hour, minute)
 
@@ -31,6 +32,7 @@ data class Alarm(
         put("customSoundUri", customSoundUri ?: JSONObject.NULL)
         put("flashEnabled", flashEnabled)
         put("vibrationEnabled", vibrationEnabled)
+        put("retryMinutes", retryMinutes)
     }
 
     companion object {
@@ -47,7 +49,8 @@ data class Alarm(
                 rampMinutes = json.optInt("rampMinutes", 10).coerceIn(0, 30),
                 customSoundUri = if (json.isNull("customSoundUri")) null else json.optString("customSoundUri"),
                 flashEnabled = json.optBoolean("flashEnabled", false),
-                vibrationEnabled = json.optBoolean("vibrationEnabled", true)
+                vibrationEnabled = json.optBoolean("vibrationEnabled", true),
+                retryMinutes = json.optInt("retryMinutes", 5).coerceIn(1, 30)
             )
         }
     }
