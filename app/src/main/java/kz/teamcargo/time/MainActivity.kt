@@ -88,6 +88,7 @@ class MainActivity : ComponentActivity() {
                 var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSleepJournal by remember { mutableStateOf(false) }
+                var showSleepCalculator by remember { mutableStateOf(false) }
                 val sleepJournalStore = remember { SleepJournalStore(this@MainActivity) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
@@ -145,7 +146,10 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("TIME", style = MaterialTheme.typography.labelLarge)
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
-                            Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
+                                Button(onClick = { showSleepCalculator = true }) { Text("Фазы сна") }
+                            }
                             Text("Простая настройка. Остальные возможности можно добавить позже.",
                                 style = MaterialTheme.typography.bodyMedium)
                             if (Build.VERSION.SDK_INT >= 34 &&
@@ -231,6 +235,9 @@ class MainActivity : ComponentActivity() {
 
                 if (showSleepJournal) {
                     SleepJournalDialog(store = sleepJournalStore, onDismiss = { showSleepJournal = false })
+                }
+                if (showSleepCalculator) {
+                    SleepPhaseCalculatorDialog(onDismiss = { showSleepCalculator = false })
                 }
 
                 showRepeatFor?.let { selected ->
