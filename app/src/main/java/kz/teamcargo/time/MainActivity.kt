@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.Manifest
+import android.content.pm.PackageManager
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,7 +23,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -47,6 +48,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         store = AlarmStore(this)
         scheduler = AlarmScheduler(this)
+        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001)
+        }
 
         setContent {
             MaterialTheme {
@@ -71,6 +75,7 @@ class MainActivity : ComponentActivity() {
                             val updated = if (existing == null) alarms.toList() + next
                                 else alarms.map { if (it.id == existing.id) next else it }
                             persist(updated)
+                            requestExactAlarmPermissionIfNeeded()
                         },
                         existing?.hour ?: now.get(Calendar.HOUR_OF_DAY),
                         existing?.minute ?: now.get(Calendar.MINUTE),
