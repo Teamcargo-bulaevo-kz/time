@@ -15,13 +15,21 @@ import androidx.core.app.NotificationCompat
 
 class AlarmSoundService : Service() {
     private var player: MediaPlayer? = null
+    private var ambient: AmbientAudioEngine? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID).orEmpty()
         val label = intent?.getStringExtra(EXTRA_LABEL).orEmpty().ifBlank { "Пора просыпаться" }
+        val profile = intent?.getStringExtra(EXTRA_SOUND_PROFILE).orEmpty().ifBlank { "rain" }
+        val ramp = intent?.getIntExtra(EXTRA_RAMP_MINUTES, 10) ?: 10
         createChannel()
         startForeground(NOTIFICATION_ID, buildNotification(alarmId, label))
-        if (player == null) startAlarmSound()
+        if (player == null && ambient == null) {
+            if (profile == "system") startAlarmSound()
+            else runCatching {
+                ambient = AmbientAudioEngine(profile, ramp).also { it.start() }
+            }.onFailure { startAlarmSound() }
+        }
         return START_NOT_STICKY
     }
 
@@ -84,6 +92,8 @@ class AlarmSoundService : Service() {
     override fun onDestroy() {
         player?.let { media -> runCatching { media.stop(); media.release() } }
         player = null
+        ambient?.stop()
+        ambient = null
         super.onDestroy()
     }
 
@@ -91,6 +101,8 @@ class AlarmSoundService : Service() {
 
     companion object {
         const val EXTRA_LABEL = "kz.teamcargo.time.ALARM_LABEL"
+        const val EXTRA_SOUND_PROFILE = "kz.teamcargo.time.SOUND_PROFILE"
+        const val EXTRA_RAMP_MINUTES = "kz.teamcargo.time.RAMP_MINUTES"
         const val NOTIFICATION_ID = 7001
     }
 }
