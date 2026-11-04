@@ -17,7 +17,7 @@ class AlarmStore(context: Context) {
     fun saveAll(alarms: List<Alarm>) {
         val array = JSONArray()
         alarms.forEach { array.put(it.toJson()) }
-        prefs.edit().putString(KEY, array.toString()).apply()
+        prefs.edit().putString(KEY, array.toString()).commit()
     }
 
     companion object { private const val KEY = "alarms_json" }
