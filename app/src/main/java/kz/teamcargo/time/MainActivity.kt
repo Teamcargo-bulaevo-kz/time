@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                val alarms = remember { mutableStateListOf("08:00") }
+                val alarms = remember { mutableStateListOf<String>() }
 
                 Scaffold(
                     floatingActionButton = {
@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                                     items(alarms) { time ->
-                                        varEnabledRow(time)
+                                        AlarmRow(time)
                                     }
                                 }
                             }
@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @androidx.compose.runtime.Composable
-private fun varEnabledRow(time: String) {
+private fun AlarmRow(time: String) {
     var enabled = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(true) }
     Row(
         modifier = Modifier.fillMaxWidth(),
