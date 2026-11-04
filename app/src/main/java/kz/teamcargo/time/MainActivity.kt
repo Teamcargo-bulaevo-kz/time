@@ -67,6 +67,8 @@ class MainActivity : ComponentActivity() {
                 var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
                 var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
+                var showSleepJournal by remember { mutableStateOf(false) }
+                val sleepJournalStore = remember { SleepJournalStore(this@MainActivity) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
                 fun persist(updated: List<Alarm>) {
@@ -123,6 +125,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("TIME", style = MaterialTheme.typography.labelLarge)
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
+                            Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
                             Text("Простая настройка. Остальные возможности можно добавить позже.",
                                 style = MaterialTheme.typography.bodyMedium)
                             if (Build.VERSION.SDK_INT >= 34 &&
@@ -204,6 +207,10 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
+                }
+
+                if (showSleepJournal) {
+                    SleepJournalDialog(store = sleepJournalStore, onDismiss = { showSleepJournal = false })
                 }
 
                 showRepeatFor?.let { selected ->
