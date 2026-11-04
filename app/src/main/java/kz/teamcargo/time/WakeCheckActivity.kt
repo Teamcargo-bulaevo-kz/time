@@ -48,7 +48,8 @@ class WakeCheckActivity : ComponentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         stopService(android.content.Intent(this, AlarmSoundService::class.java))
-        WakeCheckRetryScheduler.schedule(this, alarmId, 5)
+        val retryMinutes = AlarmStore(this).getAll().firstOrNull { it.id == alarmId }?.retryMinutes ?: 5
+        WakeCheckRetryScheduler.schedule(this, alarmId, retryMinutes)
 
         setContent {
             MaterialTheme {
