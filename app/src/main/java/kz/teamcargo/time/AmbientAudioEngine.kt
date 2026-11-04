@@ -5,8 +5,6 @@ import android.media.AudioFormat
 import android.media.AudioTrack
 import android.os.Handler
 import android.os.Looper
-import kotlin.math.PI
-import kotlin.math.sin
 import kotlin.random.Random
 
 /**
@@ -101,7 +99,9 @@ class AmbientAudioEngine(
             val tailIndex = count - fade + i
             val tail = result[tailIndex].toDouble()
             val mixed = tail * (1.0 - blend) + head * blend
-            result[i] = mixed.toInt().coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt()).toShort()
+            val value = mixed.toInt().coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt()).toShort()
+            result[i] = value
+            result[tailIndex] = value
         }
         return result
     }
