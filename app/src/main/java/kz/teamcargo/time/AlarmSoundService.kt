@@ -124,8 +124,15 @@ class AlarmSoundService : Service() {
             this, 10, Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+        val check = PendingIntent.getActivity(
+            this, alarmId.hashCode(), Intent(this, WakeCheckActivity::class.java)
+                .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarmId)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         val stop = PendingIntent.getBroadcast(
-            this, 11, Intent(this, StopAlarmReceiver::class.java),
+            this, 11, Intent(this, StopAlarmReceiver::class.java)
+                .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarmId),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         return NotificationCompat.Builder(this, AlarmReceiver.CHANNEL_ID)
@@ -137,7 +144,8 @@ class AlarmSoundService : Service() {
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setContentIntent(open)
-            .addAction(android.R.drawable.ic_media_pause, "Остановить звук", stop)
+            .addAction(android.R.drawable.ic_media_pause, "Решить задачу", check)
+            .addAction(android.R.drawable.ic_delete, "Аварийно отключить", stop)
             .build()
     }
 
