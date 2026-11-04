@@ -119,6 +119,7 @@ class MainActivity : ComponentActivity() {
                                                     )
                                                     TextButton(onClick = { chooseTime(alarm) }) { Text("Изменить время") }
                                                     TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
+                                                    TextButton(onClick = { scheduler.cancel(alarm.id); persist(alarms.filterNot { it.id == alarm.id }) }) { Text("Удалить") }
                                                 }
                                                 Switch(
                                                     checked = alarm.enabled,
