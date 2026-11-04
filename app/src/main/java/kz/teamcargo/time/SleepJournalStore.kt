@@ -39,15 +39,30 @@ class SleepJournalStore(context: Context) {
     }
 
     fun addRecord(record: SleepRecord) {
-        val updated = (listOf(record) + getRecords()).take(30)
+        saveRecords((listOf(record) + getRecords()).take(30))
+        prefs.edit().remove("active_start").apply()
+    }
+
+    fun updateRecord(originalStartedAt: Long, record: SleepRecord) {
+        val updated = getRecords().map {
+            if (it.startedAt == originalStartedAt) record else it
+        }
+        saveRecords(updated)
+    }
+
+    fun deleteRecord(startedAt: Long) {
+        saveRecords(getRecords().filterNot { it.startedAt == startedAt })
+    }
+
+    private fun saveRecords(records: List<SleepRecord>) {
         val array = JSONArray()
-        updated.forEach { item ->
+        records.sortedByDescending { it.endedAt }.take(30).forEach { item ->
             array.put(JSONObject().apply {
                 put("startedAt", item.startedAt)
                 put("endedAt", item.endedAt)
-                put("quality", item.quality)
+                put("quality", item.quality.coerceIn(1, 5))
             })
         }
-        prefs.edit().putString("records", array.toString()).remove("active_start").apply()
+        prefs.edit().putString("records", array.toString()).apply()
     }
 }
