@@ -178,6 +178,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (::store.isInitialized && ::scheduler.isInitialized) scheduler.scheduleAll(store.getAll())
+    }
+
     private fun requestExactAlarmPermissionIfNeeded() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             !getSystemService(android.app.AlarmManager::class.java).canScheduleExactAlarms()
