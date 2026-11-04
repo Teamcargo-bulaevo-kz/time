@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity() {
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
+                var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
@@ -145,6 +146,7 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { chooseTime(alarm) }) { Text("Изменить время") }
                                                     TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
                                                     TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
+                                                    TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
                                                     TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(arrayOf("audio/*")) }) { Text("Выбрать музыку") }
                                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                                         Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
@@ -225,6 +227,26 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
+                showRetryFor?.let { selected ->
+                    var retry by remember(selected.id) { mutableStateOf(selected.retryMinutes.toFloat()) }
+                    AlertDialog(
+                        onDismissRequest = { showRetryFor = null },
+                        title = { Text("Повтор проверки") },
+                        text = {
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Text("Повторить сигнал через ${retry.roundToInt()} мин, если пробуждение не подтверждено.")
+                                Slider(value = retry, onValueChange = { retry = it }, valueRange = 1f..30f, steps = 28)
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                persist(alarms.map { if (it.id == selected.id) it.copy(retryMinutes = retry.roundToInt()) else it })
+                                showRetryFor = null
+                            }) { Text("Сохранить") }
+                        },
+                        dismissButton = { TextButton(onClick = { showRetryFor = null }) { Text("Отмена") } }
+                    )
+                }
                 showSoundFor?.let { selected ->
                     var profile by remember(selected.id) { mutableStateOf(selected.soundProfile) }
                     var ramp by remember(selected.id) { mutableStateOf(selected.rampMinutes.toFloat()) }
