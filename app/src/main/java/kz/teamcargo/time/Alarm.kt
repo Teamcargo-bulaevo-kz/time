@@ -10,7 +10,9 @@ data class Alarm(
     val minute: Int,
     val enabled: Boolean = true,
     val repeatDays: Set<Int> = emptySet(),
-    val label: String = ""
+    val label: String = "",
+    val soundProfile: String = "rain",
+    val rampMinutes: Int = 10
 ) {
     fun timeText(): String = "%02d:%02d".format(hour, minute)
 
@@ -21,6 +23,8 @@ data class Alarm(
         put("enabled", enabled)
         put("repeatDays", JSONArray().also { array -> repeatDays.sorted().forEach(array::put) })
         put("label", label)
+        put("soundProfile", soundProfile)
+        put("rampMinutes", rampMinutes)
     }
 
     companion object {
@@ -32,7 +36,9 @@ data class Alarm(
                 minute = json.optInt("minute", 0).coerceIn(0, 59),
                 enabled = json.optBoolean("enabled", true),
                 repeatDays = (0 until days.length()).map { days.optInt(it) }.filter { it in 1..7 }.toSet(),
-                label = json.optString("label", "")
+                label = json.optString("label", ""),
+                soundProfile = json.optString("soundProfile", "rain").let { if (it in setOf("rain", "storm", "system")) it else "rain" },
+                rampMinutes = json.optInt("rampMinutes", 10).coerceIn(0, 30)
             )
         }
     }
