@@ -1,6 +1,7 @@
 package kz.teamcargo.time
 
 import android.app.TimePickerDialog
+import android.app.NotificationManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -123,6 +124,15 @@ class MainActivity : ComponentActivity() {
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
                             Text("Простая настройка. Остальные возможности можно добавить позже.",
                                 style = MaterialTheme.typography.bodyMedium)
+                            if (Build.VERSION.SDK_INT >= 34 &&
+                                !getSystemService(NotificationManager::class.java).canUseFullScreenIntent()
+                            ) {
+                                Text("Для открытия будильника поверх экрана блокировки разрешите полноэкранные уведомления.")
+                                TextButton(onClick = {
+                                    startActivity(Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT,
+                                        Uri.parse("package:$packageName")))
+                                }) { Text("Разрешить полноэкранный будильник") }
+                            }
 
                             if (alarms.isEmpty()) {
                                 Spacer(Modifier.weight(1f))
