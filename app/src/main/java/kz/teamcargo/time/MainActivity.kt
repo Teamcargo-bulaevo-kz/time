@@ -9,6 +9,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -61,12 +63,22 @@ class MainActivity : ComponentActivity() {
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
+                var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
 
                 fun persist(updated: List<Alarm>) {
                     store.saveAll(updated)
                     scheduler.scheduleAll(updated)
                     alarms.clear()
                     alarms.addAll(updated)
+                }
+
+                val musicPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                    val target = pickingMusicFor
+                    if (uri != null && target != null) {
+                        runCatching { contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+                        persist(alarms.map { if (it.id == target.id) it.copy(soundProfile = "custom", customSoundUri = uri.toString()) else it })
+                    }
+                    pickingMusicFor = null
                 }
 
                 fun chooseTime(existing: Alarm?) {
@@ -124,6 +136,7 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { chooseTime(alarm) }) { Text("Изменить время") }
                                                     TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
                                                     TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
+                                                    TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(arrayOf("audio/*")) }) { Text("Выбрать музыку") }
                                                     TextButton(onClick = { scheduler.cancel(alarm.id); persist(alarms.filterNot { it.id == alarm.id }) }) { Text("Удалить") }
                                                 }
                                                 Switch(
@@ -188,7 +201,7 @@ class MainActivity : ComponentActivity() {
                         title = { Text("Звук и нарастание") },
                         text = {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                listOf("rain" to "Дождь", "storm" to "Гроза", "system" to "Системный сигнал").forEach { option ->
+                                listOf("rain" to "Дождь", "storm" to "Гроза", "system" to "Системный сигнал", "custom" to "Моя музыка").forEach { option ->
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         RadioButton(selected = profile == option.first, onClick = { profile = option.first })
                                         Text(option.second)
@@ -240,6 +253,7 @@ class MainActivity : ComponentActivity() {
     private fun soundLabel(profile: String): String = when (profile) {
         "storm" -> "Гроза"
         "system" -> "Системный сигнал"
+        "custom" -> "Моя музыка"
         else -> "Дождь"
     }
 
