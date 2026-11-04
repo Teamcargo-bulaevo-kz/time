@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
                 var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
+                var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
@@ -157,6 +158,7 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
                                                     TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
                                                     TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
+                                                    TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
                                                     TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(arrayOf("audio/*")) }) { Text("Выбрать музыку") }
                                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                                         Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
@@ -237,6 +239,31 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
+                showChallengeFor?.let { selected ->
+                    var mode by remember(selected.id) { mutableStateOf(selected.challengeMode) }
+                    AlertDialog(
+                        onDismissRequest = { showChallengeFor = null },
+                        title = { Text("Задание для пробуждения") },
+                        text = {
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                listOf("schulte" to "Таблица Шульте", "math" to "Математика", "random" to "Случайное задание").forEach { option ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = mode == option.first, onClick = { mode = option.first })
+                                        Text(option.second)
+                                    }
+                                }
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                persist(alarms.map { if (it.id == selected.id) it.copy(challengeMode = mode) else it })
+                                showChallengeFor = null
+                            }) { Text("Сохранить") }
+                        },
+                        dismissButton = { TextButton(onClick = { showChallengeFor = null }) { Text("Отмена") } }
+                    )
+                }
+
                 showRetryFor?.let { selected ->
                     var retry by remember(selected.id) { mutableStateOf(selected.retryMinutes.toFloat()) }
                     AlertDialog(
@@ -312,6 +339,12 @@ class MainActivity : ComponentActivity() {
                     Uri.parse("package:$packageName")))
             }
         }
+    }
+
+    private fun challengeLabel(mode: String): String = when (mode) {
+        "math" -> "Математика"
+        "random" -> "Случайное"
+        else -> "Шульте"
     }
 
     private fun soundLabel(profile: String): String = when (profile) {
