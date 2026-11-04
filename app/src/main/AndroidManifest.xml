@@ -22,6 +22,9 @@
 
         <receiver android:name=".AlarmReceiver" android:enabled="true" android:exported="false" />
         <receiver android:name=".StopAlarmReceiver" android:enabled="true" android:exported="false" />
+        <receiver android:name=".WakeCheckRetryReceiver" android:enabled="true" android:exported="false" />
+
+        <activity android:name=".WakeCheckActivity" android:exported="false" android:showWhenLocked="true" android:turnScreenOn="true" />
 
         <receiver
             android:name=".BootReceiver"
