@@ -20,6 +20,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val serviceIntent = Intent(context, AlarmSoundService::class.java)
             .putExtra(EXTRA_ALARM_ID, id)
             .putExtra(AlarmSoundService.EXTRA_LABEL, alarm.label)
+            .putExtra(AlarmSoundService.EXTRA_SOUND_PROFILE, alarm.soundProfile)
+            .putExtra(AlarmSoundService.EXTRA_RAMP_MINUTES, alarm.rampMinutes)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(serviceIntent)
         } else {
