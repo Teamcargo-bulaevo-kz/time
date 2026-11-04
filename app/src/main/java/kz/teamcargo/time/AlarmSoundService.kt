@@ -20,6 +20,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
+import android.os.PowerManager
 import androidx.core.app.NotificationCompat
 
 class AlarmSoundService : Service() {
@@ -31,6 +32,7 @@ class AlarmSoundService : Service() {
     private var flashCameraId: String? = null
     private var flashOn = false
     private var vibrator: Vibrator? = null
+    private var screenWakeLock: PowerManager.WakeLock? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val alarmId = intent?.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID).orEmpty()
@@ -41,6 +43,7 @@ class AlarmSoundService : Service() {
         val flashEnabled = intent?.getBooleanExtra(EXTRA_FLASH_ENABLED, false) ?: false
         val vibrationEnabled = intent?.getBooleanExtra(EXTRA_VIBRATION_ENABLED, true) ?: true
 
+        acquireScreenWakeLock()
         createChannel()
         startForeground(NOTIFICATION_ID, buildNotification(alarmId, label))
         if (vibrationEnabled) startVibration() else stopVibration()
@@ -54,6 +57,20 @@ class AlarmSoundService : Service() {
             }
         }
         return START_NOT_STICKY
+    }
+
+    @Suppress("DEPRECATION")
+    private fun acquireScreenWakeLock() {
+        if (screenWakeLock?.isHeld == true) return
+        val powerManager = getSystemService(PowerManager::class.java) ?: return
+        runCatching {
+            screenWakeLock = powerManager.newWakeLock(
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
+                    PowerManager.ACQUIRE_CAUSES_WAKEUP or
+                    PowerManager.ON_AFTER_RELEASE,
+                "TIME:AlarmScreenWake"
+            ).apply { acquire(120_000L) }
+        }.onFailure { screenWakeLock = null }
     }
 
     private fun startVibration() {
@@ -220,6 +237,8 @@ class AlarmSoundService : Service() {
     override fun onDestroy() {
         rampTask?.let(handler::removeCallbacks)
         rampTask = null
+        screenWakeLock?.let { lock -> runCatching { if (lock.isHeld) lock.release() } }
+        screenWakeLock = null
         stopFlash()
         vibrator?.let { runCatching { it.cancel() } }
         vibrator = null
