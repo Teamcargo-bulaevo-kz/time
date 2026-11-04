@@ -11,7 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -78,11 +78,10 @@ class AlarmRingingActivity : ComponentActivity() {
 
         setContent {
             var now by remember { mutableStateOf(LocalTime.now()) }
-            val reveal by animateFloatAsState(
-                targetValue = 1f,
-                animationSpec = tween(durationMillis = 90_000, easing = LinearEasing),
-                label = "sunriseReveal"
-            )
+            val reveal = remember { Animatable(0f) }
+            LaunchedEffect(Unit) {
+                reveal.animateTo(1f, animationSpec = tween(durationMillis = 90_000, easing = LinearEasing))
+            }
             val motion = rememberInfiniteTransition(label = "wakeVisual")
             val phase by motion.animateFloat(
                 initialValue = 0f,
@@ -112,8 +111,8 @@ class AlarmRingingActivity : ComponentActivity() {
                                 drawCircle(
                                     brush = Brush.radialGradient(
                                         colors = listOf(
-                                            Color(0xFFB6C9FF).copy(alpha = 0.62f * reveal),
-                                            Color(0xFF6C86C8).copy(alpha = 0.24f * reveal),
+                                            Color(0xFFB6C9FF).copy(alpha = 0.62f * reveal.value),
+                                            Color(0xFF6C86C8).copy(alpha = 0.24f * reveal.value),
                                             Color.Transparent
                                         ),
                                         center = Offset(w * 0.5f, h * 0.43f),
@@ -137,7 +136,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                     val waveRadius = min(w, h) * (0.22f + phase * 0.10f + index * 0.035f)
                                     drawCircle(
                                         brush = Brush.radialGradient(
-                                            colors = listOf(item.third.copy(alpha = 0.32f * reveal), Color.Transparent),
+                                            colors = listOf(item.third.copy(alpha = 0.32f * reveal.value), Color.Transparent),
                                             center = center,
                                             radius = waveRadius
                                         ),
@@ -145,7 +144,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                         center = center
                                     )
                                     drawCircle(
-                                        color = item.third.copy(alpha = 0.20f * reveal),
+                                        color = item.third.copy(alpha = 0.20f * reveal.value),
                                         radius = waveRadius * 0.72f,
                                         center = center,
                                         style = Stroke(width = 2.dp.toPx())
@@ -166,7 +165,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                 drawCircle(
                                     brush = Brush.radialGradient(
                                         colors = listOf(
-                                            Color(0xFFFFD8A0).copy(alpha = 0.72f * reveal),
+                                            Color(0xFFFFD8A0).copy(alpha = 0.72f * reveal.value),
                                             Color(0xFFE89A79).copy(alpha = 0.24f * reveal),
                                             Color.Transparent
                                         ),
@@ -178,7 +177,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        drawRect(Color.Black.copy(alpha = 0.78f * (1f - reveal)))
+                        drawRect(Color.Black.copy(alpha = 0.78f * (1f - reveal.value)))
                     }
                     Column(
                         modifier = Modifier.fillMaxSize().padding(horizontal = 28.dp, vertical = 36.dp),
