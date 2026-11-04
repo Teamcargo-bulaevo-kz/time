@@ -33,6 +33,10 @@ fun SleepJournalDialog(
     var records by remember { mutableStateOf(store.getRecords()) }
     var pendingEnd by remember { mutableStateOf<Long?>(null) }
     var quality by remember { mutableFloatStateOf(3f) }
+    var editingRecord by remember { mutableStateOf<SleepRecord?>(null) }
+    var editStart by remember { mutableStateOf(0L) }
+    var editEnd by remember { mutableStateOf(0L) }
+    var editQuality by remember { mutableFloatStateOf(3f) }
 
     fun chooseDateTime(initial: Long?, onSelected: (Long) -> Unit) {
         val base = Calendar.getInstance().apply {
@@ -108,6 +112,7 @@ fun SleepJournalDialog(
                     Button(
                         onClick = {
                             val start = activeStart ?: return@Button
+                            if (end <= start) return@Button
                             store.addRecord(SleepRecord(start, end, quality.roundToInt()))
                             activeStart = null
                             pendingEnd = null
@@ -128,16 +133,30 @@ fun SleepJournalDialog(
                     )
                     Text("Последние записи", style = MaterialTheme.typography.titleSmall)
                     records.take(5).forEach { record ->
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            Text(
-                                dateFormat.format(Date(record.endedAt)),
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            Text(
-                                "${durationLabel(record.durationMinutes)} · ${record.quality}/5",
-                                style = MaterialTheme.typography.bodySmall
-                            )
+                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                Text(
+                                    dateFormat.format(Date(record.endedAt)),
+                                    modifier = Modifier.weight(1f),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                                Text(
+                                    "${durationLabel(record.durationMinutes)} · ${record.quality}/5",
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                            Row {
+                                TextButton(onClick = {
+                                    editingRecord = record
+                                    editStart = record.startedAt
+                                    editEnd = record.endedAt
+                                    editQuality = record.quality.toFloat()
+                                }) { Text("Изменить") }
+                                TextButton(onClick = {
+                                    store.deleteRecord(record.startedAt)
+                                    records = store.getRecords()
+                                }) { Text("Удалить") }
+                            }
                         }
                     }
                 } else {
@@ -149,4 +168,46 @@ fun SleepJournalDialog(
             TextButton(onClick = onDismiss) { Text("Закрыть") }
         }
     )
+
+    editingRecord?.let { original ->
+        AlertDialog(
+            onDismissRequest = { editingRecord = null },
+            title = { Text("Изменить запись сна") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Засыпание: ${dateFormat.format(Date(editStart))}")
+                    TextButton(onClick = { chooseDateTime(editStart) { editStart = it } }) {
+                        Text("Изменить начало")
+                    }
+                    Text("Пробуждение: ${dateFormat.format(Date(editEnd))}")
+                    TextButton(onClick = { chooseDateTime(editEnd) { editEnd = it } }) {
+                        Text("Изменить конец")
+                    }
+                    Text("Качество: ${editQuality.roundToInt()} из 5")
+                    Slider(value = editQuality, onValueChange = { editQuality = it }, valueRange = 1f..5f, steps = 3)
+                    if (editEnd <= editStart) {
+                        Text("Время пробуждения должно быть позже времени засыпания.", color = MaterialTheme.colorScheme.error)
+                    } else {
+                        Text("Продолжительность: ${durationLabel((editEnd - editStart) / 60_000L)}")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    enabled = editEnd > editStart,
+                    onClick = {
+                        store.updateRecord(
+                            original.startedAt,
+                            SleepRecord(editStart, editEnd, editQuality.roundToInt())
+                        )
+                        records = store.getRecords()
+                        editingRecord = null
+                    }
+                ) { Text("Сохранить") }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingRecord = null }) { Text("Отмена") }
+            }
+        )
+    }
 }
