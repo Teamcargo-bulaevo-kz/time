@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.media.AudioAttributes
+import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
@@ -33,6 +35,7 @@ class AlarmReceiver : BroadcastReceiver() {
             manager.createNotificationChannel(NotificationChannel(CHANNEL_ID, "Будильник",
                 NotificationManager.IMPORTANCE_HIGH).apply {
                 description = "Сигналы будильника TIME"
+                setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM), AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build())
                 lockscreenVisibility = android.app.Notification.VISIBILITY_PUBLIC
             })
         }
