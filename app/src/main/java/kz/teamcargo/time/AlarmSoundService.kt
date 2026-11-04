@@ -184,8 +184,11 @@ class AlarmSoundService : Service() {
     }
 
     private fun buildNotification(alarmId: String, label: String): Notification {
-        val open = PendingIntent.getActivity(
-            this, 10, Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        val ringing = PendingIntent.getActivity(
+            this, alarmId.hashCode() xor 0x4411,
+            Intent(this, AlarmRingingActivity::class.java)
+                .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarmId)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val check = PendingIntent.getActivity(
@@ -207,7 +210,8 @@ class AlarmSoundService : Service() {
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setContentIntent(open)
+            .setContentIntent(ringing)
+            .setFullScreenIntent(ringing, true)
             .addAction(android.R.drawable.ic_media_pause, "Решить задачу", check)
             .addAction(android.R.drawable.ic_delete, "Аварийно отключить", stop)
             .build()
