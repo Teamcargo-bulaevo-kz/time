@@ -16,7 +16,8 @@ data class Alarm(
     val customSoundUri: String? = null,
     val flashEnabled: Boolean = false,
     val vibrationEnabled: Boolean = true,
-    val retryMinutes: Int = 5
+    val retryMinutes: Int = 5,
+    val challengeMode: String = "schulte"
 ) {
     fun timeText(): String = "%02d:%02d".format(hour, minute)
 
@@ -33,6 +34,7 @@ data class Alarm(
         put("flashEnabled", flashEnabled)
         put("vibrationEnabled", vibrationEnabled)
         put("retryMinutes", retryMinutes)
+        put("challengeMode", challengeMode)
     }
 
     companion object {
@@ -50,7 +52,8 @@ data class Alarm(
                 customSoundUri = if (json.isNull("customSoundUri")) null else json.optString("customSoundUri"),
                 flashEnabled = json.optBoolean("flashEnabled", false),
                 vibrationEnabled = json.optBoolean("vibrationEnabled", true),
-                retryMinutes = json.optInt("retryMinutes", 5).coerceIn(1, 30)
+                retryMinutes = json.optInt("retryMinutes", 5).coerceIn(1, 30),
+                challengeMode = json.optString("challengeMode", "schulte").let { if (it in setOf("schulte", "math", "random")) it else "schulte" }
             )
         }
     }
