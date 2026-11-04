@@ -26,6 +26,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -54,12 +55,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         store = AlarmStore(this)
         scheduler = AlarmScheduler(this)
+        window.statusBarColor = android.graphics.Color.rgb(18, 18, 18)
+        window.navigationBarColor = android.graphics.Color.rgb(18, 18, 18)
+        @Suppress("DEPRECATION")
+        window.decorView.systemUiVisibility = 0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
         if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001)
         }
 
         setContent {
-            MaterialTheme {
+            MaterialTheme(
+                colorScheme = darkColorScheme(
+                    primary = androidx.compose.ui.graphics.Color(0xFFB7C8FF),
+                    onPrimary = androidx.compose.ui.graphics.Color(0xFF172B55),
+                    secondary = androidx.compose.ui.graphics.Color(0xFFBFC7DC),
+                    background = androidx.compose.ui.graphics.Color(0xFF101114),
+                    surface = androidx.compose.ui.graphics.Color(0xFF17191E),
+                    surfaceVariant = androidx.compose.ui.graphics.Color(0xFF292D35),
+                    onBackground = androidx.compose.ui.graphics.Color(0xFFE3E2E6),
+                    onSurface = androidx.compose.ui.graphics.Color(0xFFE3E2E6),
+                    onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFFC3C6D0)
+                )
+            ) {
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
