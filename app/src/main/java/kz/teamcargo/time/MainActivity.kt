@@ -26,6 +26,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -39,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.util.Calendar
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     private lateinit var store: AlarmStore
@@ -57,6 +60,7 @@ class MainActivity : ComponentActivity() {
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
+                var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
 
                 fun persist(updated: List<Alarm>) {
                     store.saveAll(updated)
@@ -119,6 +123,7 @@ class MainActivity : ComponentActivity() {
                                                     )
                                                     TextButton(onClick = { chooseTime(alarm) }) { Text("Изменить время") }
                                                     TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
+                                                    TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
                                                     TextButton(onClick = { scheduler.cancel(alarm.id); persist(alarms.filterNot { it.id == alarm.id }) }) { Text("Удалить") }
                                                 }
                                                 Switch(
@@ -174,6 +179,44 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 }
+
+                showSoundFor?.let { selected ->
+                    var profile by remember(selected.id) { mutableStateOf(selected.soundProfile) }
+                    var ramp by remember(selected.id) { mutableStateOf(selected.rampMinutes.toFloat()) }
+                    AlertDialog(
+                        onDismissRequest = { showSoundFor = null },
+                        title = { Text("Звук и нарастание") },
+                        text = {
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                listOf("rain" to "Дождь", "storm" to "Гроза", "system" to "Системный сигнал").forEach { option ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = profile == option.first, onClick = { profile = option.first })
+                                        Text(option.second)
+                                    }
+                                }
+                                Text("Время нарастания: ${ramp.roundToInt()} мин")
+                                Slider(
+                                    value = ramp,
+                                    onValueChange = { ramp = it },
+                                    valueRange = 0f..30f,
+                                    steps = 29
+                                )
+                                Text("0 минут — сразу полная громкость", style = MaterialTheme.typography.labelSmall)
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                persist(alarms.map {
+                                    if (it.id == selected.id) it.copy(soundProfile = profile, rampMinutes = ramp.roundToInt()) else it
+                                })
+                                showSoundFor = null
+                            }) { Text("Сохранить") }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showSoundFor = null }) { Text("Отмена") }
+                        }
+                    )
+                }
             }
         }
     }
@@ -192,6 +235,12 @@ class MainActivity : ComponentActivity() {
                     Uri.parse("package:$packageName")))
             }
         }
+    }
+
+    private fun soundLabel(profile: String): String = when (profile) {
+        "storm" -> "Гроза"
+        "system" -> "Системный сигнал"
+        else -> "Дождь"
     }
 
     private fun repeatLabel(days: Set<Int>): String = when {
