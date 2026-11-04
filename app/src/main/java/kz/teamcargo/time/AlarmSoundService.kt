@@ -43,8 +43,8 @@ class AlarmSoundService : Service() {
 
         createChannel()
         startForeground(NOTIFICATION_ID, buildNotification(alarmId, label))
-        if (vibrationEnabled) startVibration()
-        if (flashEnabled) startFlash()
+        if (vibrationEnabled) startVibration() else stopVibration()
+        if (flashEnabled) startFlash() else stopFlash()
 
         if (player == null && ambient == null) {
             when (profile) {
@@ -57,6 +57,7 @@ class AlarmSoundService : Service() {
     }
 
     private fun startVibration() {
+        if (vibrator != null) return
         val deviceVibrator = getSystemService(Vibrator::class.java) ?: return
         if (!deviceVibrator.hasVibrator()) return
         vibrator = deviceVibrator
@@ -70,6 +71,7 @@ class AlarmSoundService : Service() {
     }
 
     private fun startFlash() {
+        if (flashTask != null) return
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) return
         val manager = getSystemService(CameraManager::class.java) ?: return
         val cameraId = runCatching {
@@ -88,6 +90,10 @@ class AlarmSoundService : Service() {
         }
         flashTask = task
         handler.post(task)
+    }
+
+    private fun stopVibration() {
+        stopVibration()
     }
 
     private fun stopFlash() {
