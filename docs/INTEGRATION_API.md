@@ -37,7 +37,7 @@ Alarm:
 - flashEnabled: boolean
 - vibrationEnabled: boolean
 - wakeCheckEnabled: boolean
-- repeatCheckMinutes: integer (default 5)
+- repeatCheckMinutes: integer (1–30, default 5)
 
 Status:
 - apiVersion: integer
