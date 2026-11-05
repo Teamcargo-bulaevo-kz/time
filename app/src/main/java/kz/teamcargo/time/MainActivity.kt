@@ -89,7 +89,8 @@ class MainActivity : ComponentActivity() {
                 var showVisualFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSleepJournal by remember { mutableStateOf(false) }
-                var showSleepCalculator by remember { mutableStateOf(false) }\n                var showSleepStats by remember { mutableStateOf(false) }
+                var showSleepCalculator by remember { mutableStateOf(false) }
+                var showSleepStats by remember { mutableStateOf(false) }
                 val sleepJournalStore = remember { SleepJournalStore(this@MainActivity) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
@@ -149,7 +150,8 @@ class MainActivity : ComponentActivity() {
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
-                                Button(onClick = { showSleepCalculator = true }) { Text("Фазы сна") }\n                                Button(onClick = { showSleepStats = true }) { Text("Статистика сна") }
+                                Button(onClick = { showSleepCalculator = true }) { Text("Фазы сна") }
+                                Button(onClick = { showSleepStats = true }) { Text("Статистика сна") }
                             }
                             Text("Простая настройка. Остальные возможности можно добавить позже.",
                                 style = MaterialTheme.typography.bodyMedium)
@@ -240,6 +242,9 @@ class MainActivity : ComponentActivity() {
                 }
                 if (showSleepCalculator) {
                     SleepPhaseCalculatorDialog(onDismiss = { showSleepCalculator = false })
+                }
+                if (showSleepStats) {
+                    SleepStatsDialog(context = this@MainActivity, onDismiss = { showSleepStats = false })
                 }
 
                 showRepeatFor?.let { selected ->
