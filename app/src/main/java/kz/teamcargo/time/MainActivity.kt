@@ -123,9 +123,10 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                val musicPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                val musicPicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                    val uri = result.data?.data
                     val target = pickingMusicFor
-                    if (uri != null && target != null) {
+                    if (result.resultCode == RESULT_OK && uri != null && target != null) {
                         runCatching { contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
                         persist(alarms.map { if (it.id == target.id) it.copy(soundProfile = "custom", customSoundUri = uri.toString()) else it })
                     }
@@ -214,7 +215,11 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
                                                     TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
                                                     TextButton(onClick = { showVisualFor = alarm }) { Text("Экран: " + visualStyleLabel(alarm.wakeVisualStyle)) }
-                                                    TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(arrayOf("audio/*")) }) { Text("Выбрать музыку") }
+                                                    TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                                                        addCategory(Intent.CATEGORY_OPENABLE)
+                                                        type = "audio/*"
+                                                        musicFolderUri?.let { putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI, it) }
+                                                    }) }) { Text("Выбрать музыку") }
                                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                                         Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
                                                         Switch(
