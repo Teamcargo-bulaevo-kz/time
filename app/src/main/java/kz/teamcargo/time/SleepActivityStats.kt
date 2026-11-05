@@ -10,7 +10,7 @@ import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxWidth\nimport androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -112,7 +112,7 @@ fun SleepStatsDialog(context: Context, onDismiss: () -> Unit) {
                     val average = sessions.map { it.durationMinutes }.average().toLong()
                     Text("Средний ночной интервал: ${SleepActivityStats.formatDuration(average)}",
                         style = MaterialTheme.typography.titleMedium)
-                    LazyColumn {
+                    LazyColumn(modifier = Modifier.heightIn(max = 280.dp)) {
                         items(sessions) { session ->
                             Column(Modifier.fillMaxWidth().padding(vertical = 5.dp)) {
                                 Text(dateFormat.format(Date(session.endMillis)))
@@ -130,7 +130,7 @@ fun SleepStatsDialog(context: Context, onDismiss: () -> Unit) {
         },
         confirmButton = {
             if (!hasAccess) {
-                Button(onClick = { SleepActivityStats.openUsageAccessSettings(context) }) {
+                Button(onClick = { SleepActivityStats.openUsageAccessSettings(context); onDismiss() }) {
                     Text("Разрешить доступ")
                 }
             } else {
