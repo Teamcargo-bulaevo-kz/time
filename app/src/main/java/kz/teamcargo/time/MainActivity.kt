@@ -88,6 +88,9 @@ class MainActivity : ComponentActivity() {
                 var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
                 var showVisualFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
+                var musicFolderUri by remember {
+                    mutableStateOf(getSharedPreferences("time_music", MODE_PRIVATE).getString("folder_uri", null)?.let(Uri::parse))
+                }
                 var showSleepJournal by remember { mutableStateOf(false) }
                 var showSleepCalculator by remember { mutableStateOf(false) }
                 var showSleepStats by remember { mutableStateOf(false) }
@@ -107,6 +110,17 @@ class MainActivity : ComponentActivity() {
                         persist(alarms.map { if (it.id == alarmId) it.copy(flashEnabled = true) else it })
                     }
                     pendingFlashAlarmId = null
+                }
+
+                val musicFolderPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+                    if (uri != null) {
+                        runCatching {
+                            contentResolver.takePersistableUriPermission(uri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                        }
+                        musicFolderUri = uri
+                        getSharedPreferences("time_music", MODE_PRIVATE).edit().putString("folder_uri", uri.toString()).apply()
+                    }
                 }
 
                 val musicPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -152,6 +166,16 @@ class MainActivity : ComponentActivity() {
                                 Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
                                 Button(onClick = { showSleepCalculator = true }) { Text("Фазы сна") }
                                 Button(onClick = { showSleepStats = true }) { Text("Статистика сна") }
+                            }
+                            Card(Modifier.fillMaxWidth()) {
+                                Column(Modifier.fillMaxWidth().padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    Text("Моя музыкальная папка", style = MaterialTheme.typography.titleSmall)
+                                    Text(if (musicFolderUri == null) "Папка не выбрана. Создай или выбери TIME во внутренней памяти." else "Папка подключена. Добавляй туда MP3 и другие аудиофайлы.", style = MaterialTheme.typography.bodySmall)
+                                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        TextButton(onClick = { musicFolderPicker.launch(musicFolderUri) }) { Text(if (musicFolderUri == null) "Выбрать папку TIME" else "Изменить папку") }
+                                        if (musicFolderUri != null) TextButton(onClick = { musicFolderUri = null; getSharedPreferences("time_music", MODE_PRIVATE).edit().remove("folder_uri").apply() }) { Text("Отключить") }
+                                    }
+                                }
                             }
                             Text("Простая настройка. Остальные возможности можно добавить позже.",
                                 style = MaterialTheme.typography.bodyMedium)
