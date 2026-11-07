@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 
 private data class MathQuestion(val left: Int, val right: Int, val operator: String, val answer: Int) {
     val expression: String get() = "$left $operator $right = ?"
@@ -75,6 +77,15 @@ class WakeCheckActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme {
+                var guardSeconds by remember {
+                    mutableStateOf(((AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) + 999L) / 1000L).toInt())
+                }
+                LaunchedEffect(alarmId) {
+                    while (guardSeconds > 0) {
+                        guardSeconds = ((AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) + 999L) / 1000L).toInt()
+                        delay(250)
+                    }
+                }
                 var numbers by remember { mutableStateOf((1..25).shuffled()) }
                 var target by remember { mutableStateOf(1) }
                 var completed by remember { mutableStateOf(false) }
@@ -161,9 +172,10 @@ class WakeCheckActivity : ComponentActivity() {
                                 stopService(android.content.Intent(this@WakeCheckActivity, AlarmSoundService::class.java))
                                 finish()
                             },
+                            enabled = guardSeconds == 0,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Аварийно отключить")
+                            Text(if (guardSeconds > 0) "Аварийное отключение через $guardSeconds с" else "Аварийно отключить")
                         }
                     }
                 }
