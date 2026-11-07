@@ -166,7 +166,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                     brush = Brush.radialGradient(
                                         colors = listOf(
                                             Color(0xFFFFD8A0).copy(alpha = 0.72f * reveal.value),
-                                            Color(0xFFE89A79).copy(alpha = 0.24f * reveal),
+                                            Color(0xFFE89A79).copy(alpha = 0.24f * reveal.value),
                                             Color.Transparent
                                         ),
                                         center = Offset(w * 0.5f, h * (0.72f - phase * 0.10f)),
