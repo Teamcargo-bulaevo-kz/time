@@ -6,6 +6,8 @@ import android.content.Intent
 
 class StopAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        val alarmId = intent.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID)
+        if (alarmId != null && AlarmGuard.isLocked(context, alarmId)) return
         intent.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID)?.let {
             WakeCheckRetryScheduler.cancel(context, it)
         }
