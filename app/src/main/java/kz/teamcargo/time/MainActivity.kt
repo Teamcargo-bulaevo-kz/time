@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.Manifest
 import android.content.pm.PackageManager
 import android.provider.Settings
+import android.provider.DocumentsContract
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -46,6 +47,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.util.Calendar
 import kotlin.math.roundToInt
+
+private data class TimeAudioFile(val name: String, val mimeType: String, val uri: Uri)
 
 class MainActivity : ComponentActivity() {
     private lateinit var store: AlarmStore
@@ -91,6 +94,8 @@ class MainActivity : ComponentActivity() {
                 var musicFolderUri by remember {
                     mutableStateOf(getSharedPreferences("time_music", MODE_PRIVATE).getString("folder_uri", null)?.let(Uri::parse))
                 }
+                var folderSongs by remember { mutableStateOf<List<TimeAudioFile>>(emptyList()) }
+                var showFolderSongsFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSleepJournal by remember { mutableStateOf(false) }
                 var showSleepCalculator by remember { mutableStateOf(false) }
                 var showSleepStats by remember { mutableStateOf(false) }
@@ -119,6 +124,7 @@ class MainActivity : ComponentActivity() {
                                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                         }
                         musicFolderUri = uri
+                        folderSongs = loadTimeAudioFiles(uri)
                         getSharedPreferences("time_music", MODE_PRIVATE).edit().putString("folder_uri", uri.toString()).apply()
                     }
                 }
@@ -174,7 +180,17 @@ class MainActivity : ComponentActivity() {
                                     Text(if (musicFolderUri == null) "Папка не выбрана. Создай или выбери TIME во внутренней памяти." else "Папка подключена. Добавляй туда MP3 и другие аудиофайлы.", style = MaterialTheme.typography.bodySmall)
                                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                         TextButton(onClick = { musicFolderPicker.launch(musicFolderUri) }) { Text(if (musicFolderUri == null) "Выбрать папку TIME" else "Изменить папку") }
-                                        if (musicFolderUri != null) TextButton(onClick = { musicFolderUri = null; getSharedPreferences("time_music", MODE_PRIVATE).edit().remove("folder_uri").apply() }) { Text("Отключить") }
+                                        if (musicFolderUri != null) {
+                                            TextButton(onClick = { folderSongs = loadTimeAudioFiles(musicFolderUri!!) }) { Text("Обновить список") }
+                                            TextButton(onClick = { musicFolderUri = null; folderSongs = emptyList(); getSharedPreferences("time_music", MODE_PRIVATE).edit().remove("folder_uri").apply() }) { Text("Отключить") }
+                                        }
+                                    }
+                                    if (musicFolderUri != null) {
+                                        Text("Аудиофайлы: ${folderSongs.size}", style = MaterialTheme.typography.labelMedium)
+                                        folderSongs.take(5).forEach { audio ->
+                                            Text(audio.name, style = MaterialTheme.typography.bodySmall, maxLines = 1)
+                                        }
+                                        if (folderSongs.size > 5) Text("И ещё ${folderSongs.size - 5}…", style = MaterialTheme.typography.labelSmall)
                                     }
                                 }
                             }
@@ -215,6 +231,7 @@ class MainActivity : ComponentActivity() {
                                                     TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
                                                     TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
                                                     TextButton(onClick = { showVisualFor = alarm }) { Text("Экран: " + visualStyleLabel(alarm.wakeVisualStyle)) }
+                                                    TextButton(onClick = { showFolderSongsFor = alarm }) { Text("Выбрать из папки TIME") }
                                                     TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                                                         addCategory(Intent.CATEGORY_OPENABLE)
                                                         type = "audio/*"
@@ -264,6 +281,33 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
+                }
+
+                showFolderSongsFor?.let { target ->
+                    AlertDialog(
+                        onDismissRequest = { showFolderSongsFor = null },
+                        title = { Text("Музыка из TIME") },
+                        text = {
+                            if (folderSongs.isEmpty()) {
+                                Text("В папке пока нет аудиофайлов. Добавь песни и нажми «Обновить список».")
+                            } else {
+                                LazyColumn {
+                                    items(folderSongs, key = { it.uri.toString() }) { audio ->
+                                        TextButton(onClick = {
+                                            persist(alarms.map { if (it.id == target.id) it.copy(soundProfile = "custom", customSoundUri = audio.uri.toString()) else it })
+                                            showFolderSongsFor = null
+                                        }, modifier = Modifier.fillMaxWidth()) {
+                                            Column(Modifier.fillMaxWidth()) {
+                                                Text(audio.name, maxLines = 1)
+                                                Text(audio.mimeType, style = MaterialTheme.typography.labelSmall)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        confirmButton = { TextButton(onClick = { showFolderSongsFor = null }) { Text("Закрыть") } }
+                    )
                 }
 
                 if (showSleepJournal) {
@@ -441,6 +485,37 @@ class MainActivity : ComponentActivity() {
                     Uri.parse("package:$packageName")))
             }
         }
+    }
+
+    private fun loadTimeAudioFiles(treeUri: Uri): List<TimeAudioFile> {
+        return runCatching {
+            val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(
+                treeUri, DocumentsContract.getTreeDocumentId(treeUri)
+            )
+            val result = mutableListOf<TimeAudioFile>()
+            contentResolver.query(
+                childrenUri,
+                arrayOf(
+                    DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                    DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                    DocumentsContract.Document.COLUMN_MIME_TYPE
+                ),
+                null, null, null
+            )?.use { cursor ->
+                val idColumn = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+                val nameColumn = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                val mimeColumn = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+                while (cursor.moveToNext()) {
+                    val mime = cursor.getString(mimeColumn) ?: ""
+                    if (mime.startsWith("audio/")) {
+                        val documentId = cursor.getString(idColumn)
+                        val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+                        result += TimeAudioFile(cursor.getString(nameColumn) ?: "Аудиофайл", mime, uri)
+                    }
+                }
+            }
+            result.sortedBy { it.name.lowercase() }
+        }.getOrDefault(emptyList())
     }
 
     private fun challengeLabel(mode: String): String = when (mode) {
