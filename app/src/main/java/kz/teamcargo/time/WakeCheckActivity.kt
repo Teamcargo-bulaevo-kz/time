@@ -68,7 +68,9 @@ class WakeCheckActivity : ComponentActivity() {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        stopService(android.content.Intent(this, AlarmSoundService::class.java))
+        if (!AlarmGuard.isLocked(this, alarmId)) {
+            stopService(android.content.Intent(this, AlarmSoundService::class.java))
+        }
         val alarm = AlarmStore(this).getAll().firstOrNull { it.id == alarmId }
         val retryMinutes = alarm?.retryMinutes ?: 5
         val configuredMode = alarm?.challengeMode ?: "schulte"
@@ -135,6 +137,7 @@ class WakeCheckActivity : ComponentActivity() {
                                         feedback = "Неверно. Попробуй ещё раз."
                                     }
                                 },
+                                enabled = guardSeconds == 0,
                                 modifier = Modifier.fillMaxWidth()
                             ) { Text("Проверить ответ") }
                         } else if (!completed) {
@@ -146,7 +149,7 @@ class WakeCheckActivity : ComponentActivity() {
                             ) {
                                 items(numbers) { number ->
                                     Card(
-                                        modifier = Modifier.aspectRatio(1f).clickable {
+                                        modifier = Modifier.aspectRatio(1f).clickable(enabled = guardSeconds == 0) {
                                             if (number == target) {
                                                 if (number == 25) completeChallenge() else target += 1
                                             }
