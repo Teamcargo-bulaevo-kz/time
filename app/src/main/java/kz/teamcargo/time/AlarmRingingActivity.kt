@@ -205,6 +205,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                     .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarmId))
                                 finish()
                             },
+                            enabled = guardSeconds == 0,
                             modifier = Modifier.fillMaxWidth().height(58.dp)
                         ) { Text("Я проснулся — решить задание") }
                         Spacer(Modifier.height(14.dp))
@@ -214,6 +215,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                 stopService(Intent(this@AlarmRingingActivity, AlarmSoundService::class.java))
                                 finish()
                             },
+                            enabled = guardSeconds == 0,
                             modifier = Modifier.fillMaxWidth().height(54.dp)
                         ) { Text("Отложить на 5 минут") }
                         Spacer(Modifier.height(14.dp))
