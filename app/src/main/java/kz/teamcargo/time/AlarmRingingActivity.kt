@@ -78,6 +78,15 @@ class AlarmRingingActivity : ComponentActivity() {
 
         setContent {
             var now by remember { mutableStateOf(LocalTime.now()) }
+            var guardSeconds by remember {
+                mutableStateOf(((AlarmGuard.remainingMillis(this@AlarmRingingActivity, alarmId) + 999L) / 1000L).toInt())
+            }
+            LaunchedEffect(alarmId) {
+                while (guardSeconds > 0) {
+                    guardSeconds = ((AlarmGuard.remainingMillis(this@AlarmRingingActivity, alarmId) + 999L) / 1000L).toInt()
+                    delay(250)
+                }
+            }
             val reveal = remember { Animatable(0f) }
             LaunchedEffect(Unit) {
                 reveal.animateTo(1f, animationSpec = tween(durationMillis = 90_000, easing = LinearEasing))
@@ -214,8 +223,9 @@ class AlarmRingingActivity : ComponentActivity() {
                                 stopService(Intent(this@AlarmRingingActivity, AlarmSoundService::class.java))
                                 finish()
                             },
+                            enabled = guardSeconds == 0,
                             modifier = Modifier.fillMaxWidth().height(54.dp)
-                        ) { Text("Отключить сигнал") }
+                        ) { Text(if (guardSeconds > 0) "Отключение через $guardSeconds с" else "Отключить сигнал") }
                     }
                 }
             }
