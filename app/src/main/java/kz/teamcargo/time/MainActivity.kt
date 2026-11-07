@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
                 var musicFolderUri by remember {
                     mutableStateOf(getSharedPreferences("time_music", MODE_PRIVATE).getString("folder_uri", null)?.let(Uri::parse))
                 }
-                var folderSongs by remember { mutableStateOf<List<TimeAudioFile>>(emptyList()) }
+                var folderSongs by remember { mutableStateOf<List<TimeAudioFile>>(musicFolderUri?.let { loadTimeAudioFiles(it) } ?: emptyList()) }
                 var showFolderSongsFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSleepJournal by remember { mutableStateOf(false) }
                 var showSleepCalculator by remember { mutableStateOf(false) }
