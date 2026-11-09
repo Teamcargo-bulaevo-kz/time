@@ -70,7 +70,10 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            TimeTheme {
+            var selectedPalette by remember {
+                mutableStateOf(getSharedPreferences("time_ui", MODE_PRIVATE).getString("palette", "red") ?: "red")
+            }
+            TimeTheme(selectedPalette) {
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
@@ -87,6 +90,7 @@ class MainActivity : ComponentActivity() {
                 var showSleepJournal by remember { mutableStateOf(false) }
                 var showSleepCalculator by remember { mutableStateOf(false) }
                 var showSleepStats by remember { mutableStateOf(false) }
+                var showThemePicker by remember { mutableStateOf(false) }
                 val sleepJournalStore = remember { SleepJournalStore(this@MainActivity) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
 
@@ -157,6 +161,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("TIME", style = MaterialTheme.typography.labelLarge)
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
+                            TextButton(onClick = { showThemePicker = true }) { Text("Цвет интерфейса · " + when (selectedPalette) { "blue" -> "Midnight Blue"; "green" -> "Forest Night"; else -> "Graphite Red" }) }
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
                                 Button(onClick = { showSleepCalculator = true }) { Text("Фазы сна") }
@@ -269,6 +274,27 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
+                }
+
+                if (showThemePicker) {
+                    AlertDialog(
+                        onDismissRequest = { showThemePicker = false },
+                        title = { Text("Ночная цветовая тема") },
+                        text = {
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                listOf("red" to "Graphite Red · графит и приглушённый красный", "blue" to "Midnight Blue · тёмно-синий и стальной", "green" to "Forest Night · угольный и мягкий зелёный").forEach { option ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = selectedPalette == option.first, onClick = {
+                                            selectedPalette = option.first
+                                            getSharedPreferences("time_ui", MODE_PRIVATE).edit().putString("palette", option.first).apply()
+                                        })
+                                        Text(option.second, style = MaterialTheme.typography.bodyMedium)
+                                    }
+                                }
+                            }
+                        },
+                        confirmButton = { TextButton(onClick = { showThemePicker = false }) { Text("Готово") } }
+                    )
                 }
 
                 showFolderSongsFor?.let { target ->
