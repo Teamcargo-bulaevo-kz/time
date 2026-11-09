@@ -21,8 +21,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -156,7 +156,7 @@ class MainActivity : ComponentActivity() {
                 ) { padding ->
                     Surface(Modifier.fillMaxSize().padding(padding)) {
                         Column(
-                            Modifier.fillMaxSize().padding(20.dp),
+                            Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text("TIME", style = MaterialTheme.typography.labelLarge)
@@ -205,8 +205,8 @@ class MainActivity : ComponentActivity() {
                                     style = MaterialTheme.typography.bodyLarge)
                                 Spacer(Modifier.weight(1f))
                             } else {
-                                LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                                    items(alarms, key = { it.id }) { alarm ->
+                                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                    alarms.forEach { alarm ->
                                         Card(Modifier.fillMaxWidth()) {
                                             Row(
                                                 Modifier.fillMaxWidth().padding(16.dp),
@@ -535,8 +535,6 @@ class MainActivity : ComponentActivity() {
     private fun challengeLabel(mode: String): String = when (mode) {
         "math" -> "Математика"
         "shake" -> "Встряхнуть телефон"
-        "tank" -> "Танчик · 30 секунд"
-        "random" -> "Случайное"
         else -> "Шульте"
     }
 
