@@ -106,6 +106,8 @@ class WakeCheckActivity : ComponentActivity() {
                 var questionIndex by remember { mutableStateOf(0) }
                 var answerText by remember { mutableStateOf("") }
                 var feedback by remember { mutableStateOf("") }
+                var activeMode by remember { mutableStateOf(mode) }
+                var shakeUnavailable by remember { mutableStateOf(false) }
                 val shakeCountState = remember { mutableIntStateOf(0) }
                 fun completeChallenge() {
                     completed = true
@@ -113,8 +115,8 @@ class WakeCheckActivity : ComponentActivity() {
                     stopService(android.content.Intent(this@WakeCheckActivity, AlarmSoundService::class.java))
                 }
 
-                DisposableEffect(mode) {
-                    if (mode == "shake") {
+                DisposableEffect(activeMode) {
+                    if (activeMode == "shake") {
                         val manager = getSystemService(SENSOR_SERVICE) as SensorManager
                         val sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
                         var lastShakeAt = 0L
@@ -133,7 +135,12 @@ class WakeCheckActivity : ComponentActivity() {
                             }
                             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
                         }
-                        if (sensor != null) manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_GAME)
+                        if (sensor != null) {
+                            manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_GAME)
+                        } else {
+                            shakeUnavailable = true
+                            activeMode = "schulte"
+                        }
                         onDispose { manager.unregisterListener(listener) }
                     } else onDispose { }
                 }
@@ -150,7 +157,7 @@ class WakeCheckActivity : ComponentActivity() {
                             Text("Задания станут активны через $guardSeconds с", color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.bodyMedium)
                         }
                         Text(
-                            if (completed) "Задание выполнено" else when (mode) {
+                            if (completed) "Задание выполнено" else when (activeMode) {
                                 "math" -> "Реши 5 примеров · ${questionIndex + 1} / 5"
                                 "shake" -> "Встряхни телефон 8 раз · ${shakeCountState.intValue} / 8"
                                 else -> "Найди числа по порядку: $target / 25"
@@ -158,11 +165,16 @@ class WakeCheckActivity : ComponentActivity() {
                             style = MaterialTheme.typography.titleMedium
                         )
 
-                        if (!completed && mode == "shake") {
+                        if (shakeUnavailable) {
+                            Text("Датчик движения недоступен. Вместо встряхивания включена таблица Шульте.",
+                                color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.bodySmall)
+                        }
+
+                        if (!completed && activeMode == "shake") {
                             Text("Держи телефон удобно и сделай восемь отчётливых встряхиваний.", style = MaterialTheme.typography.bodyLarge)
                             Text("${shakeCountState.intValue} / 8", style = MaterialTheme.typography.displayMedium, color = MaterialTheme.colorScheme.primary)
                             Text("Не нужно трясти телефон сильно.", style = MaterialTheme.typography.bodySmall)
-                        } else if (!completed && mode == "math") {
+                        } else if (!completed && activeMode == "math") {
                             Text(questions[questionIndex].expression, style = MaterialTheme.typography.headlineLarge)
                             OutlinedTextField(
                                 value = answerText,
