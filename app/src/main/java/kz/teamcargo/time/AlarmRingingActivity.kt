@@ -90,7 +90,7 @@ class AlarmRingingActivity : ComponentActivity() {
             }
             val reveal = remember { Animatable(0f) }
             LaunchedEffect(Unit) {
-                reveal.animateTo(1f, animationSpec = tween(durationMillis = 90_000, easing = LinearEasing))
+                reveal.animateTo(1f, animationSpec = tween(durationMillis = 60_000, easing = LinearEasing))
             }
             val motion = rememberInfiniteTransition(label = "wakeVisual")
             val phase by motion.animateFloat(
@@ -187,18 +187,18 @@ class AlarmRingingActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        drawRect(Color.Black.copy(alpha = 0.78f * (1f - reveal.value)))
+                        drawRect(Color.Black.copy(alpha = 0.28f * (1f - reveal.value)))
                     }
                     Column(
                         modifier = Modifier.fillMaxSize().padding(horizontal = 28.dp, vertical = 36.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("TIME", color = Color(0xFF9D9294), style = MaterialTheme.typography.titleMedium)
+                        Text("TIME", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(28.dp))
-                        Text(clock, color = Color(0xFFBDB7B8), fontSize = 76.sp, lineHeight = 82.sp)
+                        Text(clock, color = Color(0xFFF0E8E9), fontSize = 76.sp, lineHeight = 82.sp)
                         Spacer(Modifier.height(12.dp))
-                        Text(label, color = Color(0xFFAAA0A2), style = MaterialTheme.typography.titleLarge)
+                        Text(label, color = Color(0xFFE0D5D7), style = MaterialTheme.typography.titleLarge)
                         Spacer(Modifier.height(52.dp))
                         Button(
                             onClick = {
@@ -207,7 +207,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                 finish()
                             },
                             enabled = guardSeconds == 0,
-                            modifier = Modifier.fillMaxWidth().height(58.dp)
+                            modifier = Modifier.fillMaxWidth().height(62.dp)
                         ) { Text("Я проснулся — решить задание") }
                         Spacer(Modifier.height(14.dp))
                         OutlinedButton(
@@ -217,7 +217,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                 finish()
                             },
                             enabled = guardSeconds == 0,
-                            modifier = Modifier.fillMaxWidth().height(54.dp)
+                            modifier = Modifier.fillMaxWidth().height(58.dp)
                         ) { Text("Отложить на 5 минут") }
                         Spacer(Modifier.height(14.dp))
                         OutlinedButton(
@@ -240,10 +240,10 @@ class AlarmRingingActivity : ComponentActivity() {
         brightnessStartedAt = SystemClock.elapsedRealtime()
         val task = object : Runnable {
             override fun run() {
-                val fraction = ((SystemClock.elapsedRealtime() - brightnessStartedAt).toFloat() / 90_000L)
+                val fraction = ((SystemClock.elapsedRealtime() - brightnessStartedAt).toFloat() / 60_000L)
                     .coerceIn(0f, 1f)
                 window.attributes = window.attributes.apply {
-                    screenBrightness = 0.035f + 0.30f * fraction
+                    screenBrightness = 0.12f + 0.38f * fraction
                 }
                 if (fraction < 1f) handler.postDelayed(this, 1_000L)
             }
