@@ -55,7 +55,7 @@ data class Alarm(
                 flashEnabled = json.optBoolean("flashEnabled", false),
                 vibrationEnabled = json.optBoolean("vibrationEnabled", true),
                 retryMinutes = json.optInt("retryMinutes", 5).coerceIn(1, 30),
-                challengeMode = json.optString("challengeMode", "schulte").let { if (it in setOf("schulte", "math", "random", "shake", "tank")) it else "schulte" },
+                challengeMode = json.optString("challengeMode", "schulte").let { if (it in setOf("schulte", "math", "shake")) it else "schulte" },
                 wakeVisualStyle = json.optString("wakeVisualStyle", "sunrise").let { if (it in setOf("sunrise", "pulse", "waves")) it else "sunrise" }
             )
         }
