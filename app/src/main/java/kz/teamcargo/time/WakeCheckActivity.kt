@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -29,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -100,9 +102,9 @@ class WakeCheckActivity : ComponentActivity() {
                 var questionIndex by remember { mutableStateOf(0) }
                 var answerText by remember { mutableStateOf("") }
                 var feedback by remember { mutableStateOf("") }
-                var shakeCount by remember { mutableStateOf(0) }
+                val shakeCountState = remember { mutableIntStateOf(0) }
                 var tankSeconds by remember { mutableStateOf(30) }
-                var tankTouches by remember { mutableStateOf(0) }
+                val tankTouchCount = remember { mutableIntStateOf(0) }
                 var tankPosition by remember { mutableStateOf(0) }
                 DisposableEffect(mode) {
                     if (mode == "shake") {
@@ -118,8 +120,8 @@ class WakeCheckActivity : ComponentActivity() {
                                 val now = SystemClock.elapsedRealtime()
                                 if (magnitude > 15.5f && now - lastShakeAt > 450L) {
                                     lastShakeAt = now
-                                    if (shakeCount < 8) shakeCount += 1
-                                    if (shakeCount >= 8) completeChallenge()
+                                    if (shakeCountState.intValue < 8) shakeCountState.intValue += 1
+                                    if (shakeCountState.intValue >= 8) completeChallenge()
                                 }
                             }
                             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
@@ -135,7 +137,7 @@ class WakeCheckActivity : ComponentActivity() {
                             tankSeconds -= 1
                             tankPosition = (tankPosition + 1) % 4
                         }
-                        if (tankTouches >= 3) completeChallenge()
+                        if (tankTouchCount.intValue >= 3) completeChallenge()
                         else feedback = "Коснись танка ещё ${3 - tankTouches} раза, чтобы подтвердить бодрствование."
                     }
                 }
@@ -157,7 +159,7 @@ class WakeCheckActivity : ComponentActivity() {
                         Text(
                             if (completed) "Задание выполнено" else when (mode) {
                                 "math" -> "Реши 5 примеров · ${questionIndex + 1} / 5"
-                                "shake" -> "Встряхни телефон 8 раз · $shakeCount / 8"
+                                "shake" -> "Встряхни телефон 8 раз · $shakeCountState.intValue / 8"
                                 "tank" -> "30 секунд бодрствования · ${tankSeconds} с"
                                 else -> "Найди числа по порядку: $target / 25"
                             },
@@ -171,12 +173,12 @@ class WakeCheckActivity : ComponentActivity() {
                         } else if (!completed && mode == "tank") {
                             Text("Игрушка для мягкого пробуждения. Результат не оценивается — нужно лишь немного подвигаться и побыть активным 30 секунд.", style = MaterialTheme.typography.bodyMedium)
                             Button(
-                                onClick = { tankTouches += 1; if (tankTouches >= 3 && tankSeconds <= 0) completeChallenge() },
+                                onClick = { tankTouchCount.intValue += 1; if (tankTouchCount.intValue >= 3 && tankSeconds <= 0) completeChallenge() },
                                 modifier = Modifier.fillMaxWidth().height(150.dp)
                             ) {
                                 Text(listOf("▰  ТАНК  ▰", "◀  ТАНК  ▶", "▰  ТАНК  ▰", "▶  ТАНК  ◀")[tankPosition], style = MaterialTheme.typography.headlineLarge)
                             }
-                            Text("Касания: $tankTouches / 3 · Осталось: $tankSeconds с", style = MaterialTheme.typography.titleMedium)
+                            Text("Касания: $tankTouchCount.intValue / 3 · Осталось: $tankSeconds с", style = MaterialTheme.typography.titleMedium)
                             if (feedback.isNotBlank()) Text(feedback, color = MaterialTheme.colorScheme.primary)
                         } else if (!completed && mode == "math") {
                             Text(questions[questionIndex].expression, style = MaterialTheme.typography.headlineLarge)
