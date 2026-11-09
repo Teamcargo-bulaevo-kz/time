@@ -78,7 +78,7 @@ class WakeCheckActivity : ComponentActivity() {
         WakeCheckRetryScheduler.schedule(this, alarmId, retryMinutes)
 
         setContent {
-            MaterialTheme {
+            TimeTheme {
                 var guardSeconds by remember {
                     mutableStateOf(((AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) + 999L) / 1000L).toInt())
                 }
