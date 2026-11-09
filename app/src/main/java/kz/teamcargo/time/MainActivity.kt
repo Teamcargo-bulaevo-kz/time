@@ -216,7 +216,7 @@ class MainActivity : ComponentActivity() {
                                         Card(Modifier.fillMaxWidth()) {
                                             Row(
                                                 Modifier.fillMaxWidth().padding(16.dp),
-                                                verticalAlignment = Alignment.CenterVertically
+                                                verticalAlignment = Alignment.Top
                                             ) {
                                                 Column(Modifier.weight(1f)) {
                                                     Text(alarm.timeText(), style = MaterialTheme.typography.headlineLarge)
