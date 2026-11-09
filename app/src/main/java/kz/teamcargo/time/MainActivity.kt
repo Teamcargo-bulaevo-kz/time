@@ -38,6 +38,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,13 +59,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         store = AlarmStore(this)
         scheduler = AlarmScheduler(this)
-        window.statusBarColor = android.graphics.Color.rgb(18, 18, 18)
-        window.navigationBarColor = android.graphics.Color.rgb(18, 18, 18)
-        @Suppress("DEPRECATION")
-        window.decorView.systemUiVisibility = 0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            window.isNavigationBarContrastEnforced = false
-        }
         if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001)
         }
@@ -74,8 +68,20 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(getSharedPreferences("time_ui", MODE_PRIVATE).getString("palette", "red") ?: "red")
             }
             TimeTheme(selectedPalette) {
+                SideEffect {
+                    val bar = when (selectedPalette) {
+                        "blue" -> android.graphics.Color.rgb(11, 17, 25)
+                        "green" -> android.graphics.Color.rgb(13, 19, 15)
+                        else -> android.graphics.Color.rgb(16, 13, 14)
+                    }
+                    window.statusBarColor = bar
+                    window.navigationBarColor = bar
+                    @Suppress("DEPRECATION")
+                    run { window.decorView.systemUiVisibility = 0 }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced = false
+                }
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
-                var editing by remember { mutableStateOf<Alarm?>(null) }
+                var expandedAlarmId by remember { mutableStateOf<String?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
                 var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
@@ -162,10 +168,12 @@ class MainActivity : ComponentActivity() {
                             Text("TIME", style = MaterialTheme.typography.labelLarge)
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
                             TextButton(onClick = { showThemePicker = true }) { Text("Цвет интерфейса · " + when (selectedPalette) { "blue" -> "Midnight Blue"; "green" -> "Forest Night"; else -> "Graphite Red" }) }
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Button(onClick = { showSleepJournal = true }) { Text("Дневник сна") }
-                                Button(onClick = { showSleepCalculator = true }) { Text("Фазы сна") }
-                                Button(onClick = { showSleepStats = true }) { Text("Статистика сна") }
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                                    Button(onClick = { showSleepJournal = true }, modifier = Modifier.weight(1f)) { Text("Дневник сна") }
+                                    Button(onClick = { showSleepCalculator = true }, modifier = Modifier.weight(1f)) { Text("Фазы сна") }
+                                }
+                                Button(onClick = { showSleepStats = true }, modifier = Modifier.fillMaxWidth()) { Text("Статистика сна") }
                             }
                             Card(Modifier.fillMaxWidth()) {
                                 Column(Modifier.fillMaxWidth().padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -218,42 +226,45 @@ class MainActivity : ComponentActivity() {
                                                         alarm.label.ifBlank { repeatLabel(alarm.repeatDays) },
                                                         style = MaterialTheme.typography.bodySmall
                                                     )
-                                                    TextButton(onClick = { chooseTime(alarm) }) { Text("Изменить время") }
-                                                    TextButton(onClick = { showRepeatFor = alarm }) { Text("Повторение") }
-                                                    TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
-                                                    TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
-                                                    TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
-                                                    TextButton(onClick = { showVisualFor = alarm }) { Text("Экран: " + visualStyleLabel(alarm.wakeVisualStyle)) }
-                                                    TextButton(onClick = { showFolderSongsFor = alarm }) { Text("Выбрать из папки TIME") }
-                                                    TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                                                        addCategory(Intent.CATEGORY_OPENABLE)
-                                                        type = "audio/*"
-                                                        musicFolderUri?.let { putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI, it) }
-                                                    }) }) { Text("Выбрать музыку") }
-                                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                                        Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-                                                        Switch(
-                                                            checked = alarm.flashEnabled,
-                                                            onCheckedChange = { enabled ->
+                                                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.fillMaxWidth()) {
+                                                        TextButton(onClick = { chooseTime(alarm) }) { Text("Время") }
+                                                        TextButton(onClick = { showRepeatFor = alarm }) { Text("Повтор") }
+                                                        TextButton(onClick = { expandedAlarmId = if (expandedAlarmId == alarm.id) null else alarm.id }) {
+                                                            Text(if (expandedAlarmId == alarm.id) "Свернуть" else "Настройки")
+                                                        }
+                                                    }
+                                                    if (expandedAlarmId == alarm.id) {
+                                                        TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
+                                                        TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
+                                                        TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
+                                                        TextButton(onClick = { showVisualFor = alarm }) { Text("Экран: " + visualStyleLabel(alarm.wakeVisualStyle)) }
+                                                        TextButton(onClick = { showFolderSongsFor = alarm }) { Text("Музыка из папки TIME") }
+                                                        TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                                                            addCategory(Intent.CATEGORY_OPENABLE)
+                                                            type = "audio/*"
+                                                            musicFolderUri?.let { putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI, it) }
+                                                        }) }) { Text("Выбрать отдельный файл") }
+                                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                                            Text("Вспышка", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                                                            Switch(checked = alarm.flashEnabled, onCheckedChange = { enabled ->
                                                                 if (enabled && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                                                                     pendingFlashAlarmId = alarm.id
                                                                     cameraPermission.launch(Manifest.permission.CAMERA)
-                                                                } else {
-                                                                    persist(alarms.map { if (it.id == alarm.id) it.copy(flashEnabled = enabled) else it })
-                                                                }
-                                                            }
-                                                        )
-                                                    }
-                                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                                        Text("Вибрация", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-                                                        Switch(
-                                                            checked = alarm.vibrationEnabled,
-                                                            onCheckedChange = { enabled ->
+                                                                } else persist(alarms.map { if (it.id == alarm.id) it.copy(flashEnabled = enabled) else it })
+                                                            })
+                                                        }
+                                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                                            Text("Вибрация", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                                                            Switch(checked = alarm.vibrationEnabled, onCheckedChange = { enabled ->
                                                                 persist(alarms.map { if (it.id == alarm.id) it.copy(vibrationEnabled = enabled) else it })
-                                                            }
-                                                        )
+                                                            })
+                                                        }
+                                                        TextButton(onClick = {
+                                                            scheduler.cancel(alarm.id)
+                                                            persist(alarms.filterNot { it.id == alarm.id })
+                                                            expandedAlarmId = null
+                                                        }) { Text("Удалить будильник") }
                                                     }
-                                                    TextButton(onClick = { scheduler.cancel(alarm.id); persist(alarms.filterNot { it.id == alarm.id }) }) { Text("Удалить") }
                                                 }
                                                 Switch(
                                                     checked = alarm.enabled,
