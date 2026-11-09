@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TimeAppTheme" parent="@android:style/Theme.Material.NoActionBar">
-        <item name="android:windowBackground">#101114</item>
-        <item name="android:colorAccent">#B7C8FF</item>
-        <item name="android:textColorPrimary">#E3E2E6</item>
-        <item name="android:textColorSecondary">#C3C6D0</item>
+        <item name="android:windowBackground">#100D0E</item>
+        <item name="android:colorAccent">#E36A72</item>
+        <item name="android:textColorPrimary">#BDB7B8</item>
+        <item name="android:textColorSecondary">#8F8587</item>
         <item name="android:statusBarColor">#101114</item>
         <item name="android:navigationBarColor">#101114</item>
         <item name="android:windowLightStatusBar">false</item>
