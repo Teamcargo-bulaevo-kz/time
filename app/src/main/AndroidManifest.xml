@@ -16,6 +16,8 @@
         android:allowBackup="true"
         android:label="TIME"
         android:supportsRtl="true"
+        android:icon="@drawable/ic_time_launcher"
+        android:roundIcon="@drawable/ic_time_launcher"
         android:theme="@style/TimeAppTheme">
         <activity
             android:name=".MainActivity"
