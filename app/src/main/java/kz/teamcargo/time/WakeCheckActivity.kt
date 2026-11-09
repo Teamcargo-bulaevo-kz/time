@@ -10,6 +10,8 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -34,6 +36,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
@@ -172,11 +178,23 @@ class WakeCheckActivity : ComponentActivity() {
                             Text("Не нужно трясти телефон сильно.", style = MaterialTheme.typography.bodySmall)
                         } else if (!completed && mode == "tank") {
                             Text("Игрушка для мягкого пробуждения. Результат не оценивается — нужно лишь немного подвигаться и побыть активным 30 секунд.", style = MaterialTheme.typography.bodyMedium)
+                            val tankAccent = MaterialTheme.colorScheme.primary
                             Button(
                                 onClick = { tankTouchCount.intValue += 1; if (tankTouchCount.intValue >= 3 && tankSeconds <= 0) completeChallenge() },
                                 modifier = Modifier.fillMaxWidth().height(150.dp)
                             ) {
-                                Text(listOf("▰  ТАНК  ▰", "◀  ТАНК  ▶", "▰  ТАНК  ▰", "▶  ТАНК  ◀")[tankPosition], style = MaterialTheme.typography.headlineLarge)
+                                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    Canvas(Modifier.fillMaxSize()) {
+                                        val x = size.width * (0.10f + tankPosition * 0.20f)
+                                        val y = size.height * 0.48f
+                                        drawRoundRect(tankAccent.copy(alpha = 0.22f), Offset(x, y), Size(76.dp.toPx(), 28.dp.toPx()), CornerRadius(8.dp.toPx()))
+                                        drawRoundRect(tankAccent, Offset(x + 9.dp.toPx(), y - 15.dp.toPx()), Size(46.dp.toPx(), 24.dp.toPx()), CornerRadius(6.dp.toPx()))
+                                        drawLine(tankAccent, Offset(x + 48.dp.toPx(), y - 5.dp.toPx()), Offset(x + 82.dp.toPx(), y - 5.dp.toPx()), 5.dp.toPx())
+                                        drawCircle(Color(0xFF171316), 8.dp.toPx(), Offset(x + 18.dp.toPx(), y + 28.dp.toPx()))
+                                        drawCircle(Color(0xFF171316), 8.dp.toPx(), Offset(x + 58.dp.toPx(), y + 28.dp.toPx()))
+                                    }
+                                    Text("КОСНИСЬ ТАНКА", style = MaterialTheme.typography.labelSmall)
+                                }
                             }
                             Text("Касания: ${tankTouchCount.intValue} / 3 · Осталось: $tankSeconds с", style = MaterialTheme.typography.titleMedium)
                             if (feedback.isNotBlank()) Text(feedback, color = MaterialTheme.colorScheme.primary)
