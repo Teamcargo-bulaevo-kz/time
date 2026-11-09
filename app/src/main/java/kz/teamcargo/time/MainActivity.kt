@@ -71,7 +71,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TimeTheme {
-{
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
