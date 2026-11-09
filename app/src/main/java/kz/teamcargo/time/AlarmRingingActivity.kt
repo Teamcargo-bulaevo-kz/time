@@ -16,6 +16,9 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -76,8 +79,9 @@ class AlarmRingingActivity : ComponentActivity() {
         val visualStyle = alarm?.wakeVisualStyle ?: "sunrise"
         val snoozeMinutes = 5
 
+        val selectedPalette = getSharedPreferences("time_ui", MODE_PRIVATE).getString("palette", "red") ?: "red"
         setContent {
-            TimeTheme {
+            TimeTheme(selectedPalette) {
             var now by remember { mutableStateOf(LocalTime.now()) }
             var guardSeconds by remember {
                 mutableStateOf(((AlarmGuard.remainingMillis(this@AlarmRingingActivity, alarmId) + 999L) / 1000L).toInt())
@@ -109,8 +113,13 @@ class AlarmRingingActivity : ComponentActivity() {
                 }
             }
             val clock = now.format(DateTimeFormatter.ofPattern("HH:mm"))
+            val openWakeCheck = {
+                startActivity(Intent(this@AlarmRingingActivity, WakeCheckActivity::class.java)
+                    .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarmId))
+                finish()
+            }
             Surface(modifier = Modifier.fillMaxSize(), color = Color(0xFF080D18)) {
-                Box(modifier = Modifier.fillMaxSize()) {
+                Box(modifier = Modifier.fillMaxSize().clickable(enabled = guardSeconds == 0, onClick = openWakeCheck)) {
                     Canvas(modifier = Modifier.fillMaxSize()) {
                         val w = size.width
                         val h = size.height
@@ -190,8 +199,8 @@ class AlarmRingingActivity : ComponentActivity() {
                         drawRect(Color.Black.copy(alpha = 0.28f * (1f - reveal.value)))
                     }
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(horizontal = 28.dp, vertical = 36.dp),
-                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.CenterVertically),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text("TIME", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.titleMedium)
@@ -203,13 +212,10 @@ class AlarmRingingActivity : ComponentActivity() {
                             Spacer(Modifier.height(16.dp))
                             Text("Кнопки разблокируются через $guardSeconds с", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.bodyMedium)
                         }
-                        Spacer(Modifier.height(36.dp))
+                        Text("Коснись экрана или нажми кнопку, чтобы перейти к заданию.", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.bodySmall)
+                        Spacer(Modifier.height(24.dp))
                         Button(
-                            onClick = {
-                                startActivity(Intent(this@AlarmRingingActivity, WakeCheckActivity::class.java)
-                                    .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarmId))
-                                finish()
-                            },
+                            onClick = openWakeCheck,
                             enabled = guardSeconds == 0,
                             modifier = Modifier.fillMaxWidth().height(62.dp)
                         ) { Text("Я проснулся — решить задание") }
