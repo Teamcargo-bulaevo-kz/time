@@ -32,6 +32,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -83,6 +84,7 @@ class MainActivity : ComponentActivity() {
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
                 var expandedAlarmId by remember { mutableStateOf<String?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
+                var showLabelFor by remember { mutableStateOf<Alarm?>(null) }
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
                 var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
                 var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
@@ -195,8 +197,6 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             }
-                            Text("Простая настройка. Остальные возможности можно добавить позже.",
-                                style = MaterialTheme.typography.bodyMedium)
                             if (Build.VERSION.SDK_INT >= 34 &&
                                 !getSystemService(NotificationManager::class.java).canUseFullScreenIntent()
                             ) {
@@ -208,10 +208,8 @@ class MainActivity : ComponentActivity() {
                             }
 
                             if (alarms.isEmpty()) {
-                                Spacer(Modifier.weight(1f))
                                 Text("Пока нет будильников. Нажмите +, чтобы добавить первый.",
                                     style = MaterialTheme.typography.bodyLarge)
-                                Spacer(Modifier.weight(1f))
                             } else {
                                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                     alarms.forEach { alarm ->
@@ -234,6 +232,7 @@ class MainActivity : ComponentActivity() {
                                                         }
                                                     }
                                                     if (expandedAlarmId == alarm.id) {
+                                                        TextButton(onClick = { showLabelFor = alarm }) { Text(if (alarm.label.isBlank()) "Добавить название" else "Название: ${alarm.label}") }
                                                         TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
                                                         TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
                                                         TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
@@ -345,6 +344,24 @@ class MainActivity : ComponentActivity() {
                     SleepStatsDialog(context = this@MainActivity, onDismiss = { showSleepStats = false })
                 }
 
+                showLabelFor?.let { selected ->
+                    var label by remember(selected.id) { mutableStateOf(selected.label) }
+                    AlertDialog(
+                        onDismissRequest = { showLabelFor = null },
+                        title = { Text("Название будильника") },
+                        text = {
+                            OutlinedTextField(value = label, onValueChange = { label = it.take(40) },
+                                label = { Text("Например, Работа") }, singleLine = true)
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                persist(alarms.map { if (it.id == selected.id) it.copy(label = label.trim()) else it })
+                                showLabelFor = null
+                            }) { Text("Сохранить") }
+                        },
+                        dismissButton = { TextButton(onClick = { showLabelFor = null }) { Text("Отмена") } }
+                    )
+                }
                 showRepeatFor?.let { selected ->
                     val dayNames = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
                     var days by remember(selected.id) { mutableStateOf(selected.repeatDays) }
