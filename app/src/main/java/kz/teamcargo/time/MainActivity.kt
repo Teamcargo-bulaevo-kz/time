@@ -360,7 +360,7 @@ class MainActivity : ComponentActivity() {
                         title = { Text("Задание для пробуждения") },
                         text = {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                listOf("schulte" to "Таблица Шульте", "math" to "Математика", "random" to "Случайное задание").forEach { option ->
+                                listOf("schulte" to "Таблица Шульте", "math" to "Математика", "shake" to "Встряхнуть телефон", "tank" to "Танчик · 30 секунд", "random" to "Случайное задание").forEach { option ->
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         RadioButton(selected = mode == option.first, onClick = { mode = option.first })
                                         Text(option.second)
@@ -520,6 +520,8 @@ class MainActivity : ComponentActivity() {
 
     private fun challengeLabel(mode: String): String = when (mode) {
         "math" -> "Математика"
+        "shake" -> "Встряхнуть телефон"
+        "tank" -> "Танчик · 30 секунд"
         "random" -> "Случайное"
         else -> "Шульте"
     }
