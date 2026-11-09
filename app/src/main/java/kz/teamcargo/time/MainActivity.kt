@@ -482,8 +482,11 @@ class MainActivity : ComponentActivity() {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                 listOf("rain" to "Дождь", "storm" to "Гроза", "system" to "Системный сигнал", "custom" to "Моя музыка").forEach { option ->
                                     Row(verticalAlignment = Alignment.CenterVertically) {
-                                        RadioButton(selected = profile == option.first, onClick = { profile = option.first })
-                                        Text(option.second)
+                                        val customReady = selected.customSoundUri != null
+                                        RadioButton(selected = profile == option.first, onClick = { profile = option.first },
+                                            enabled = option.first != "custom" || customReady)
+                                        Text(if (option.first == "custom" && !customReady) "Моя музыка — сначала выбери файл" else option.second,
+                                            color = if (option.first == "custom" && !customReady) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface)
                                     }
                                 }
                                 Text("Время нарастания: ${ramp.roundToInt()} мин")
