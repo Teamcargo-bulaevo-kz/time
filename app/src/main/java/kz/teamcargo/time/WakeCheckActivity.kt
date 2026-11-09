@@ -88,8 +88,9 @@ class WakeCheckActivity : ComponentActivity() {
         val mode = configuredMode.takeIf { it in setOf("schulte", "math", "shake") } ?: "schulte"
         WakeCheckRetryScheduler.schedule(this, alarmId, retryMinutes)
 
+        val selectedPalette = getSharedPreferences("time_ui", MODE_PRIVATE).getString("palette", "red") ?: "red"
         setContent {
-            TimeTheme {
+            TimeTheme(selectedPalette) {
                 var guardSeconds by remember {
                     mutableStateOf(((AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) + 999L) / 1000L).toInt())
                 }
