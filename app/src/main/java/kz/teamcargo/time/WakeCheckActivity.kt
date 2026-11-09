@@ -138,7 +138,7 @@ class WakeCheckActivity : ComponentActivity() {
                             tankPosition = (tankPosition + 1) % 4
                         }
                         if (tankTouchCount.intValue >= 3) completeChallenge()
-                        else feedback = "Коснись танка ещё ${3 - tankTouches} раза, чтобы подтвердить бодрствование."
+                        else feedback = "Коснись танка ещё ${3 - tankTouchCount.intValue} раза, чтобы подтвердить бодрствование."
                     }
                 }
                 val questions = remember { List(5) { makeMathQuestion() } }
@@ -159,7 +159,7 @@ class WakeCheckActivity : ComponentActivity() {
                         Text(
                             if (completed) "Задание выполнено" else when (mode) {
                                 "math" -> "Реши 5 примеров · ${questionIndex + 1} / 5"
-                                "shake" -> "Встряхни телефон 8 раз · $shakeCountState.intValue / 8"
+                                "shake" -> "Встряхни телефон 8 раз · ${shakeCountState.intValue} / 8"
                                 "tank" -> "30 секунд бодрствования · ${tankSeconds} с"
                                 else -> "Найди числа по порядку: $target / 25"
                             },
@@ -168,7 +168,7 @@ class WakeCheckActivity : ComponentActivity() {
 
                         if (!completed && mode == "shake") {
                             Text("Держи телефон удобно и сделай восемь отчётливых встряхиваний.", style = MaterialTheme.typography.bodyLarge)
-                            Text("$shakeCount / 8", style = MaterialTheme.typography.displayMedium, color = MaterialTheme.colorScheme.primary)
+                            Text("${shakeCountState.intValue} / 8", style = MaterialTheme.typography.displayMedium, color = MaterialTheme.colorScheme.primary)
                             Text("Не нужно трясти телефон сильно.", style = MaterialTheme.typography.bodySmall)
                         } else if (!completed && mode == "tank") {
                             Text("Игрушка для мягкого пробуждения. Результат не оценивается — нужно лишь немного подвигаться и побыть активным 30 секунд.", style = MaterialTheme.typography.bodyMedium)
