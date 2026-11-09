@@ -70,19 +70,8 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            MaterialTheme(
-                colorScheme = darkColorScheme(
-                    primary = androidx.compose.ui.graphics.Color(0xFFB7C8FF),
-                    onPrimary = androidx.compose.ui.graphics.Color(0xFF172B55),
-                    secondary = androidx.compose.ui.graphics.Color(0xFFBFC7DC),
-                    background = androidx.compose.ui.graphics.Color(0xFF101114),
-                    surface = androidx.compose.ui.graphics.Color(0xFF17191E),
-                    surfaceVariant = androidx.compose.ui.graphics.Color(0xFF292D35),
-                    onBackground = androidx.compose.ui.graphics.Color(0xFFE3E2E6),
-                    onSurface = androidx.compose.ui.graphics.Color(0xFFE3E2E6),
-                    onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFFC3C6D0)
-                )
-            ) {
+            TimeTheme {
+{
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
                 var editing by remember { mutableStateOf<Alarm?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
