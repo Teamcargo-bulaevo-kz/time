@@ -16,7 +16,7 @@
         android:allowBackup="true"
         android:label="TIME"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material.NoActionBar">
+        android:theme="@style/TimeAppTheme">
         <activity
             android:name=".MainActivity"
             android:exported="true">
