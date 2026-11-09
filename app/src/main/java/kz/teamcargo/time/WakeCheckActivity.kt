@@ -106,6 +106,12 @@ class WakeCheckActivity : ComponentActivity() {
                 var tankSeconds by remember { mutableStateOf(30) }
                 val tankTouchCount = remember { mutableIntStateOf(0) }
                 var tankPosition by remember { mutableStateOf(0) }
+                fun completeChallenge() {
+                    completed = true
+                    WakeCheckRetryScheduler.cancel(this@WakeCheckActivity, alarmId)
+                    stopService(android.content.Intent(this@WakeCheckActivity, AlarmSoundService::class.java))
+                }
+
                 DisposableEffect(mode) {
                     if (mode == "shake") {
                         val manager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -143,12 +149,6 @@ class WakeCheckActivity : ComponentActivity() {
                 }
                 val questions = remember { List(5) { makeMathQuestion() } }
 
-                fun completeChallenge() {
-                    completed = true
-                    WakeCheckRetryScheduler.cancel(this@WakeCheckActivity, alarmId)
-                    stopService(android.content.Intent(this@WakeCheckActivity, AlarmSoundService::class.java))
-                }
-
                 Surface(Modifier.fillMaxSize()) {
                     Column(
                         Modifier.fillMaxSize().padding(20.dp),
@@ -178,7 +178,7 @@ class WakeCheckActivity : ComponentActivity() {
                             ) {
                                 Text(listOf("▰  ТАНК  ▰", "◀  ТАНК  ▶", "▰  ТАНК  ▰", "▶  ТАНК  ◀")[tankPosition], style = MaterialTheme.typography.headlineLarge)
                             }
-                            Text("Касания: $tankTouchCount.intValue / 3 · Осталось: $tankSeconds с", style = MaterialTheme.typography.titleMedium)
+                            Text("Касания: ${tankTouchCount.intValue} / 3 · Осталось: $tankSeconds с", style = MaterialTheme.typography.titleMedium)
                             if (feedback.isNotBlank()) Text(feedback, color = MaterialTheme.colorScheme.primary)
                         } else if (!completed && mode == "math") {
                             Text(questions[questionIndex].expression, style = MaterialTheme.typography.headlineLarge)
