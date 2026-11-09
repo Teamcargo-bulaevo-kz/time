@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                     window.statusBarColor = bar
                     window.navigationBarColor = bar
                     @Suppress("DEPRECATION")
-                    run { window.decorView.systemUiVisibility = 0 }
+                    window.decorView.systemUiVisibility = 0
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced = false
                 }
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
