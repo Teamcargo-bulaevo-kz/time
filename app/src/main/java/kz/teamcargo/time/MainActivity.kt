@@ -169,6 +169,22 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("TIME", style = MaterialTheme.typography.labelLarge)
                             Text("Будильники", style = MaterialTheme.typography.headlineMedium)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+                                !getSystemService(android.app.AlarmManager::class.java).canScheduleExactAlarms()
+                            ) {
+                                Card(Modifier.fillMaxWidth()) {
+                                    Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        Text("Точность будильника ограничена", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.titleSmall)
+                                        Text("Разреши точные будильники в настройках Android, чтобы сигнал срабатывал вовремя.", style = MaterialTheme.typography.bodySmall)
+                                        TextButton(onClick = { requestExactAlarmPermissionIfNeeded() }) { Text("Разрешить точное срабатывание") }
+                                    }
+                                }
+                            }
+                            if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                                TextButton(onClick = { requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001) }) {
+                                    Text("Разрешить уведомления будильника")
+                                }
+                            }
                             TextButton(onClick = { showThemePicker = true }) { Text("Цвет интерфейса · " + when (selectedPalette) { "blue" -> "Midnight Blue"; "green" -> "Forest Night"; else -> "Graphite Red" }) }
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
