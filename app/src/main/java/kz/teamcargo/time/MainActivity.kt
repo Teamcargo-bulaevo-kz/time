@@ -305,8 +305,8 @@ class MainActivity : ComponentActivity() {
                             if (folderSongs.isEmpty()) {
                                 Text("В папке пока нет аудиофайлов. Добавь песни и нажми «Обновить список».")
                             } else {
-                                LazyColumn {
-                                    items(folderSongs, key = { it.uri.toString() }) { audio ->
+                                Column {
+                                    folderSongs.forEach { audio ->
                                         TextButton(onClick = {
                                             persist(alarms.map { if (it.id == target.id) it.copy(soundProfile = "custom", customSoundUri = audio.uri.toString()) else it })
                                             showFolderSongsFor = null
@@ -374,7 +374,7 @@ class MainActivity : ComponentActivity() {
                         title = { Text("Задание для пробуждения") },
                         text = {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                listOf("schulte" to "Таблица Шульте", "math" to "Математика", "shake" to "Встряхнуть телефон", "tank" to "Танчик · 30 секунд", "random" to "Случайное задание").forEach { option ->
+                                listOf("schulte" to "Таблица Шульте", "math" to "Математика", "shake" to "Встряхнуть телефон").forEach { option ->
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         RadioButton(selected = mode == option.first, onClick = { mode = option.first })
                                         Text(option.second)
