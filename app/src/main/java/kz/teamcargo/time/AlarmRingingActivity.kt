@@ -77,6 +77,7 @@ class AlarmRingingActivity : ComponentActivity() {
         val snoozeMinutes = 5
 
         setContent {
+            TimeTheme {
             var now by remember { mutableStateOf(LocalTime.now()) }
             var guardSeconds by remember {
                 mutableStateOf(((AlarmGuard.remainingMillis(this@AlarmRingingActivity, alarmId) + 999L) / 1000L).toInt())
@@ -230,6 +231,7 @@ class AlarmRingingActivity : ComponentActivity() {
                         ) { Text(if (guardSeconds > 0) "Отключение через $guardSeconds с" else "Отключить сигнал") }
                     }
                 }
+            }
             }
         }
     }
