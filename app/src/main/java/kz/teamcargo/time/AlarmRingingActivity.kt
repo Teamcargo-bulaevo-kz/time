@@ -199,7 +199,11 @@ class AlarmRingingActivity : ComponentActivity() {
                         Text(clock, color = Color(0xFFF0E8E9), fontSize = 76.sp, lineHeight = 82.sp)
                         Spacer(Modifier.height(12.dp))
                         Text(label, color = Color(0xFFE0D5D7), style = MaterialTheme.typography.titleLarge)
-                        Spacer(Modifier.height(52.dp))
+                        if (guardSeconds > 0) {
+                            Spacer(Modifier.height(16.dp))
+                            Text("Кнопки разблокируются через $guardSeconds с", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.bodyMedium)
+                        }
+                        Spacer(Modifier.height(36.dp))
                         Button(
                             onClick = {
                                 startActivity(Intent(this@AlarmRingingActivity, WakeCheckActivity::class.java)
