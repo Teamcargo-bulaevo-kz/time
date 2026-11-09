@@ -130,8 +130,8 @@ class AlarmRingingActivity : ComponentActivity() {
                                 drawCircle(
                                     brush = Brush.radialGradient(
                                         colors = listOf(
-                                            Color(0xFFB6C9FF).copy(alpha = 0.62f * reveal.value),
-                                            Color(0xFF6C86C8).copy(alpha = 0.24f * reveal.value),
+                                            Color(0xFFB6C9FF).copy(alpha = 0.62f * (0.35f + 0.65f * reveal.value)),
+                                            Color(0xFF6C86C8).copy(alpha = 0.24f * (0.35f + 0.65f * reveal.value)),
                                             Color.Transparent
                                         ),
                                         center = Offset(w * 0.5f, h * 0.43f),
@@ -155,7 +155,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                     val waveRadius = min(w, h) * (0.22f + phase * 0.10f + index * 0.035f)
                                     drawCircle(
                                         brush = Brush.radialGradient(
-                                            colors = listOf(item.third.copy(alpha = 0.32f * reveal.value), Color.Transparent),
+                                            colors = listOf(item.third.copy(alpha = 0.32f * (0.35f + 0.65f * reveal.value)), Color.Transparent),
                                             center = center,
                                             radius = waveRadius
                                         ),
@@ -163,7 +163,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                         center = center
                                     )
                                     drawCircle(
-                                        color = item.third.copy(alpha = 0.20f * reveal.value),
+                                        color = item.third.copy(alpha = 0.20f * (0.35f + 0.65f * reveal.value)),
                                         radius = waveRadius * 0.72f,
                                         center = center,
                                         style = Stroke(width = 2.dp.toPx())
@@ -184,8 +184,8 @@ class AlarmRingingActivity : ComponentActivity() {
                                 drawCircle(
                                     brush = Brush.radialGradient(
                                         colors = listOf(
-                                            Color(0xFFFFD8A0).copy(alpha = 0.72f * reveal.value),
-                                            Color(0xFFE89A79).copy(alpha = 0.24f * reveal.value),
+                                            Color(0xFFFFD8A0).copy(alpha = 0.72f * (0.45f + 0.55f * reveal.value)),
+                                            Color(0xFFE89A79).copy(alpha = 0.24f * (0.45f + 0.55f * reveal.value)),
                                             Color.Transparent
                                         ),
                                         center = Offset(w * 0.5f, h * (0.72f - phase * 0.10f)),
@@ -196,7 +196,7 @@ class AlarmRingingActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        drawRect(Color.Black.copy(alpha = 0.28f * (1f - reveal.value)))
+                        drawRect(Color.Black.copy(alpha = 0.18f * (1f - reveal.value)))
                     }
                     Column(
                         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 24.dp),
@@ -255,7 +255,7 @@ class AlarmRingingActivity : ComponentActivity() {
                 val fraction = ((SystemClock.elapsedRealtime() - brightnessStartedAt).toFloat() / 60_000L)
                     .coerceIn(0f, 1f)
                 window.attributes = window.attributes.apply {
-                    screenBrightness = 0.12f + 0.38f * fraction
+                    screenBrightness = 0.18f + 0.42f * fraction
                 }
                 if (fraction < 1f) handler.postDelayed(this, 1_000L)
             }
