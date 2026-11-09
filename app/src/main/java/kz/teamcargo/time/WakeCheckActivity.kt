@@ -145,6 +145,9 @@ class WakeCheckActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text("Проверка пробуждения", style = MaterialTheme.typography.headlineMedium)
+                        if (guardSeconds > 0) {
+                            Text("Задания станут активны через $guardSeconds с", color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.bodyMedium)
+                        }
                         Text(
                             if (completed) "Задание выполнено" else when (mode) {
                                 "math" -> "Реши 5 примеров · ${questionIndex + 1} / 5"
