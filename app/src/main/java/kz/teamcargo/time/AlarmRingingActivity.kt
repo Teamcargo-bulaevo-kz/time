@@ -194,11 +194,11 @@ class AlarmRingingActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("TIME", color = Color(0xFFD3DDF4), style = MaterialTheme.typography.titleMedium)
+                        Text("TIME", color = Color(0xFF9D9294), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(28.dp))
-                        Text(clock, color = Color.White, fontSize = 76.sp, lineHeight = 82.sp)
+                        Text(clock, color = Color(0xFFBDB7B8), fontSize = 76.sp, lineHeight = 82.sp)
                         Spacer(Modifier.height(12.dp))
-                        Text(label, color = Color(0xFFF0EAF0), style = MaterialTheme.typography.titleLarge)
+                        Text(label, color = Color(0xFFAAA0A2), style = MaterialTheme.typography.titleLarge)
                         Spacer(Modifier.height(52.dp))
                         Button(
                             onClick = {
@@ -243,7 +243,7 @@ class AlarmRingingActivity : ComponentActivity() {
                 val fraction = ((SystemClock.elapsedRealtime() - brightnessStartedAt).toFloat() / 90_000L)
                     .coerceIn(0f, 1f)
                 window.attributes = window.attributes.apply {
-                    screenBrightness = 0.05f + 0.95f * fraction
+                    screenBrightness = 0.035f + 0.30f * fraction
                 }
                 if (fraction < 1f) handler.postDelayed(this, 1_000L)
             }
