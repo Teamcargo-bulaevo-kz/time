@@ -212,7 +212,9 @@ class AlarmRingingActivity : ComponentActivity() {
                             Spacer(Modifier.height(16.dp))
                             Text("Кнопки разблокируются через $guardSeconds с", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.bodyMedium)
                         }
-                        Text("Коснись экрана или нажми кнопку, чтобы перейти к заданию.", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.bodySmall)
+                        if (guardSeconds == 0) {
+                            Text("Коснись экрана или нажми кнопку, чтобы перейти к заданию.", color = Color(0xFFD0C4C6), style = MaterialTheme.typography.bodySmall)
+                        }
                         Spacer(Modifier.height(24.dp))
                         Button(
                             onClick = openWakeCheck,
