@@ -333,7 +333,7 @@ class MainActivity : ComponentActivity() {
                             if (folderSongs.isEmpty()) {
                                 Text("В папке пока нет аудиофайлов. Добавь песни и нажми «Обновить список».")
                             } else {
-                                Column {
+                                Column(Modifier.verticalScroll(rememberScrollState())) {
                                     folderSongs.forEach { audio ->
                                         TextButton(onClick = {
                                             persist(alarms.map { if (it.id == target.id) it.copy(soundProfile = "custom", customSoundUri = audio.uri.toString()) else it })
