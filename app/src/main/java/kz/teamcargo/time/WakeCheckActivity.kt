@@ -127,10 +127,16 @@ class WakeCheckActivity : ComponentActivity() {
                                 val z = event.values[2]
                                 val magnitude = kotlin.math.sqrt(x*x + y*y + z*z)
                                 val now = SystemClock.elapsedRealtime()
-                                if (magnitude > 15.5f && now - lastShakeAt > 450L) {
+                                // Ignore motion until the mandatory 30-second lock has expired.
+                                // Read the persisted guard directly: a Compose state captured by this
+                                // sensor listener could otherwise remain stale for the whole session.
+                                if (AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) == 0L &&
+                                    magnitude > 15.5f && now - lastShakeAt > 450L &&
+                                    shakeCountState.intValue < 8
+                                ) {
                                     lastShakeAt = now
-                                    if (shakeCountState.intValue < 8) shakeCountState.intValue += 1
-                                    if (shakeCountState.intValue >= 8) completeChallenge()
+                                    shakeCountState.intValue += 1
+                                    if (shakeCountState.intValue == 8) completeChallenge()
                                 }
                             }
                             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
