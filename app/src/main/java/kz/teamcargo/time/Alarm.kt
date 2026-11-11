@@ -14,10 +14,11 @@ data class Alarm(
     val soundProfile: String = "rain",
     val rampMinutes: Int = 10,
     val customSoundUri: String? = null,
-    val flashEnabled: Boolean = false,
-    val vibrationEnabled: Boolean = true,
+    val flashEnabled: Boolean = true,
+    val vibrationEnabled: Boolean = false,
     val retryMinutes: Int = 5,
-    val challengeMode: String = "schulte",
+    val challengeMode: String = "shake",
+    val flashPattern: String = "classic",
     val wakeVisualStyle: String = "sunrise"
 ) {
     fun timeText(): String = "%02d:%02d".format(hour, minute)
@@ -36,6 +37,7 @@ data class Alarm(
         put("vibrationEnabled", vibrationEnabled)
         put("retryMinutes", retryMinutes)
         put("challengeMode", challengeMode)
+        put("flashPattern", flashPattern)
         put("wakeVisualStyle", wakeVisualStyle)
     }
 
@@ -52,10 +54,11 @@ data class Alarm(
                 soundProfile = json.optString("soundProfile", "rain").let { if (it in setOf("rain", "storm", "system", "custom")) it else "rain" },
                 rampMinutes = json.optInt("rampMinutes", 10).coerceIn(0, 30),
                 customSoundUri = if (json.isNull("customSoundUri")) null else json.optString("customSoundUri"),
-                flashEnabled = json.optBoolean("flashEnabled", false),
-                vibrationEnabled = json.optBoolean("vibrationEnabled", true),
+                flashEnabled = json.optBoolean("flashEnabled", true),
+                vibrationEnabled = json.optBoolean("vibrationEnabled", false),
                 retryMinutes = json.optInt("retryMinutes", 5).coerceIn(1, 30),
-                challengeMode = json.optString("challengeMode", "schulte").let { if (it in setOf("schulte", "math", "shake")) it else "schulte" },
+                challengeMode = json.optString("challengeMode", "shake").let { if (it in setOf("schulte", "math", "shake")) it else "shake" },
+                flashPattern = json.optString("flashPattern", "classic").let { if (it in setOf("classic", "double", "rapid", "slow", "heartbeat")) it else "classic" },
                 wakeVisualStyle = json.optString("wakeVisualStyle", "sunrise").let { if (it in setOf("sunrise", "pulse", "waves")) it else "sunrise" }
             )
         }
