@@ -141,7 +141,7 @@ class WakeCheckActivity : ComponentActivity() {
                                 // Read the persisted guard directly: a Compose state captured by this
                                 // sensor listener could otherwise remain stale for the whole session.
                                 if (AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) == 0L &&
-                                    magnitude > 15.5f && now - lastShakeAt > 450L &&
+                                    magnitude > 13.0f && now - lastShakeAt > 300L &&
                                     shakeCountState.intValue < 20
                                 ) {
                                     lastShakeAt = now
@@ -188,7 +188,7 @@ class WakeCheckActivity : ComponentActivity() {
 
                         if (!completed && activeMode == "shake") {
                             Text("Держи телефон удобно и сделай 20 отчётливых встряхиваний.", style = MaterialTheme.typography.bodyLarge)
-                            Text("${shakeCountState.intValue} / 8", style = MaterialTheme.typography.displayMedium, color = MaterialTheme.colorScheme.primary)
+                            Text("${shakeCountState.intValue} / 20", style = MaterialTheme.typography.displayMedium, color = MaterialTheme.colorScheme.primary)
                             Text("Не нужно трясти телефон сильно.", style = MaterialTheme.typography.bodySmall)
                         } else if (!completed && activeMode == "math") {
                             Text(questions[questionIndex].expression, style = MaterialTheme.typography.headlineLarge)
