@@ -89,6 +89,16 @@ class WakeCheckActivity : ComponentActivity() {
         WakeCheckRetryScheduler.schedule(this, alarmId, retryMinutes)
 
         val selectedPalette = getSharedPreferences("time_ui", MODE_PRIVATE).getString("palette", "red") ?: "red"
+        val systemBarColor = when (selectedPalette) {
+            "blue" -> android.graphics.Color.rgb(11, 17, 25)
+            "green" -> android.graphics.Color.rgb(13, 19, 15)
+            else -> android.graphics.Color.rgb(16, 13, 14)
+        }
+        window.statusBarColor = systemBarColor
+        window.navigationBarColor = systemBarColor
+        @Suppress("DEPRECATION")
+        window.decorView.systemUiVisibility = 0
+        if (android.os.Build.VERSION.SDK_INT >= 29) window.isNavigationBarContrastEnforced = false
         setContent {
             TimeTheme(selectedPalette) {
                 var guardSeconds by remember {
