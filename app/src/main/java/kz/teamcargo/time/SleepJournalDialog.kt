@@ -111,14 +111,19 @@ fun SleepJournalDialog(
                 }
 
                 pendingEnd?.let { end ->
+                    val start = activeStart
                     Text("Качество сна: ${quality.roundToInt()} из 5")
                     Slider(value = quality, onValueChange = { quality = it }, valueRange = 1f..5f, steps = 3)
-                    Text("Продолжительность: ${durationLabel(((end - (activeStart ?: end)) / 60_000L).coerceAtLeast(0))}")
+                    if (start != null && end > start) {
+                        Text("Продолжительность: ${durationLabel((end - start) / 60_000L)}")
+                    } else {
+                        Text("Время пробуждения должно быть позже времени засыпания.", color = MaterialTheme.colorScheme.error)
+                    }
                     Button(
+                        enabled = start != null && end > start,
                         onClick = {
-                            val start = activeStart ?: return@Button
-                            if (end <= start) return@Button
-                            store.addRecord(SleepRecord(start, end, quality.roundToInt()))
+                            val validStart = start ?: return@Button
+                            store.addRecord(SleepRecord(validStart, end, quality.roundToInt()))
                             activeStart = null
                             pendingEnd = null
                             records = store.getRecords()
