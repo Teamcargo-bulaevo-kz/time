@@ -41,13 +41,14 @@ class AlarmSoundService : Service() {
         val ramp = intent?.getIntExtra(EXTRA_RAMP_MINUTES, 10) ?: 10
         val customUri = intent?.getStringExtra(EXTRA_CUSTOM_URI)?.let(Uri::parse)
         val flashEnabled = intent?.getBooleanExtra(EXTRA_FLASH_ENABLED, false) ?: false
-        val vibrationEnabled = intent?.getBooleanExtra(EXTRA_VIBRATION_ENABLED, true) ?: true
+        val vibrationEnabled = intent?.getBooleanExtra(EXTRA_VIBRATION_ENABLED, false) ?: false
+        val flashPattern = intent?.getStringExtra(EXTRA_FLASH_PATTERN).orEmpty().ifBlank { "classic" }
 
         acquireScreenWakeLock()
         createChannel()
         startForeground(NOTIFICATION_ID, buildNotification(alarmId, label))
         if (vibrationEnabled) startVibration() else stopVibration()
-        if (flashEnabled) startFlash() else stopFlash()
+        if (flashEnabled) startFlash(flashPattern) else stopFlash()
 
         if (player == null && ambient == null) {
             when (profile) {
@@ -87,7 +88,7 @@ class AlarmSoundService : Service() {
         }
     }
 
-    private fun startFlash() {
+    private fun startFlash(pattern: String) {
         if (flashTask != null) return
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) return
         val manager = getSystemService(CameraManager::class.java) ?: return
@@ -97,12 +98,24 @@ class AlarmSoundService : Service() {
             }
         }.getOrNull() ?: return
         flashCameraId = cameraId
+        val timings = when (pattern) {
+            "double" -> longArrayOf(160, 130, 160, 700)
+            "rapid" -> longArrayOf(110, 160)
+            "slow" -> longArrayOf(900, 1100)
+            "heartbeat" -> longArrayOf(120, 120, 120, 650)
+            else -> longArrayOf(450, 900)
+        }
+        var step = 0
         val task = object : Runnable {
             override fun run() {
                 val id = flashCameraId ?: return
-                flashOn = !flashOn
+                flashOn = step % 2 == 0
                 runCatching { manager.setTorchMode(id, flashOn) }.onFailure { stopFlash() }
-                if (flashCameraId != null) handler.postDelayed(this, if (flashOn) 450L else 900L)
+                if (flashCameraId != null) {
+                    val delay = timings[step % timings.size]
+                    step = (step + 1) % timings.size
+                    handler.postDelayed(this, delay)
+                }
             }
         }
         flashTask = task
@@ -258,6 +271,7 @@ class AlarmSoundService : Service() {
         const val EXTRA_CUSTOM_URI = "kz.teamcargo.time.CUSTOM_URI"
         const val EXTRA_FLASH_ENABLED = "kz.teamcargo.time.FLASH_ENABLED"
         const val EXTRA_VIBRATION_ENABLED = "kz.teamcargo.time.VIBRATION_ENABLED"
+        const val EXTRA_FLASH_PATTERN = "kz.teamcargo.time.FLASH_PATTERN"
         const val NOTIFICATION_ID = 7001
     }
 }
