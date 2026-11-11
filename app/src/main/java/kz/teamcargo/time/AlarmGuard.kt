@@ -20,7 +20,10 @@ object AlarmGuard {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         if (prefs.getString(KEY_ALARM_ID, null) != alarmId) return 0L
         val startedAt = prefs.getLong(KEY_STARTED_AT, 0L)
-        return (LOCK_MILLIS - (SystemClock.elapsedRealtime() - startedAt)).coerceAtLeast(0L)
+        val now = SystemClock.elapsedRealtime()
+        // Ignore stale wall-clock values from earlier app versions or a previous device boot.
+        if (startedAt <= 0L || startedAt > now) return 0L
+        return (LOCK_MILLIS - (now - startedAt)).coerceAtLeast(0L)
     }
 
     fun isLocked(context: Context, alarmId: String): Boolean =
