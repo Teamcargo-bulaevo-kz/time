@@ -210,15 +210,35 @@ class MainActivity : ComponentActivity() {
                                 Column(Modifier.fillMaxWidth().padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                     Text("Моя музыкальная папка", style = MaterialTheme.typography.titleSmall)
                                     Text(if (musicFolderUri == null) "Папка не выбрана. Создай или выбери TIME во внутренней памяти." else "Папка подключена. Добавляй туда MP3 и другие аудиофайлы.", style = MaterialTheme.typography.bodySmall)
-                                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        TextButton(onClick = { musicFolderPicker.launch(musicFolderUri) }) { Text(if (musicFolderUri == null) "Выбрать папку TIME" else "Изменить папку") }
-                                        if (musicFolderUri != null) {
-                                            TextButton(onClick = { folderSongs = loadTimeAudioFiles(musicFolderUri!!) }) { Text("Обновить список") }
-                                            TextButton(onClick = { musicFolderUri = null; folderSongs = emptyList(); getSharedPreferences("time_music", MODE_PRIVATE).edit().remove("folder_uri").apply() }) { Text("Отключить") }
+                                    if (musicFolderUri == null) {
+                                        TextButton(onClick = { musicFolderPicker.launch(null) }) {
+                                            Text("Выбрать папку TIME")
                                         }
+                                    } else {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                        ) {
+                                            TextButton(
+                                                onClick = { musicFolderPicker.launch(musicFolderUri) },
+                                                modifier = Modifier.weight(1f)
+                                            ) { Text("Изменить", maxLines = 1) }
+                                            TextButton(
+                                                onClick = { folderSongs = loadTimeAudioFiles(musicFolderUri!!) },
+                                                modifier = Modifier.weight(1f)
+                                            ) { Text("Обновить", maxLines = 1) }
+                                        }
+                                        TextButton(
+                                            onClick = {
+                                                musicFolderUri = null
+                                                folderSongs = emptyList()
+                                                getSharedPreferences("time_music", MODE_PRIVATE).edit().remove("folder_uri").apply()
+                                            },
+                                            modifier = Modifier.fillMaxWidth()
+                                        ) { Text("Отключить папку", maxLines = 1) }
                                     }
                                     if (musicFolderUri != null) {
-                                        Text("Аудиофайлы: ${folderSongs.size}", style = MaterialTheme.typography.labelMedium)
+                                        Text("Файлов: ${folderSongs.size}", style = MaterialTheme.typography.labelMedium)
                                         folderSongs.take(5).forEach { audio ->
                                             Text(audio.name, style = MaterialTheme.typography.bodySmall, maxLines = 1)
                                         }
