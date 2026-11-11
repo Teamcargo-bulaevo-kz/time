@@ -26,6 +26,7 @@ class AlarmReceiver : BroadcastReceiver() {
             .putExtra(AlarmSoundService.EXTRA_RAMP_MINUTES, alarm.rampMinutes)
             .putExtra(AlarmSoundService.EXTRA_CUSTOM_URI, alarm.customSoundUri)
             .putExtra(AlarmSoundService.EXTRA_FLASH_ENABLED, alarm.flashEnabled)
+            .putExtra(AlarmSoundService.EXTRA_FLASH_PATTERN, alarm.flashPattern)
             .putExtra(AlarmSoundService.EXTRA_VIBRATION_ENABLED, alarm.vibrationEnabled)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(serviceIntent)
