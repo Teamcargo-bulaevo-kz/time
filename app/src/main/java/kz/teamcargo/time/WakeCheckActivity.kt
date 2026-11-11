@@ -142,11 +142,11 @@ class WakeCheckActivity : ComponentActivity() {
                                 // sensor listener could otherwise remain stale for the whole session.
                                 if (AlarmGuard.remainingMillis(this@WakeCheckActivity, alarmId) == 0L &&
                                     magnitude > 15.5f && now - lastShakeAt > 450L &&
-                                    shakeCountState.intValue < 8
+                                    shakeCountState.intValue < 20
                                 ) {
                                     lastShakeAt = now
                                     shakeCountState.intValue += 1
-                                    if (shakeCountState.intValue == 8) completeChallenge()
+                                    if (shakeCountState.intValue == 20) completeChallenge()
                                 }
                             }
                             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
@@ -175,7 +175,7 @@ class WakeCheckActivity : ComponentActivity() {
                         Text(
                             if (completed) "Задание выполнено" else when (activeMode) {
                                 "math" -> "Реши 5 примеров · ${questionIndex + 1} / 5"
-                                "shake" -> "Встряхни телефон 8 раз · ${shakeCountState.intValue} / 8"
+                                "shake" -> "Встряхни телефон 20 раз · ${shakeCountState.intValue} / 20"
                                 else -> "Найди числа по порядку: $target / 25"
                             },
                             style = MaterialTheme.typography.titleMedium
@@ -187,7 +187,7 @@ class WakeCheckActivity : ComponentActivity() {
                         }
 
                         if (!completed && activeMode == "shake") {
-                            Text("Держи телефон удобно и сделай восемь отчётливых встряхиваний.", style = MaterialTheme.typography.bodyLarge)
+                            Text("Держи телефон удобно и сделай 20 отчётливых встряхиваний.", style = MaterialTheme.typography.bodyLarge)
                             Text("${shakeCountState.intValue} / 8", style = MaterialTheme.typography.displayMedium, color = MaterialTheme.colorScheme.primary)
                             Text("Не нужно трясти телефон сильно.", style = MaterialTheme.typography.bodySmall)
                         } else if (!completed && activeMode == "math") {
@@ -215,25 +215,27 @@ class WakeCheckActivity : ComponentActivity() {
                                 modifier = Modifier.fillMaxWidth()
                             ) { Text("Проверить ответ") }
                         } else if (!completed) {
-                            LazyVerticalGrid(
-                                columns = GridCells.Fixed(5),
-                                modifier = Modifier.fillMaxWidth().height(300.dp),
-                                verticalArrangement = Arrangement.spacedBy(7.dp),
-                                horizontalArrangement = Arrangement.spacedBy(7.dp)
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.spacedBy(6.dp)
                             ) {
-                                items(numbers) { number ->
-                                    Card(
-                                        modifier = Modifier.aspectRatio(1f).clickable(enabled = guardSeconds == 0) {
-                                            if (number == target) {
-                                                if (number == 25) completeChallenge() else target += 1
-                                            }
-                                        }
+                                numbers.chunked(5).forEach { rowNumbers ->
+                                    androidx.compose.foundation.layout.Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(6.dp)
                                     ) {
-                                        androidx.compose.foundation.layout.Box(
-                                            Modifier.fillMaxSize(),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Text(number.toString(), style = MaterialTheme.typography.headlineSmall)
+                                        rowNumbers.forEach { number ->
+                                            Card(
+                                                modifier = Modifier.weight(1f).aspectRatio(1f).clickable(enabled = guardSeconds == 0) {
+                                                    if (number == target) {
+                                                        if (number == 25) completeChallenge() else target += 1
+                                                    }
+                                                }
+                                            ) {
+                                                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                                    Text(number.toString(), style = MaterialTheme.typography.titleLarge)
+                                                }
+                                            }
                                         }
                                     }
                                 }
