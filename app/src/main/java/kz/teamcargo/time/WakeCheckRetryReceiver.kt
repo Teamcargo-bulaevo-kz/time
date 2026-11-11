@@ -9,6 +9,8 @@ class WakeCheckRetryReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getStringExtra(AlarmReceiver.EXTRA_ALARM_ID) ?: return
         val alarm = AlarmStore(context).getAll().firstOrNull { it.id == id } ?: return
+        // A retry is a fresh ringing session and receives the same 30-second lock.
+        AlarmGuard.begin(context, id)
         val service = Intent(context, AlarmSoundService::class.java)
             .putExtra(AlarmReceiver.EXTRA_ALARM_ID, id)
             .putExtra(AlarmSoundService.EXTRA_LABEL, alarm.label)
