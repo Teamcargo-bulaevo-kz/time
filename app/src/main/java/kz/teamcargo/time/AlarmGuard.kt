@@ -1,6 +1,7 @@
 package kz.teamcargo.time
 
 import android.content.Context
+import android.os.SystemClock
 
 object AlarmGuard {
     private const val PREFS = "time_alarm_guard"
@@ -11,7 +12,7 @@ object AlarmGuard {
     fun begin(context: Context, alarmId: String) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
             .putString(KEY_ALARM_ID, alarmId)
-            .putLong(KEY_STARTED_AT, System.currentTimeMillis())
+            .putLong(KEY_STARTED_AT, SystemClock.elapsedRealtime())
             .apply()
     }
 
@@ -19,7 +20,7 @@ object AlarmGuard {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         if (prefs.getString(KEY_ALARM_ID, null) != alarmId) return 0L
         val startedAt = prefs.getLong(KEY_STARTED_AT, 0L)
-        return (LOCK_MILLIS - (System.currentTimeMillis() - startedAt)).coerceAtLeast(0L)
+        return (LOCK_MILLIS - (SystemClock.elapsedRealtime() - startedAt)).coerceAtLeast(0L)
     }
 
     fun isLocked(context: Context, alarmId: String): Boolean =
