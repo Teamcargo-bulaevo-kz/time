@@ -55,6 +55,7 @@ private data class TimeAudioFile(val name: String, val mimeType: String, val uri
 class MainActivity : ComponentActivity() {
     private lateinit var store: AlarmStore
     private lateinit var scheduler: AlarmScheduler
+    private var refreshAlarmList: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +83,7 @@ class MainActivity : ComponentActivity() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced = false
                 }
                 val alarms = remember { mutableStateListOf<Alarm>().apply { addAll(store.getAll()) } }
+                refreshAlarmList = { alarms.clear(); alarms.addAll(store.getAll()) }
                 var expandedAlarmId by remember { mutableStateOf<String?>(null) }
                 var showRepeatFor by remember { mutableStateOf<Alarm?>(null) }
                 var showLabelFor by remember { mutableStateOf<Alarm?>(null) }
@@ -534,7 +536,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (::store.isInitialized && ::scheduler.isInitialized) scheduler.scheduleAll(store.getAll())
+        if (::store.isInitialized && ::scheduler.isInitialized) {
+            refreshAlarmList?.invoke()
+            scheduler.scheduleAll(store.getAll())
+        }
+    }
+
+    override fun onDestroy() {
+        refreshAlarmList = null
+        super.onDestroy()
     }
 
     private fun requestExactAlarmPermissionIfNeeded() {
