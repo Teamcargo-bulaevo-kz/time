@@ -121,7 +121,7 @@ class MainActivity : ComponentActivity() {
                     if (granted && alarmId != null) {
                         persist(alarms.map { if (it.id == alarmId) it.copy(flashEnabled = true) else it })
                     }
-                    if (granted && pendingNewAlarmFlash) newAlarmDraft = newAlarmDraft.copy(flashEnabled = true)
+                    if (pendingNewAlarmFlash) newAlarmDraft = newAlarmDraft.copy(flashEnabled = granted)
                     pendingNewAlarmFlash = false
                     pendingFlashAlarmId = null
                 }
