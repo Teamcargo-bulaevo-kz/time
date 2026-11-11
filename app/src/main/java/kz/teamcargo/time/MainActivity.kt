@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -90,6 +91,7 @@ class MainActivity : ComponentActivity() {
                 var showSoundFor by remember { mutableStateOf<Alarm?>(null) }
                 var showRetryFor by remember { mutableStateOf<Alarm?>(null) }
                 var showChallengeFor by remember { mutableStateOf<Alarm?>(null) }
+                var showFlashPatternFor by remember { mutableStateOf<Alarm?>(null) }
                 var showVisualFor by remember { mutableStateOf<Alarm?>(null) }
                 var pickingMusicFor by remember { mutableStateOf<Alarm?>(null) }
                 var musicFolderUri by remember {
@@ -103,6 +105,9 @@ class MainActivity : ComponentActivity() {
                 var showThemePicker by remember { mutableStateOf(false) }
                 val sleepJournalStore = remember { SleepJournalStore(this@MainActivity) }
                 var pendingFlashAlarmId by remember { mutableStateOf<String?>(null) }
+                var pendingNewAlarmFlash by remember { mutableStateOf(false) }
+                var showNewAlarmSetup by remember { mutableStateOf(false) }
+                var newAlarmDraft by remember { mutableStateOf(Alarm(hour = 8, minute = 0)) }
 
                 fun persist(updated: List<Alarm>) {
                     store.saveAll(updated)
@@ -116,6 +121,8 @@ class MainActivity : ComponentActivity() {
                     if (granted && alarmId != null) {
                         persist(alarms.map { if (it.id == alarmId) it.copy(flashEnabled = true) else it })
                     }
+                    if (granted && pendingNewAlarmFlash) newAlarmDraft = newAlarmDraft.copy(flashEnabled = true)
+                    pendingNewAlarmFlash = false
                     pendingFlashAlarmId = null
                 }
 
@@ -161,7 +168,11 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     floatingActionButton = {
-                        FloatingActionButton(onClick = { chooseTime(null) }) { Text("+") }
+                        FloatingActionButton(onClick = {
+                            val now = Calendar.getInstance()
+                            newAlarmDraft = Alarm(hour = now.get(Calendar.HOUR_OF_DAY), minute = now.get(Calendar.MINUTE))
+                            showNewAlarmSetup = true
+                        }) { Text("+") }
                     }
                 ) { padding ->
                     Surface(Modifier.fillMaxSize().padding(padding)) {
@@ -254,6 +265,7 @@ class MainActivity : ComponentActivity() {
                                                         TextButton(onClick = { showSoundFor = alarm }) { Text("Звук: " + soundLabel(alarm.soundProfile)) }
                                                         TextButton(onClick = { showRetryFor = alarm }) { Text("Повтор проверки: ${alarm.retryMinutes} мин") }
                                                         TextButton(onClick = { showChallengeFor = alarm }) { Text("Задание: " + challengeLabel(alarm.challengeMode)) }
+                                                        TextButton(onClick = { showFlashPatternFor = alarm }) { Text("Ритм вспышки: " + flashPatternLabel(alarm.flashPattern)) }
                                                         TextButton(onClick = { showVisualFor = alarm }) { Text("Экран: " + visualStyleLabel(alarm.wakeVisualStyle)) }
                                                         TextButton(onClick = { showFolderSongsFor = alarm }) { Text("Музыка из папки TIME") }
                                                         TextButton(onClick = { pickingMusicFor = alarm; musicPicker.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -304,6 +316,100 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
+                if (showNewAlarmSetup) {
+                    AlertDialog(
+                        onDismissRequest = { showNewAlarmSetup = false },
+                        title = { Text("Настройка будильника") },
+                        text = {
+                            Column(
+                                Modifier.heightIn(max = 430.dp).verticalScroll(rememberScrollState()),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text("Сначала выбери способ пробуждения и функции. Время задаётся последним шагом.")
+                                Text("Задание", style = MaterialTheme.typography.titleSmall)
+                                listOf("shake" to "Встряхивание · 20 раз", "schulte" to "Таблица Шульте", "math" to "Математика").forEach { option ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = newAlarmDraft.challengeMode == option.first,
+                                            onClick = { newAlarmDraft = newAlarmDraft.copy(challengeMode = option.first) })
+                                        Text(option.second)
+                                    }
+                                }
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("Вспышка", Modifier.weight(1f))
+                                    Switch(checked = newAlarmDraft.flashEnabled, onCheckedChange = { enabled ->
+                                        if (enabled && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                            pendingNewAlarmFlash = true
+                                            cameraPermission.launch(Manifest.permission.CAMERA)
+                                        } else newAlarmDraft = newAlarmDraft.copy(flashEnabled = enabled)
+                                    })
+                                }
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text("Вибрация", Modifier.weight(1f))
+                                    Switch(checked = newAlarmDraft.vibrationEnabled,
+                                        onCheckedChange = { newAlarmDraft = newAlarmDraft.copy(vibrationEnabled = it) })
+                                }
+                                Text("Ритм вспышки", style = MaterialTheme.typography.titleSmall)
+                                listOf("classic", "double", "rapid", "slow", "heartbeat").forEach { pattern ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = newAlarmDraft.flashPattern == pattern,
+                                            onClick = { newAlarmDraft = newAlarmDraft.copy(flashPattern = pattern) })
+                                        Text(flashPatternLabel(pattern))
+                                    }
+                                }
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                if (newAlarmDraft.flashEnabled && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                    pendingNewAlarmFlash = true
+                                    cameraPermission.launch(Manifest.permission.CAMERA)
+                                } else {
+                                    val draft = newAlarmDraft
+                                    val now = Calendar.getInstance()
+                                    TimePickerDialog(
+                                        this,
+                                        { _, hour, minute ->
+                                            val created = draft.copy(hour = hour, minute = minute)
+                                            persist(alarms.toList() + created)
+                                            requestExactAlarmPermissionIfNeeded()
+                                            showNewAlarmSetup = false
+                                        },
+                                        now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true
+                                    ).show()
+                                }
+                            }) { Text("Выбрать время") }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showNewAlarmSetup = false }) { Text("Отмена") }
+                        }
+                    )
+                }
+
+                showFlashPatternFor?.let { selected ->
+                    var pattern by remember(selected.id) { mutableStateOf(selected.flashPattern) }
+                    AlertDialog(
+                        onDismissRequest = { showFlashPatternFor = null },
+                        title = { Text("Ритм вспышки") },
+                        text = {
+                            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                listOf("classic", "double", "rapid", "slow", "heartbeat").forEach { option ->
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        RadioButton(selected = pattern == option, onClick = { pattern = option })
+                                        Text(flashPatternLabel(option))
+                                    }
+                                }
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                persist(alarms.map { if (it.id == selected.id) it.copy(flashPattern = pattern) else it })
+                                showFlashPatternFor = null
+                            }) { Text("Сохранить") }
+                        },
+                        dismissButton = { TextButton(onClick = { showFlashPatternFor = null }) { Text("Отмена") } }
+                    )
+                }
+
                 if (showThemePicker) {
                     AlertDialog(
                         onDismissRequest = { showThemePicker = false },
@@ -333,7 +439,7 @@ class MainActivity : ComponentActivity() {
                             if (folderSongs.isEmpty()) {
                                 Text("В папке пока нет аудиофайлов. Добавь песни и нажми «Обновить список».")
                             } else {
-                                Column(Modifier.verticalScroll(rememberScrollState())) {
+                                Column(Modifier.heightIn(max = 340.dp).verticalScroll(rememberScrollState())) {
                                     folderSongs.forEach { audio ->
                                         TextButton(onClick = {
                                             persist(alarms.map { if (it.id == target.id) it.copy(soundProfile = "custom", customSoundUri = audio.uri.toString()) else it })
@@ -601,7 +707,15 @@ class MainActivity : ComponentActivity() {
         else -> "Рассвет"
     }
 
-    private fun soundLabel(profile: String): String = when (profile) {
+    private fun flashPatternLabel(pattern: String): String = when (pattern) {
+    "double" -> "Двойная вспышка"
+    "rapid" -> "Частая"
+    "slow" -> "Медленная"
+    "heartbeat" -> "Двойной импульс"
+    else -> "Классическая"
+}
+
+private fun soundLabel(profile: String): String = when (profile) {
         "storm" -> "Гроза"
         "system" -> "Системный сигнал"
         "custom" -> "Моя музыка"
