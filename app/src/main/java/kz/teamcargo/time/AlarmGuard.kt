@@ -5,21 +5,18 @@ import android.os.SystemClock
 
 object AlarmGuard {
     private const val PREFS = "time_alarm_guard"
-    private const val KEY_ALARM_ID = "alarm_id"
     private const val KEY_STARTED_AT = "started_at"
     private const val LOCK_MILLIS = 30_000L
 
     fun begin(context: Context, alarmId: String) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
-            .putString(KEY_ALARM_ID, alarmId)
-            .putLong(KEY_STARTED_AT, SystemClock.elapsedRealtime())
+            .putLong(startedKey(alarmId), SystemClock.elapsedRealtime())
             .apply()
     }
 
     fun remainingMillis(context: Context, alarmId: String): Long {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        if (prefs.getString(KEY_ALARM_ID, null) != alarmId) return 0L
-        val startedAt = prefs.getLong(KEY_STARTED_AT, 0L)
+        val startedAt = prefs.getLong(startedKey(alarmId), 0L)
         val now = SystemClock.elapsedRealtime()
         // Ignore stale wall-clock values from earlier app versions or a previous device boot.
         if (startedAt <= 0L || startedAt > now) return 0L
@@ -28,4 +25,6 @@ object AlarmGuard {
 
     fun isLocked(context: Context, alarmId: String): Boolean =
         remainingMillis(context, alarmId) > 0L
+
+    private fun startedKey(alarmId: String): String = "${KEY_STARTED_AT}_$alarmId"
 }
