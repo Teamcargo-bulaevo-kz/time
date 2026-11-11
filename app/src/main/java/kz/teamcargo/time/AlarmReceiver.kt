@@ -8,9 +8,10 @@ import android.os.Build
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getStringExtra(EXTRA_ALARM_ID) ?: return
-        AlarmGuard.begin(context, id)
         val store = AlarmStore(context)
         val alarm = store.getAll().firstOrNull { it.id == id } ?: return
+        if (!alarm.enabled) return
+        AlarmGuard.begin(context, id)
 
         if (alarm.repeatDays.isNotEmpty()) {
             AlarmScheduler(context).schedule(alarm)
