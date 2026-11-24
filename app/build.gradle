@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'kz.bulaevo.audit'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'kz.bulaevo.audit'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '0.1'
+    }
+
+    // Один ключ для всех сборок: новую версию можно ставить поверх старой.
+    signingConfigs {
+        audit {
+            storeFile file('audit.keystore')
+            storePassword 'audit-check'
+            keyAlias 'audit'
+            keyPassword 'audit-check'
+        }
+    }
+
+    buildTypes {
+        debug { signingConfig signingConfigs.audit }
+        release {
+            signingConfig signingConfigs.audit
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
