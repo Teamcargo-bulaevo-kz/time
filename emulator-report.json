@@ -1,0 +1,6380 @@
+{
+ "analysis": {
+  "findings": [
+   {
+    "level": "ВЫСОКИЙ",
+    "title": "Обновления безопасности устарели",
+    "details": "Последний патч: 2019-09-05 (87 мес. назад). Известные дыры Android не закрыты.",
+    "advice": "Проверьте обновления системы. Если производитель больше не обновляет телефон — не ставьте APK из интернета и не храните там банк без крайней нужды."
+   },
+   {
+    "level": "ВЫСОКИЙ",
+    "title": "Есть признаки root-доступа",
+    "details": "• \/system\/xbin\/su",
+    "advice": "С root любое вредоносное приложение может получить полный контроль. Если root ставили не вы — сбросьте телефон."
+   },
+   {
+    "level": "ВЫСОКИЙ",
+    "title": "Нет блокировки экрана",
+    "details": "Кто угодно с телефоном в руках откроет все приложения.",
+    "advice": "Поставьте PIN-код или пароль (не графический ключ)."
+   },
+   {
+    "level": "СРЕДНИЙ",
+    "title": "Неофициальная или отладочная прошивка",
+    "details": "tags=test-keys, type=userdebug",
+    "advice": "Банковские приложения могут не работать, защита слабее. Если прошивку ставили не вы — это тревожный знак."
+   },
+   {
+    "level": "СРЕДНИЙ",
+    "title": "Система в отладочном режиме",
+    "details": "ro.debuggable=1",
+    "advice": ""
+   },
+   {
+    "level": "СРЕДНИЙ",
+    "title": "Включена отладка по USB",
+    "details": "Через кабель (зарядку в публичном месте) можно управлять телефоном.",
+    "advice": "Выключите в «Для разработчиков», если не пользуетесь."
+   },
+   {
+    "level": "СРЕДНИЙ",
+    "title": "Разрешена установка из неизвестных источников (глобально)",
+    "details": "",
+    "advice": "Выключите."
+   },
+   {
+    "level": "НИЗКИЙ",
+    "title": "Текст уведомлений виден на заблокированном экране",
+    "details": "Коды из СМС банка можно прочитать, не разблокируя телефон.",
+    "advice": "Настройки → Уведомления → На заблокированном экране → скрывать содержимое."
+   }
+  ],
+  "app_risks": [
+   {
+    "package": "kz.bulaevo.audit",
+    "label": "Аудит",
+    "score": 3,
+    "reasons": [
+     "установлено не из магазина (источник неизвестен)",
+     "установлено меньше месяца назад"
+    ]
+   }
+  ],
+  "user_apps": 1,
+  "system_apps": 145,
+  "sideloaded": 1
+ },
+ "raw": {
+  "report_version": 1,
+  "app_version": "0.1",
+  "created": "2026-11-24T11:40:33+0000",
+  "device": {
+   "manufacturer": "unknown",
+   "brand": "Android",
+   "model": "Android SDK built for x86_64",
+   "device": "generic_x86_64",
+   "product": "sdk_phone_x86_64",
+   "hardware": "ranchu",
+   "android": "10",
+   "sdk": 29,
+   "security_patch": "2019-09-05",
+   "security_patch_age_days": 2637,
+   "display": "sdk_phone_x86_64-userdebug 10 QSR1.210820.001 7663313 test-keys",
+   "incremental": "7663313",
+   "fingerprint": "Android\/sdk_phone_x86_64\/generic_x86_64:10\/QSR1.210820.001\/7663313:userdebug\/test-keys",
+   "tags": "test-keys",
+   "type": "userdebug",
+   "bootloader": "unknown",
+   "first_api_level": "28",
+   "miui": "",
+   "hyperos": "",
+   "emui": "",
+   "oneui": "",
+   "now": "2026-11-24T11:40:33+0000"
+  },
+  "integrity": {
+   "su_files": [
+    "\/system\/xbin\/su"
+   ],
+   "which_su": "",
+   "root_packages": [],
+   "props": {
+    "ro.debuggable": "1",
+    "ro.secure": "1",
+    "ro.adb.secure": "0",
+    "service.adb.root": "",
+    "ro.boot.verifiedbootstate": "",
+    "ro.boot.flash.locked": "",
+    "ro.boot.vbmeta.device_state": "",
+    "ro.boot.veritymode": "",
+    "ro.boot.warranty_bit": "",
+    "ro.warranty_bit": "",
+    "ro.secureboot.lockstate": "",
+    "ro.build.selinux": "",
+    "ro.boot.selinux": "",
+    "ro.crypto.state": "encrypted",
+    "ro.crypto.type": "file",
+    "persist.sys.usb.config": "adb",
+    "sys.usb.state": "adb",
+    "ro.oem_unlock_supported": "",
+    "sys.oem_unlock_allowed": "",
+    "ro.kernel.qemu": "1",
+    "ro.build.tags": "test-keys",
+    "ro.build.type": "userdebug"
+   },
+   "getenforce": "getenforce: Couldn't get enforcing status: Permission denied",
+   "kernel": "4.14.175-g6f3fc9538452",
+   "rw_system": []
+  },
+  "lock": {
+   "device_secure": false,
+   "keyguard_secure": false,
+   "encryption": "active_per_user",
+   "biometric": "ошибка: SecurityException"
+  },
+  "settings": {
+   "global": {
+    "adb_enabled": "1",
+    "adb_wifi_enabled": null,
+    "development_settings_enabled": null,
+    "package_verifier_enable": "1",
+    "package_verifier_user_consent": null,
+    "verifier_verify_adb_installs": "0",
+    "upload_apk_enable": null,
+    "install_non_market_apps": "1",
+    "private_dns_mode": null,
+    "private_dns_specifier": null,
+    "http_proxy": null,
+    "global_http_proxy_host": null,
+    "global_http_proxy_port": null,
+    "airplane_mode_on": "0",
+    "wifi_on": "1",
+    "bluetooth_on": "1",
+    "auto_time": "1",
+    "stay_on_while_plugged_in": "1",
+    "mobile_data": "1",
+    "data_roaming": "0",
+    "usb_mass_storage_enabled": "1",
+    "wifi_networks_available_notification_on": "1",
+    "wifi_scan_always_enabled": "1",
+    "ble_scan_always_enabled": null,
+    "nfc_on": null
+   },
+   "secure": {
+    "accessibility_enabled": "0",
+    "enabled_accessibility_services": null,
+    "enabled_notification_listeners": "com.android.launcher3\/com.android.launcher3.notification.NotificationListener",
+    "enabled_notification_assistant": "android.ext.services\/android.ext.services.notification.Assistant",
+    "enabled_notification_policy_access_packages": "com.android.camera2",
+    "default_input_method": "com.android.inputmethod.latin\/.LatinIME",
+    "enabled_input_methods": "com.android.inputmethod.latin\/.LatinIME",
+    "install_non_market_apps": "1",
+    "lock_screen_show_notifications": "1",
+    "lock_screen_allow_private_notifications": "1",
+    "lock_screen_lock_after_timeout": null,
+    "lock_screen_owner_info_enabled": "0",
+    "location_mode": "3",
+    "location_providers_allowed": "gps",
+    "mock_location": "0",
+    "voice_interaction_service": "",
+    "assistant": "",
+    "sms_default_application": null,
+    "dialer_default_application": null,
+    "screensaver_enabled": "1",
+    "trust_agents_initialized": "1",
+    "enabled_vr_listeners": null,
+    "autofill_service": "",
+    "credential_service": null,
+    "lockscreen.disabled": "1",
+    "lock_pattern_visible_pattern": null,
+    "selected_spell_checker": "com.android.inputmethod.latin\/.spellcheck.AndroidSpellCheckerService",
+    "always_on_vpn_app": null,
+    "always_on_vpn_lockdown": null
+   },
+   "system": {
+    "screen_off_timeout": "2147483647",
+    "show_password": null,
+    "lock_to_app_enabled": null
+   }
+  },
+  "privileged": {
+   "accessibility_enabled": [],
+   "device_admins": [],
+   "notification_listeners": [
+    "com.android.launcher3\/com.android.launcher3.notification.NotificationListener"
+   ],
+   "input_methods_enabled": [
+    "com.android.inputmethod.latin\/com.android.inputmethod.latin.LatinIME"
+   ],
+   "input_method_default": "com.android.inputmethod.latin\/.LatinIME",
+   "defaults": {
+    "sms": "com.android.messaging",
+    "dialer": "com.android.dialer",
+    "browser": "org.chromium.webview_shell",
+    "launcher": "com.android.launcher3",
+    "assistant": "",
+    "autofill": ""
+   }
+  },
+  "certificates": {
+   "system_count": 138,
+   "user_installed": []
+  },
+  "network": {
+   "networks": [
+    {
+     "transport": [
+      "cellular"
+     ],
+     "active": true,
+     "validated": true,
+     "dns": [
+      "10.0.2.3"
+     ],
+     "private_dns_active": false,
+     "private_dns_server": null,
+     "http_proxy": null
+    }
+   ],
+   "vpn_active": false,
+   "system_proxy": null,
+   "listening_tcp": "недоступно (ограничение Android)"
+  },
+  "components": {
+   "com.android.webview": {
+    "version": "74.0.3729.185",
+    "updated": "2021-08-21T06:17:41+0000",
+    "enabled": true
+   },
+   "com.android.packageinstaller": {
+    "version": "10",
+    "updated": "2021-08-21T06:14:41+0000",
+    "enabled": true
+   }
+  },
+  "apps": [
+   {
+    "package": "com.android.cts.priv.ctsshim",
+    "label": "com.android.cts.priv.ctsshim",
+    "version": "9-5374186",
+    "version_code": 28,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 24,
+    "first_install": "2021-08-21T06:03:11+0000",
+    "last_update": "2021-08-21T06:03:11+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10062,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/CtsShimPrivPrebuilt\/CtsShimPrivPrebuilt.apk",
+    "apk_size": 21335,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.display.cutout.emulation.corner",
+    "label": "Corner cutout",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10026,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/DisplayCutoutEmulationCorner\/DisplayCutoutEmulationCornerOverlay.apk",
+    "apk_size": 24926,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "kz.bulaevo.audit",
+    "label": "Аудит",
+    "version": "0.1",
+    "version_code": 1,
+    "system": false,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 34,
+    "min_sdk": 24,
+    "first_install": "2026-11-24T11:40:28+0000",
+    "last_update": "2026-11-24T11:40:28+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10116,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "REQUEST_DELETE_PACKAGES"
+    ],
+    "permissions_not_granted": [
+     "QUERY_ALL_PACKAGES"
+    ],
+    "special_access": {
+     "overlay": "default",
+     "install_apps": "default",
+     "usage_stats": "default",
+     "write_settings": "default",
+     "screen_capture": "ignored"
+    },
+    "apk_path": "\/data\/app\/kz.bulaevo.audit-y0PUzKZ2svP0McZeM7ctxg==\/base.apk",
+    "apk_size": 42868,
+    "apk_sha256": "a33b78b4c6e030440ad30eb354368fb1a7d38395b99f0785a35572007f61b8c1",
+    "signers": [
+     {
+      "sha256": "6112b1702bbe8f237eb2117c7008d2859687b1302ea70193abceee13c0224f3d",
+      "subject": "CN=Audit",
+      "not_before": "2026-11-24T11:32:40+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.display.cutout.emulation.double",
+    "label": "Double cutout",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:53+0000",
+    "last_update": "2021-08-21T06:16:53+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10036,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/DisplayCutoutEmulationDouble\/DisplayCutoutEmulationDoubleOverlay.apk",
+    "apk_size": 24926,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.telephony",
+    "label": "Phone and Messaging Storage",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:09+0000",
+    "last_update": "2021-08-21T06:16:09+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "RECEIVE_SMS",
+     "WRITE_EXTERNAL_STORAGE",
+     "READ_DEVICE_CONFIG",
+     "INTERACT_ACROSS_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "USE_RESERVED_DISK",
+     "MODIFY_PHONE_STATE",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/TelephonyProvider\/TelephonyProvider.apk",
+    "apk_size": 468183,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.dynsystem",
+    "label": "Dynamic System Updates",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "FOREGROUND_SERVICE",
+     "INTERNET",
+     "MANAGE_DYNAMIC_SYSTEM",
+     "REBOOT",
+     "RECEIVE_BOOT_COMPLETED"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/DynamicSystemInstallationService\/DynamicSystemInstallationService.apk",
+    "apk_size": 41467,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.calendar",
+    "label": "Calendar Storage",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:36+0000",
+    "last_update": "2021-08-21T06:09:36+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10055,
+    "shared_user_id": "android.uid.calendar",
+    "flags": [],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "READ_CALENDAR",
+     "WRITE_CALENDAR",
+     "RECEIVE_BOOT_COMPLETED",
+     "GET_ACCOUNTS",
+     "GET_ACCOUNTS_PRIVILEGED",
+     "USE_CREDENTIALS",
+     "MANAGE_ACCOUNTS",
+     "READ_SYNC_STATS",
+     "READ_SYNC_SETTINGS",
+     "WRITE_SYNC_SETTINGS",
+     "INTERNET",
+     "SUBSCRIBED_FEEDS_READ",
+     "SUBSCRIBED_FEEDS_WRITE",
+     "WAKE_LOCK",
+     "WRITE_EXTERNAL_STORAGE",
+     "UPDATE_APP_OPS_STATS",
+     "USE_RESERVED_DISK",
+     "MANAGE_USERS",
+     "INTERACT_ACROSS_USERS",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/CalendarProvider\/CalendarProvider.apk",
+    "apk_size": 594742,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.media",
+    "label": "Media Storage",
+    "version": "10",
+    "version_code": 1023,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:32+0000",
+    "last_update": "2021-08-21T06:09:32+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10049,
+    "shared_user_id": "android.media",
+    "flags": [
+     "cleartext_traffic"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "RECEIVE_DEVICE_CUSTOMIZATION_READY",
+     "WRITE_SETTINGS",
+     "WAKE_LOCK",
+     "WRITE_EXTERNAL_STORAGE",
+     "WRITE_MEDIA_STORAGE",
+     "ACCESS_MTP",
+     "MANAGE_USERS",
+     "INTERACT_ACROSS_USERS",
+     "USE_RESERVED_DISK",
+     "WATCH_APPOPS",
+     "UPDATE_DEVICE_STATS",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/MediaProvider\/MediaProvider.apk",
+    "apk_size": 452650,
+    "signers": [
+     {
+      "sha256": "465983f7791f2abeb43ea2cbdc7f21a8260b72bc08a55c839fc1a43bc741a81e",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T23:40:57+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon.square",
+    "label": "Square",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:53+0000",
+    "last_update": "2021-08-21T06:16:53+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10045,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconShapeSquare\/IconShapeSquareOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.systemui.navbar.gestural_wide_back",
+    "label": "Gestural Navigation Bar",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10017,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/NavigationBarModeGesturalWideBack\/NavigationBarModeGesturalOverlayWideBack.apk",
+    "apk_size": 16734,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.wallpapercropper",
+    "label": "com.android.wallpapercropper",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:50+0000",
+    "last_update": "2021-08-21T06:16:50+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10096,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "SET_WALLPAPER",
+     "SET_WALLPAPER_HINTS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/WallpaperCropper\/WallpaperCropper.apk",
+    "apk_size": 131938,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.cinnamon",
+    "label": "Cinnamon",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10048,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorCinnamon\/AccentColorCinnamonOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.rounded.systemui",
+    "label": "Rounded",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10018,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackRoundedSystemUI\/IconPackRoundedSystemUIOverlay.apk",
+    "apk_size": 65956,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_2_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10031,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel2XL\/SystemUIEmulationPixel2XLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_3_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10022,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel3XL\/SystemUIEmulationPixel3XLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_4_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10035,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel4XL\/SystemUIEmulationPixel4XLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.documentsui",
+    "label": "Files",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 28,
+    "first_install": "2021-08-21T06:15:47+0000",
+    "last_update": "2021-08-21T06:15:47+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10057,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "MANAGE_DOCUMENTS",
+     "REMOVE_TASKS",
+     "FOREGROUND_SERVICE",
+     "WAKE_LOCK",
+     "CACHE_CONTENT",
+     "RECEIVE_BOOT_COMPLETED",
+     "CHANGE_OVERLAY_PACKAGES"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/DocumentsUI\/DocumentsUI.apk",
+    "apk_size": 5028639,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.externalstorage",
+    "label": "External Storage",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:03+0000",
+    "last_update": "2021-08-21T06:09:03+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10054,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "READ_EXTERNAL_STORAGE",
+     "WRITE_EXTERNAL_STORAGE",
+     "WRITE_MEDIA_STORAGE",
+     "MOUNT_UNMOUNT_FILESYSTEMS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/ExternalStorageProvider\/ExternalStorageProvider.apk",
+    "apk_size": 61854,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.htmlviewer",
+    "label": "HTML Viewer",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:13:53+0000",
+    "last_update": "2021-08-21T06:13:53+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10069,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/HTMLViewer\/HTMLViewer.apk",
+    "apk_size": 29151,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.companiondevicemanager",
+    "label": "Companion Device Manager",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:18+0000",
+    "last_update": "2021-08-21T06:09:18+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10088,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "ACCESS_FINE_LOCATION",
+     "ACCESS_BACKGROUND_LOCATION",
+     "ACCESS_WIFI_STATE",
+     "CHANGE_WIFI_STATE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/CompanionDeviceManager\/CompanionDeviceManager.apk",
+    "apk_size": 66319,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.quicksearchbox",
+    "label": "Search",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 14,
+    "first_install": "2021-08-21T06:16:50+0000",
+    "last_update": "2021-08-21T06:16:50+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10111,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "com.android.browser.permission.READ_HISTORY_BOOKMARKS",
+     "ACCESS_NETWORK_STATE",
+     "INTERNET",
+     "WRITE_SETTINGS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/QuickSearchBox\/QuickSearchBox.apk",
+    "apk_size": 705232,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.mms.service",
+    "label": "MmsService",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:03+0000",
+    "last_update": "2021-08-21T06:16:03+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "READ_SMS",
+     "WRITE_SMS",
+     "BROADCAST_WAP_PUSH",
+     "BIND_CARRIER_SERVICES",
+     "BIND_CARRIER_MESSAGING_SERVICE",
+     "INTERACT_ACROSS_USERS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/MmsService\/MmsService.apk",
+    "apk_size": 74210,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.downloads",
+    "label": "Download Manager",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:33+0000",
+    "last_update": "2021-08-21T06:09:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10049,
+    "shared_user_id": "android.media",
+    "flags": [
+     "cleartext_traffic"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "ACCESS_DOWNLOAD_MANAGER",
+     "ACCESS_CACHE_FILESYSTEM",
+     "SEND_DOWNLOAD_COMPLETED_INTENTS",
+     "ACCESS_NETWORK_STATE",
+     "INTERNET",
+     "WRITE_EXTERNAL_STORAGE",
+     "ACCESS_ALL_DOWNLOADS",
+     "UPDATE_DEVICE_STATS",
+     "CONNECTIVITY_INTERNAL",
+     "CLEAR_APP_CACHE",
+     "WAKE_LOCK",
+     "UPDATE_APP_OPS_STATS",
+     "START_ACTIVITIES_FROM_BACKGROUND",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/DownloadProvider\/DownloadProvider.apk",
+    "apk_size": 795528,
+    "signers": [
+     {
+      "sha256": "465983f7791f2abeb43ea2cbdc7f21a8260b72bc08a55c839fc1a43bc741a81e",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T23:40:57+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.messaging",
+    "label": "Messaging",
+    "version": "1.0.001",
+    "version_code": 10001180,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:38+0000",
+    "last_update": "2021-08-21T06:17:38+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10078,
+    "flags": [],
+    "declares": [
+     "sms_app",
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "WAKE_LOCK",
+     "READ_SMS",
+     "WRITE_SMS",
+     "RECEIVE_SMS",
+     "RECEIVE_MMS",
+     "SEND_SMS",
+     "INTERNET",
+     "ACCESS_NETWORK_STATE",
+     "CHANGE_NETWORK_STATE",
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "READ_PROFILE",
+     "VIBRATE",
+     "READ_PHONE_STATE",
+     "CAMERA",
+     "WRITE_EXTERNAL_STORAGE",
+     "READ_EXTERNAL_STORAGE",
+     "RECORD_AUDIO",
+     "CALL_PHONE",
+     "DOWNLOAD_WITHOUT_NOTIFICATION",
+     "RECEIVE_BOOT_COMPLETED"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/messaging\/messaging.apk",
+    "apk_size": 10342978,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.rounded.android",
+    "label": "Rounded",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10039,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackRoundedAndroid\/IconPackRoundedAndroidOverlay.apk",
+    "apk_size": 75534,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.circular.themepicker",
+    "label": "Circular",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10016,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackCircularThemePicker\/IconPackCircularThemePickerOverlay.apk",
+    "apk_size": 25827,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.emulation.pixel_4a",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10015,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/EmulationPixel4a\/EmulationPixel4aOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.timezone.updater",
+    "label": "Time Zone Updater",
+    "version": "10",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:31+0000",
+    "last_update": "2021-08-21T06:09:31+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10063,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "QUERY_TIME_ZONE_RULES",
+     "UPDATE_TIME_ZONE_RULES"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/TimeZoneUpdater\/TimeZoneUpdater.apk",
+    "apk_size": 49566,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.downloads.ui",
+    "label": "Downloads",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:08:52+0000",
+    "last_update": "2021-08-21T06:08:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10049,
+    "shared_user_id": "android.media",
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "SEND_DOWNLOAD_COMPLETED_INTENTS",
+     "ACCESS_ALL_DOWNLOADS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/DownloadProviderUi\/DownloadProviderUi.apk",
+    "apk_size": 258952,
+    "signers": [
+     {
+      "sha256": "465983f7791f2abeb43ea2cbdc7f21a8260b72bc08a55c839fc1a43bc741a81e",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T23:40:57+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.pacprocessor",
+    "label": "PacProcessor",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:08:54+0000",
+    "last_update": "2021-08-21T06:08:54+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10071,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/PacProcessor\/PacProcessor.apk",
+    "apk_size": 16798,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.simappdialog",
+    "label": "Sim App Dialog",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10086,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/SimAppDialog\/SimAppDialog.apk",
+    "apk_size": 306708,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.networkstack",
+    "label": "NetworkStack",
+    "version": "2019-09",
+    "version_code": 290000000,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1073,
+    "shared_user_id": "android.uid.networkstack",
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic",
+     "persistent"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET",
+     "ACCESS_COARSE_LOCATION",
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "CONNECTIVITY_INTERNAL",
+     "INTERACT_ACROSS_USERS",
+     "WAKE_LOCK",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "READ_DEVICE_CONFIG",
+     "MAINLINE_NETWORK_STACK"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/NetworkStack\/NetworkStack.apk",
+    "apk_size": 701494,
+    "signers": [
+     {
+      "sha256": "e1dbadce60dc080d15b58a014b0dcf9400e24de23fa00b287a5a982bfebda2ee",
+      "subject": "CN=com.android.networkstack,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2019-02-12T01:46:20+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.display.cutout.emulation.tall",
+    "label": "Tall cutout",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10010,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/DisplayCutoutEmulationTall\/DisplayCutoutEmulationTallOverlay.apk",
+    "apk_size": 24926,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.modulemetadata",
+    "label": "Module Metadata",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 28,
+    "first_install": "2021-08-21T06:16:50+0000",
+    "last_update": "2021-08-21T06:16:50+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10114,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/ModuleMetadata\/ModuleMetadata.apk",
+    "apk_size": 16864,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.certinstaller",
+    "label": "Certificate Installer",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:16+0000",
+    "last_update": "2021-08-21T06:09:16+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10085,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "CHANGE_WIFI_STATE",
+     "ACCESS_WIFI_STATE",
+     "MANAGE_USERS",
+     "ACCESS_ALL_DOWNLOADS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/CertInstaller\/CertInstaller.apk",
+    "apk_size": 435089,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.black",
+    "label": "Black",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10013,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorBlack\/AccentColorBlackOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.carrierconfig",
+    "label": "com.android.carrierconfig",
+    "version": "1.0.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10098,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "READ_PRIVILEGED_PHONE_STATE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/CarrierConfig\/CarrierConfig.apk",
+    "apk_size": 144143,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.green",
+    "label": "Green",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10000,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorGreen\/AccentColorGreenOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.ocean",
+    "label": "Ocean",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10023,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorOcean\/AccentColorOceanOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.space",
+    "label": "Space",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10011,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorSpace\/AccentColorSpaceOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.systemui.navbar.threebutton",
+    "label": "3 Button Navigation Bar",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10032,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/NavigationBarMode3Button\/NavigationBarMode3ButtonOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "android",
+    "label": "Android System",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:03:18+0000",
+    "last_update": "2021-08-21T06:03:18+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [
+     "allow_backup",
+     "persistent",
+     "no_code"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "LOCATION_HARDWARE",
+     "CONNECTIVITY_USE_RESTRICTED_NETWORKS",
+     "GET_ACCOUNTS",
+     "SEND_SHOW_SUSPENDED_APP_DETAILS",
+     "BIND_JOB_SERVICE",
+     "TRIGGER_TIME_ZONE_RULES_CHECK",
+     "BIND_NETWORK_RECOMMENDATION_SERVICE",
+     "BIND_ATTENTION_SERVICE",
+     "CONTROL_VPN",
+     "PACKAGE_USAGE_STATS",
+     "android.intent.category.MASTER_CLEAR.permission.C2D_MESSAGE",
+     "LOCAL_MAC_ADDRESS",
+     "CONFIRM_FULL_BACKUP",
+     "ACCESS_INSTANT_APPS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/framework\/framework-res.apk",
+    "apk_size": 45971941,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.contacts",
+    "label": "Contacts",
+    "version": "1.7.31",
+    "version_code": 10731,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 21,
+    "first_install": "2021-08-21T06:17:37+0000",
+    "last_update": "2021-08-21T06:17:37+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10097,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "GET_ACCOUNTS",
+     "GET_ACCOUNTS_PRIVILEGED",
+     "MANAGE_ACCOUNTS",
+     "ACCESS_NETWORK_STATE",
+     "CALL_PHONE",
+     "READ_PROFILE",
+     "WRITE_PROFILE",
+     "INTERNET",
+     "NFC",
+     "READ_PHONE_STATE",
+     "WAKE_LOCK",
+     "WRITE_SETTINGS",
+     "USE_CREDENTIALS",
+     "VIBRATE",
+     "READ_SYNC_SETTINGS",
+     "com.android.launcher.permission.INSTALL_SHORTCUT",
+     "WRITE_SYNC_SETTINGS",
+     "READ_SYNC_STATS",
+     "RECEIVE_BOOT_COMPLETED",
+     "FOREGROUND_SERVICE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/Contacts\/Contacts.apk",
+    "apk_size": 10253314,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.camera2",
+    "label": "Camera",
+    "version": "2.0.002",
+    "version_code": 20002100,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:35+0000",
+    "last_update": "2021-08-21T06:17:35+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10112,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "CAMERA",
+     "CHANGE_WIFI_STATE",
+     "INTERNET",
+     "NFC",
+     "READ_SYNC_SETTINGS",
+     "RECEIVE_BOOT_COMPLETED",
+     "RECORD_AUDIO",
+     "SET_WALLPAPER",
+     "SUBSCRIBED_FEEDS_READ",
+     "SUBSCRIBED_FEEDS_WRITE",
+     "USE_CREDENTIALS",
+     "VIBRATE",
+     "WAKE_LOCK",
+     "WRITE_EXTERNAL_STORAGE",
+     "WRITE_SETTINGS",
+     "WRITE_SYNC_SETTINGS",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/Camera2\/Camera2.apk",
+    "apk_size": 9755201,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.rounded.launcher",
+    "label": "Rounded",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10037,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackRoundedLauncher\/IconPackRoundedLauncherOverlay.apk",
+    "apk_size": 26008,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.egg",
+    "label": "Android Q Easter Egg",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:16+0000",
+    "last_update": "2021-08-21T06:14:16+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10084,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "WRITE_SETTINGS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/EasterEgg\/EasterEgg.apk",
+    "apk_size": 1522259,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.mtp",
+    "label": "MTP Host",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10049,
+    "shared_user_id": "android.media",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "FOREGROUND_SERVICE",
+     "MANAGE_USB"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/MtpDocumentsProvider\/MtpDocumentsProvider.apk",
+    "apk_size": 169362,
+    "signers": [
+     {
+      "sha256": "465983f7791f2abeb43ea2cbdc7f21a8260b72bc08a55c839fc1a43bc741a81e",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T23:40:57+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.nfc",
+    "label": "Nfc Service",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": false,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:09+0000",
+    "last_update": "2021-08-21T06:14:09+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1027,
+    "shared_user_id": "android.uid.nfc",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "BLUETOOTH_PRIVILEGED",
+     "NFC",
+     "BIND_NFC_SERVICE",
+     "RECEIVE_BOOT_COMPLETED",
+     "STATUS_BAR",
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS",
+     "WAKE_LOCK",
+     "STOP_APP_SWITCHES",
+     "MASTER_CLEAR",
+     "REAL_GET_TASKS",
+     "READ_PROFILE",
+     "READ_CONTACTS",
+     "READ_FRAME_BUFFER",
+     "SYSTEM_ALERT_WINDOW",
+     "ACCESS_WIFI_STATE",
+     "CHANGE_WIFI_STATE",
+     "VIBRATE",
+     "WRITE_EXTERNAL_STORAGE",
+     "INTERACT_ACROSS_USERS_FULL",
+     "INTERNET",
+     "MANAGE_USERS",
+     "INTERNAL_SYSTEM_WINDOW",
+     "SET_ACTIVITY_WATCHER",
+     "CONNECTIVITY_INTERNAL",
+     "NFC_HANDOVER_STATUS",
+     "LOCAL_MAC_ADDRESS",
+     "com.android.permission.WHITELIST_BLUETOOTH_DEVICE",
+     "DISPATCH_NFC_MESSAGE",
+     "OVERRIDE_WIFI_CONFIG",
+     "DEVICE_POWER",
+     "ACCESS_VR_MANAGER",
+     "USER_ACTIVITY",
+     "BIND_RESOLVER_RANKER_SERVICE",
+     "REQUEST_INSTALL_PACKAGES",
+     "START_ACTIVITIES_FROM_BACKGROUND",
+     "NETWORK_SETTINGS",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/NfcNci\/NfcNci.apk",
+    "apk_size": 2515678,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.ons",
+    "label": "com.android.ons",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:00+0000",
+    "last_update": "2021-08-21T06:16:00+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "allow_backup",
+     "persistent"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/ONS\/ONS.apk",
+    "apk_size": 49566,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.stk",
+    "label": "SIM Toolkit",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:07+0000",
+    "last_update": "2021-08-21T06:16:07+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "GET_TASKS",
+     "RECEIVE_STK_COMMANDS",
+     "SET_ACTIVITY_WATCHER",
+     "START_ACTIVITIES_FROM_BACKGROUND",
+     "USER_ACTIVITY",
+     "VIBRATE",
+     "WAKE_LOCK"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/Stk\/Stk.apk",
+    "apk_size": 396519,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.launcher3",
+    "label": "Quickstep",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:40+0000",
+    "last_update": "2021-08-21T06:17:40+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10100,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "notification_listener"
+    ],
+    "permissions_granted": [
+     "CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS",
+     "SET_WALLPAPER",
+     "SET_WALLPAPER_HINTS",
+     "BIND_APPWIDGET",
+     "RECEIVE_BOOT_COMPLETED",
+     "REQUEST_DELETE_PACKAGES",
+     "com.android.launcher3.permission.READ_SETTINGS",
+     "com.android.launcher3.permission.WRITE_SETTINGS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/Launcher3QuickStep\/Launcher3QuickStep.apk",
+    "apk_size": 9069243,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.backupconfirm",
+    "label": "com.android.backupconfirm",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:11+0000",
+    "last_update": "2021-08-21T06:09:11+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10051,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "BACKUP",
+     "CRYPT_KEEPER"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/BackupRestoreConfirmation\/BackupRestoreConfirmation.apk",
+    "apk_size": 254517,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.systemui.navbar.twobutton",
+    "label": "2 Button Navigation Bar",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10034,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/NavigationBarMode2Button\/NavigationBarMode2ButtonOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.provision",
+    "label": "com.android.provision",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10093,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/Provision\/Provision.apk",
+    "apk_size": 16798,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.statementservice",
+    "label": "Intent Filter Verification Service",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:53+0000",
+    "last_update": "2021-08-21T06:09:53+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10064,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET",
+     "ACCESS_NETWORK_STATE",
+     "INTENT_FILTER_VERIFICATION_AGENT"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/StatementService\/StatementService.apk",
+    "apk_size": 65950,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.hotspot2",
+    "label": "OsuLogin",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:24+0000",
+    "last_update": "2021-08-21T06:14:24+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10090,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "CHANGE_WIFI_STATE",
+     "INTERNET"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/OsuLogin\/OsuLogin.apk",
+    "apk_size": 224139,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.settings.intelligence",
+    "label": "Settings Suggestions",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10094,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "GET_PACKAGE_SIZE",
+     "READ_SEARCH_INDEXABLES",
+     "MODIFY_PHONE_STATE",
+     "MANAGE_FINGERPRINT"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/SettingsIntelligence\/SettingsIntelligence.apk",
+    "apk_size": 2187257,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.calendar",
+    "label": "Calendar",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10105,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "GET_ACCOUNTS",
+     "MANAGE_ACCOUNTS",
+     "INTERNET",
+     "VIBRATE",
+     "READ_CONTACTS",
+     "READ_CALENDAR",
+     "WRITE_CALENDAR",
+     "WAKE_LOCK",
+     "USE_CREDENTIALS",
+     "READ_SYNC_SETTINGS",
+     "RECEIVE_BOOT_COMPLETED"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/Calendar\/Calendar.apk",
+    "apk_size": 2562253,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.systemui.navbar.gestural_extra_wide_back",
+    "label": "Gestural Navigation Bar",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10040,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/NavigationBarModeGesturalExtraWideBack\/NavigationBarModeGesturalOverlayExtraWideBack.apk",
+    "apk_size": 16734,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_3",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10030,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel3\/SystemUIEmulationPixel3Overlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_4",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10020,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel4\/SystemUIEmulationPixel4Overlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.settings",
+    "label": "Settings Storage",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:07+0000",
+    "last_update": "2021-08-21T06:16:07+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/SettingsProvider\/SettingsProvider.apk",
+    "apk_size": 304073,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.sharedstoragebackup",
+    "label": "com.android.sharedstoragebackup",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:19+0000",
+    "last_update": "2021-08-21T06:09:19+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10052,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "WRITE_EXTERNAL_STORAGE",
+     "WRITE_MEDIA_STORAGE",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/SharedStorageBackup\/SharedStorageBackup.apk",
+    "apk_size": 20894,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.printspooler",
+    "label": "Print Spooler",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:37+0000",
+    "last_update": "2021-08-21T06:14:37+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10082,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "com.android.printspooler.permission.ACCESS_ALL_PRINT_JOBS",
+     "WAKE_LOCK",
+     "START_PRINT_SERVICE_CONFIG_ACTIVITY",
+     "READ_PRINT_SERVICES",
+     "READ_PRINT_SERVICE_RECOMMENDATIONS",
+     "ACCESS_COARSE_LOCATION",
+     "ACCESS_FINE_LOCATION"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/PrintSpooler\/PrintSpooler.apk",
+    "apk_size": 1053963,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.filled.settings",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10002,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackFilledSettings\/IconPackFilledSettingsOverlay.apk",
+    "apk_size": 80252,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.dreams.basic",
+    "label": "Basic Daydreams",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:08:43+0000",
+    "last_update": "2021-08-21T06:08:43+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10070,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/BasicDreams\/BasicDreams.apk",
+    "apk_size": 58087,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.webview",
+    "label": "Android System WebView",
+    "version": "74.0.3729.185",
+    "version_code": 373018565,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 21,
+    "first_install": "2021-08-21T06:17:41+0000",
+    "last_update": "2021-08-21T06:17:41+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10106,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET",
+     "ACCESS_NETWORK_STATE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/webview\/webview.apk",
+    "apk_size": 170663980,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.se",
+    "label": "SecureElementApplication",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:07:39+0000",
+    "last_update": "2021-08-21T06:07:39+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1068,
+    "shared_user_id": "android.uid.se",
+    "flags": [
+     "allow_backup",
+     "persistent"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/SecureElement\/SecureElement.apk",
+    "apk_size": 156062,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.inputdevices",
+    "label": "Input Devices",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/InputDevices\/InputDevices.apk",
+    "apk_size": 249590,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.bips",
+    "label": "Default Print Service",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:14+0000",
+    "last_update": "2021-08-21T06:14:14+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10073,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "CHANGE_WIFI_MULTICAST_STATE",
+     "CHANGE_WIFI_STATE",
+     "INTERNET",
+     "WAKE_LOCK",
+     "READ_PRINT_SERVICES",
+     "READ_PRINT_SERVICE_RECOMMENDATIONS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/BuiltInPrintService\/BuiltInPrintService.apk",
+    "apk_size": 427150,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.emulation.pixel_4",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10008,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/EmulationPixel4\/EmulationPixel4Overlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.circular.settings",
+    "label": "Circular",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10041,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackCircularSettings\/IconPackCircularSettingsOverlay.apk",
+    "apk_size": 84348,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.sdksetup",
+    "label": "com.android.sdksetup",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10066,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS",
+     "MANAGE_USERS",
+     "SET_TIME_ZONE",
+     "BACKUP"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/SdkSetup\/SdkSetup.apk",
+    "apk_size": 16798,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.musicfx",
+    "label": "MusicFX",
+    "version": "1.4",
+    "version_code": 10400,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:27+0000",
+    "last_update": "2021-08-21T06:09:27+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10058,
+    "flags": [],
+    "declares": [
+     "watches_installs"
+    ],
+    "permissions_granted": [
+     "CHANGE_COMPONENT_ENABLED_STATE",
+     "MODIFY_AUDIO_SETTINGS",
+     "BLUETOOTH"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/MusicFX\/MusicFX.apk",
+    "apk_size": 115565,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.display.cutout.emulation.emu01",
+    "label": "Emu01 display cutout",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10038,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/DisplayCutoutEmulationEmu01\/DisplayCutoutEmulationEmu01Overlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.cellbroadcastreceiver",
+    "label": "Emergency alerts",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:38+0000",
+    "last_update": "2021-08-21T06:16:38+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10061,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "RECEIVE_SMS",
+     "RECEIVE_EMERGENCY_BROADCAST",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "MODIFY_PHONE_STATE",
+     "WAKE_LOCK",
+     "DISABLE_KEYGUARD",
+     "VIBRATE",
+     "INTERACT_ACROSS_USERS",
+     "MANAGE_USERS",
+     "DEVICE_POWER",
+     "START_ACTIVITIES_FROM_BACKGROUND"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/CellBroadcastReceiver\/CellBroadcastReceiver.apk",
+    "apk_size": 9920436,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon.teardrop",
+    "label": "Teardrop",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10029,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconShapeTeardrop\/IconShapeTeardropOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "android.ext.shared",
+    "label": "Android Shared Library",
+    "version": "1",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:32+0000",
+    "last_update": "2021-08-21T06:17:32+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10089,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/ExtShared\/ExtShared.apk",
+    "apk_size": 16798,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.onetimeinitializer",
+    "label": "One Time Init",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:50+0000",
+    "last_update": "2021-08-21T06:16:50+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10092,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/OneTimeInitializer\/OneTimeInitializer.apk",
+    "apk_size": 20894,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.server.telecom",
+    "label": "Call Management",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:40+0000",
+    "last_update": "2021-08-21T06:16:40+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "BIND_CONNECTION_SERVICE",
+     "BIND_INCALL_SERVICE",
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "BROADCAST_CALLLOG_INFO",
+     "BROADCAST_PHONE_ACCOUNT_REGISTRATION",
+     "CALL_PRIVILEGED",
+     "HANDLE_CALL_INTENT",
+     "INTERACT_ACROSS_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "MANAGE_USERS",
+     "MANAGE_ROLE_HOLDERS",
+     "MODIFY_AUDIO_SETTINGS",
+     "MODIFY_AUDIO_ROUTING",
+     "MODIFY_PHONE_STATE",
+     "READ_CALL_LOG",
+     "READ_DEVICE_CONFIG",
+     "READ_EXTERNAL_STORAGE",
+     "SEND_SMS",
+     "STOP_APP_SWITCHES",
+     "VIBRATE",
+     "WRITE_CALL_LOG",
+     "WAKE_LOCK",
+     "READ_BLOCKED_NUMBERS",
+     "WRITE_BLOCKED_NUMBERS",
+     "SUBSTITUTE_NOTIFICATION_APP_NAME"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/Telecom\/Telecom.apk",
+    "apk_size": 7362796,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.keychain",
+    "label": "Key Chain",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:25+0000",
+    "last_update": "2021-08-21T06:09:25+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/KeyChain\/KeyChain.apk",
+    "apk_size": 139902,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.service.ims",
+    "label": "com.android.service.ims.RcsServiceApp",
+    "version": "2.4.6",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:05+0000",
+    "last_update": "2021-08-21T06:16:05+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "allow_backup",
+     "persistent"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "READ_PHONE_STATE",
+     "BROADCAST_STICKY",
+     "ACCESS_NETWORK_STATE",
+     "com.android.ims.rcs.permission.STATUS_CHANGED",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "ACCESS_UCE_PRESENCE_SERVICE",
+     "com.android.ims.permission.PRESENCE_ACCESS",
+     "com.android.rcs.eab.permission.READ_WRITE_EAB"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/RcsService\/RcsService.apk",
+    "apk_size": 111006,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.printservice.recommendation",
+    "label": "Print Service Recommendation Service",
+    "version": "1.3.0",
+    "version_code": 4,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10077,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "CHANGE_WIFI_MULTICAST_STATE",
+     "INTERNET"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/PrintRecommendationService\/PrintRecommendationService.apk",
+    "apk_size": 142435,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.dialer",
+    "label": "Phone",
+    "version": "23.0",
+    "version_code": 2900000,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:18:02+0000",
+    "last_update": "2021-08-21T06:18:02+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10101,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "CALL_PHONE",
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "READ_CALL_LOG",
+     "WRITE_CALL_LOG",
+     "READ_PROFILE",
+     "MANAGE_ACCOUNTS",
+     "GET_ACCOUNTS",
+     "GET_ACCOUNTS_PRIVILEGED",
+     "INTERNET",
+     "PROCESS_OUTGOING_CALLS",
+     "NFC",
+     "READ_PHONE_STATE",
+     "MODIFY_AUDIO_SETTINGS",
+     "MODIFY_PHONE_STATE",
+     "WAKE_LOCK",
+     "WRITE_SETTINGS",
+     "USE_CREDENTIALS",
+     "VIBRATE",
+     "BLUETOOTH",
+     "READ_SYNC_SETTINGS",
+     "com.android.voicemail.permission.ADD_VOICEMAIL",
+     "com.android.voicemail.permission.WRITE_VOICEMAIL",
+     "com.android.voicemail.permission.READ_VOICEMAIL",
+     "ALLOW_ANY_CODEC_FOR_PLAYBACK",
+     "com.android.launcher.permission.INSTALL_SHORTCUT",
+     "RECEIVE_BOOT_COMPLETED",
+     "BROADCAST_STICKY",
+     "ACCESS_WIFI_STATE",
+     "SEND_SMS",
+     "SYSTEM_ALERT_WINDOW",
+     "CONNECTIVITY_USE_RESTRICTED_NETWORKS",
+     "USE_FULL_SCREEN_INTENT",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "CONTROL_INCALL_EXPERIENCE",
+     "STATUS_BAR",
+     "CAMERA",
+     "STOP_APP_SWITCHES",
+     "FOREGROUND_SERVICE",
+     "BLUETOOTH_ADMIN",
+     "CHANGE_NETWORK_STATE",
+     "ACCESS_NETWORK_STATE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/Dialer\/Dialer.apk",
+    "apk_size": 14018099,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.gallery3d",
+    "label": "Gallery",
+    "version": "1.1.40030",
+    "version_code": 40030,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:34+0000",
+    "last_update": "2021-08-21T06:17:34+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10108,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "watches_installs"
+    ],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "INTERNET",
+     "MANAGE_ACCOUNTS",
+     "NFC",
+     "READ_SYNC_SETTINGS",
+     "RECEIVE_BOOT_COMPLETED",
+     "SET_WALLPAPER",
+     "USE_CREDENTIALS",
+     "VIBRATE",
+     "WAKE_LOCK",
+     "WRITE_EXTERNAL_STORAGE",
+     "WRITE_SETTINGS",
+     "WRITE_SYNC_SETTINGS",
+     "com.android.gallery3d.permission.GALLERY_PROVIDER",
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/Gallery2\/Gallery2.apk",
+    "apk_size": 7508036,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.filled.systemui",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10014,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackFilledSystemUI\/IconPackFilledSystemUIOverlay.apk",
+    "apk_size": 61860,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "android.ext.services",
+    "label": "Android Services Library",
+    "version": "2019-09",
+    "version_code": 290000000,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:16+0000",
+    "last_update": "2021-08-21T06:09:16+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10056,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "PROVIDE_RESOLVER_RANKER_SERVICE",
+     "READ_DEVICE_CONFIG",
+     "MONITOR_DEFAULT_SMS_PACKAGE",
+     "REQUEST_NOTIFICATION_ASSISTANT_SERVICE",
+     "ACCESS_NETWORK_STATE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/ExtServices\/ExtServices.apk",
+    "apk_size": 82334,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.calllogbackup",
+    "label": "Call Log Backup\/Restore",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:08+0000",
+    "last_update": "2021-08-21T06:09:08+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10050,
+    "shared_user_id": "android.uid.shared",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/CallLogBackup\/CallLogBackup.apk",
+    "apk_size": 37536,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.safetyregulatoryinfo",
+    "label": "Safety & regulatory manual",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:12:47+0000",
+    "last_update": "2021-08-21T06:12:47+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10075,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/SafetyRegulatoryInfo\/SafetyRegulatoryInfo.apk",
+    "apk_size": 33929,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.localtransport",
+    "label": "com.android.localtransport",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:14+0000",
+    "last_update": "2021-08-21T06:09:14+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/LocalTransport\/LocalTransport.apk",
+    "apk_size": 29086,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.packageinstaller",
+    "label": "Package installer",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:41+0000",
+    "last_update": "2021-08-21T06:14:41+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10060,
+    "flags": [],
+    "declares": [
+     "starts_on_boot",
+     "watches_installs"
+    ],
+    "permissions_granted": [
+     "MANAGE_USERS",
+     "INSTALL_PACKAGES",
+     "DELETE_PACKAGES",
+     "READ_INSTALL_SESSIONS",
+     "RECEIVE_BOOT_COMPLETED",
+     "HIDE_NON_SYSTEM_OVERLAY_WINDOWS",
+     "USE_RESERVED_DISK",
+     "UPDATE_APP_OPS_STATS",
+     "MANAGE_APP_OPS_MODES",
+     "INTERACT_ACROSS_USERS_FULL",
+     "SUBSTITUTE_NOTIFICATION_APP_NAME",
+     "PACKAGE_USAGE_STATS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/PackageInstaller\/PackageInstaller.apk",
+    "apk_size": 1924247,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.carrierdefaultapp",
+    "label": "CarrierDefaultApp",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:07+0000",
+    "last_update": "2021-08-21T06:09:07+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10091,
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET",
+     "ACCESS_NETWORK_STATE",
+     "CONNECTIVITY_INTERNAL",
+     "MODIFY_PHONE_STATE",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "CONNECTIVITY_USE_RESTRICTED_NETWORKS",
+     "NETWORK_BYPASS_PRIVATE_DNS",
+     "SUBSTITUTE_NOTIFICATION_APP_NAME"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/CarrierDefaultApp\/CarrierDefaultApp.apk",
+    "apk_size": 148215,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.font.notoserifsource",
+    "label": "Noto Serif \/ Source Sans Pro",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10021,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/FontNotoSerifSource\/FontNotoSerifSourceOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.filled.android",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10044,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackFilledAndroid\/IconPackFilledAndroidOverlay.apk",
+    "apk_size": 71438,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.proxyhandler",
+    "label": "ProxyHandler",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:07+0000",
+    "last_update": "2021-08-21T06:09:07+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10065,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/ProxyHandler\/ProxyHandler.apk",
+    "apk_size": 24990,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.circular.systemui",
+    "label": "Circular",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10028,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackCircularSystemUI\/IconPackCircularSystemUIOverlay.apk",
+    "apk_size": 65956,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.inputmethod.latin",
+    "label": "Android Keyboard (AOSP)",
+    "version": "10",
+    "version_code": 28,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 21,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10115,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "keyboard",
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "DOWNLOAD_WITHOUT_NOTIFICATION",
+     "READ_PROFILE",
+     "READ_SYNC_SETTINGS",
+     "READ_SYNC_STATS",
+     "READ_USER_DICTIONARY",
+     "RECEIVE_BOOT_COMPLETED",
+     "USE_CREDENTIALS",
+     "VIBRATE",
+     "WRITE_SYNC_SETTINGS",
+     "WRITE_USER_DICTIONARY"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/LatinIME\/LatinIME.apk",
+    "apk_size": 18501803,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "org.chromium.webview_shell",
+    "label": "WebView Shell",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:49+0000",
+    "last_update": "2021-08-21T06:16:49+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10103,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "INTERNET",
+     "MODIFY_AUDIO_SETTINGS",
+     "USE_CREDENTIALS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/Browser2\/Browser2.apk",
+    "apk_size": 75164,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.managedprovisioning",
+    "label": "Work Setup",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:35+0000",
+    "last_update": "2021-08-21T06:17:35+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10059,
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "MANAGE_USERS",
+     "MANAGE_PROFILE_AND_DEVICE_OWNERS",
+     "MANAGE_ACCOUNTS",
+     "INSTALL_PACKAGES",
+     "DELETE_PACKAGES",
+     "INTERACT_ACROSS_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "BIND_DEVICE_ADMIN",
+     "MANAGE_DEVICE_ADMINS",
+     "FOREGROUND_SERVICE",
+     "CHANGE_COMPONENT_ENABLED_STATE",
+     "CHANGE_CONFIGURATION",
+     "CHANGE_WIFI_STATE",
+     "CONNECTIVITY_INTERNAL",
+     "INTERNET",
+     "MASTER_CLEAR",
+     "NFC",
+     "SET_TIME",
+     "SET_TIME_ZONE",
+     "CRYPT_KEEPER",
+     "RECEIVE_BOOT_COMPLETED",
+     "SHUTDOWN",
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS",
+     "PERFORM_CDMA_PROVISIONING",
+     "ACCESS_PDB_STATE",
+     "PEERS_MAC_ADDRESS",
+     "NETWORK_MANAGED_PROVISIONING",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "GRANT_PROFILE_OWNER_DEVICE_IDS_ACCESS",
+     "USE_COLORIZED_NOTIFICATIONS",
+     "START_ACTIVITIES_FROM_BACKGROUND"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/ManagedProvisioning\/ManagedProvisioning.apk",
+    "apk_size": 8017527,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_3a_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10005,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel3aXL\/SystemUIEmulationPixel3aXLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.dreams.phototable",
+    "label": "Photo Screensavers",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:49+0000",
+    "last_update": "2021-08-21T06:16:49+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10113,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "WAKE_LOCK"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/PhotoTable\/PhotoTable.apk",
+    "apk_size": 539080,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.partnerbookmarks",
+    "label": "com.android.providers.partnerbookmarks",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:13:45+0000",
+    "last_update": "2021-08-21T06:13:45+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10081,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/PartnerBookmarksProvider\/PartnerBookmarksProvider.apk",
+    "apk_size": 29086,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.smspush",
+    "label": "com.android.smspush",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:15:58+0000",
+    "last_update": "2021-08-21T06:15:58+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10080,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/WAPPushManager\/WAPPushManager.apk",
+    "apk_size": 24990,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.service.ims.presence",
+    "label": "Presence",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:02+0000",
+    "last_update": "2021-08-21T06:16:02+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "ACCESS_NETWORK_STATE",
+     "BROADCAST_STICKY",
+     "INTERACT_ACROSS_USERS",
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "READ_PHONE_STATE",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "RECEIVE_BOOT_COMPLETED",
+     "GET_ACCOUNTS",
+     "com.android.rcs.eab.permission.READ_WRITE_EAB",
+     "READ_PROFILE",
+     "com.android.ims.rcs.permission.STATUS_CHANGED",
+     "com.android.ims.permission.PRESENCE_ACCESS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/PresencePolling\/PresencePolling.apk",
+    "apk_size": 135582,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.wallpaper.livepicker",
+    "label": "Live Wallpaper Picker",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:15:20+0000",
+    "last_update": "2021-08-21T06:15:20+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10079,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "SET_WALLPAPER_COMPONENT",
+     "BIND_WALLPAPER",
+     "SET_WALLPAPER"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/LiveWallpapersPicker\/LiveWallpapersPicker.apk",
+    "apk_size": 3111675,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.apps.tag",
+    "label": "Tags",
+    "version": "1.1",
+    "version_code": 101,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10053,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "CALL_PHONE",
+     "NFC",
+     "READ_CONTACTS",
+     "WAKE_LOCK"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/Tag\/Tag.apk",
+    "apk_size": 699576,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon.squircle",
+    "label": "Squircle",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10007,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconShapeSquircle\/IconShapeSquircleOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.emulation.pixel_2_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10042,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/EmulationPixel2XL\/EmulationPixel2XLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.emulation.pixel_3_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:53+0000",
+    "last_update": "2021-08-21T06:16:53+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10027,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/EmulationPixel3XL\/EmulationPixel3XLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.emulation.pixel_4_xl",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10025,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/EmulationPixel4XL\/EmulationPixel4XLOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.storagemanager",
+    "label": "Storage Manager",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:35+0000",
+    "last_update": "2021-08-21T06:17:35+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10099,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "PACKAGE_USAGE_STATS",
+     "GET_PACKAGE_SIZE",
+     "DELETE_PACKAGES",
+     "READ_EXTERNAL_STORAGE",
+     "WRITE_EXTERNAL_STORAGE",
+     "MANAGE_USERS",
+     "WRITE_SECURE_SETTINGS",
+     "INTERACT_ACROSS_USERS",
+     "RECEIVE_BOOT_COMPLETED",
+     "USE_RESERVED_DISK"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/StorageManager\/StorageManager.apk",
+    "apk_size": 6613554,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.bookmarkprovider",
+    "label": "Bookmark Provider",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:08:42+0000",
+    "last_update": "2021-08-21T06:08:42+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10072,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/BookmarkProvider\/BookmarkProvider.apk",
+    "apk_size": 29424,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.settings",
+    "label": "Settings",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:18:58+0000",
+    "last_update": "2021-08-21T06:18:58+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "REQUEST_NETWORK_SCORES",
+     "WRITE_MEDIA_STORAGE",
+     "WRITE_EXTERNAL_STORAGE",
+     "READ_EXTERNAL_STORAGE",
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS",
+     "DEVICE_POWER",
+     "CHANGE_CONFIGURATION",
+     "MOUNT_UNMOUNT_FILESYSTEMS",
+     "VIBRATE",
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "BLUETOOTH_PRIVILEGED",
+     "NFC",
+     "HARDWARE_TEST",
+     "CALL_PHONE",
+     "MODIFY_AUDIO_SETTINGS",
+     "MASTER_CLEAR",
+     "ACCESS_DOWNLOAD_MANAGER",
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "ACCESS_NETWORK_STATE",
+     "LOCAL_MAC_ADDRESS",
+     "ACCESS_WIMAX_STATE",
+     "CHANGE_WIMAX_STATE",
+     "ACCESS_WIFI_STATE",
+     "com.android.certinstaller.INSTALL_AS_USER",
+     "CHANGE_WIFI_STATE",
+     "TETHER_PRIVILEGED",
+     "FOREGROUND_SERVICE",
+     "INTERNET",
+     "CLEAR_APP_USER_DATA",
+     "READ_PHONE_STATE",
+     "MODIFY_PHONE_STATE",
+     "ACCESS_FINE_LOCATION",
+     "WRITE_APN_SETTINGS",
+     "ACCESS_CHECKIN_PROPERTIES",
+     "READ_USER_DICTIONARY",
+     "WRITE_USER_DICTIONARY",
+     "FORCE_STOP_PACKAGES",
+     "PACKAGE_USAGE_STATS",
+     "BATTERY_STATS",
+     "MOVE_PACKAGE",
+     "USE_CREDENTIALS",
+     "BACKUP",
+     "READ_SYNC_STATS",
+     "READ_SYNC_SETTINGS",
+     "WRITE_SYNC_SETTINGS",
+     "READ_DEVICE_CONFIG",
+     "STATUS_BAR",
+     "MANAGE_USB",
+     "MANAGE_DEBUGGING",
+     "SET_POINTER_SPEED",
+     "SET_KEYBOARD_LAYOUT",
+     "INTERACT_ACROSS_USERS_FULL",
+     "COPY_PROTECTED_DATA",
+     "MANAGE_USERS",
+     "MANAGE_PROFILE_AND_DEVICE_OWNERS",
+     "READ_PROFILE",
+     "CONFIGURE_WIFI_DISPLAY",
+     "CONFIGURE_DISPLAY_COLOR_MODE",
+     "CONTROL_DISPLAY_COLOR_TRANSFORMS",
+     "SET_TIME",
+     "ACCESS_NOTIFICATIONS",
+     "REBOOT",
+     "RECEIVE_BOOT_COMPLETED",
+     "MANAGE_DEVICE_ADMINS",
+     "READ_SEARCH_INDEXABLES",
+     "BIND_SETTINGS_SUGGESTIONS_SERVICE",
+     "OEM_UNLOCK_STATE",
+     "MANAGE_USER_OEM_UNLOCK_STATE",
+     "OVERRIDE_WIFI_CONFIG",
+     "USE_FINGERPRINT",
+     "MANAGE_FINGERPRINT",
+     "USE_BIOMETRIC",
+     "USE_BIOMETRIC_INTERNAL",
+     "USER_ACTIVITY",
+     "CHANGE_APP_IDLE_STATE",
+     "PEERS_MAC_ADDRESS",
+     "MANAGE_NOTIFICATIONS",
+     "DELETE_PACKAGES",
+     "REQUEST_DELETE_PACKAGES",
+     "MANAGE_APP_OPS_RESTRICTIONS",
+     "MANAGE_APP_OPS_MODES",
+     "HIDE_NON_SYSTEM_OVERLAY_WINDOWS",
+     "READ_PRINT_SERVICES",
+     "NETWORK_SETTINGS",
+     "TEST_BLACKLISTED_PASSWORD",
+     "USE_RESERVED_DISK",
+     "MANAGE_SCOPED_ACCESS_DIRECTORY_PERMISSIONS",
+     "CAMERA",
+     "MEDIA_CONTENT_CONTROL"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/Settings\/Settings.apk",
+    "apk_size": 49034126,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.filled.launcher",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10006,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackFilledLauncher\/IconPackFilledLauncherOverlay.apk",
+    "apk_size": 26008,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_3a",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10004,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel3a\/SystemUIEmulationPixel3aOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui.emulation.pixel_4a",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10024,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/SystemUIEmulationPixel4a\/SystemUIEmulationPixel4aOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.networkstack.permissionconfig",
+    "label": "com.android.server.NetworkPermissionConfig",
+    "version": "2019-09",
+    "version_code": 290000000,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:08:58+0000",
+    "last_update": "2021-08-21T06:08:58+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1073,
+    "shared_user_id": "android.uid.networkstack",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/NetworkPermissionConfig\/NetworkPermissionConfig.apk",
+    "apk_size": 16798,
+    "signers": [
+     {
+      "sha256": "e1dbadce60dc080d15b58a014b0dcf9400e24de23fa00b287a5a982bfebda2ee",
+      "subject": "CN=com.android.networkstack,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2019-02-12T01:46:20+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.cts.ctsshim",
+    "label": "com.android.cts.ctsshim",
+    "version": "9-5374186",
+    "version_code": 28,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 24,
+    "first_install": "2021-08-21T06:03:11+0000",
+    "last_update": "2021-08-21T06:03:11+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10087,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/CtsShimPrebuilt\/CtsShimPrebuilt.apk",
+    "apk_size": 4837,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.circular.launcher",
+    "label": "Circular",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10003,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackCircularLauncher\/IconPackCircularLauncherOverlay.apk",
+    "apk_size": 26008,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.vpndialogs",
+    "label": "VpnDialogs",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:04+0000",
+    "last_update": "2021-08-21T06:09:04+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10067,
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "CONTROL_VPN",
+     "CONTROL_ALWAYS_ON_VPN",
+     "CONNECTIVITY_INTERNAL",
+     "HIDE_NON_SYSTEM_OVERLAY_WINDOWS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/VpnDialogs\/VpnDialogs.apk",
+    "apk_size": 168644,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.email",
+    "label": "Email",
+    "version": "10",
+    "version_code": 7008110,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 24,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:37+0000",
+    "last_update": "2021-08-21T06:17:37+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10107,
+    "flags": [
+     "cleartext_traffic"
+    ],
+    "declares": [
+     "device_admin",
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "ACCESS_NETWORK_STATE",
+     "INTERNET",
+     "VIBRATE",
+     "GET_ACCOUNTS",
+     "MANAGE_ACCOUNTS",
+     "AUTHENTICATE_ACCOUNTS",
+     "READ_SYNC_SETTINGS",
+     "WRITE_SYNC_SETTINGS",
+     "WRITE_CONTACTS",
+     "READ_CONTACTS",
+     "READ_CALENDAR",
+     "WRITE_CALENDAR",
+     "READ_PROFILE",
+     "NFC",
+     "WAKE_LOCK",
+     "DOWNLOAD_WITHOUT_NOTIFICATION",
+     "USE_CREDENTIALS",
+     "com.android.email.permission.ACCESS_PROVIDER"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/Email\/Email.apk",
+    "apk_size": 8532639,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.music",
+    "label": "Android Open Source Music Player",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10104,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "READ_EXTERNAL_STORAGE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/Music\/Music.apk",
+    "apk_size": 829270,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.phone",
+    "label": "Phone Services",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:36+0000",
+    "last_update": "2021-08-21T06:17:36+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1001,
+    "shared_user_id": "android.uid.phone",
+    "flags": [
+     "cleartext_traffic",
+     "persistent"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "BROADCAST_STICKY",
+     "CALL_PHONE",
+     "CALL_PRIVILEGED",
+     "CONTROL_INCALL_EXPERIENCE",
+     "DOWNLOAD_WITHOUT_NOTIFICATION",
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS",
+     "READ_CONTACTS",
+     "READ_CALL_LOG",
+     "WRITE_CONTACTS",
+     "WRITE_CALL_LOG",
+     "SYSTEM_ALERT_WINDOW",
+     "INTERNAL_SYSTEM_WINDOW",
+     "VIBRATE",
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "REORDER_TASKS",
+     "CHANGE_CONFIGURATION",
+     "WAKE_LOCK",
+     "MODIFY_AUDIO_SETTINGS",
+     "STATUS_BAR",
+     "STATUS_BAR_SERVICE",
+     "RECEIVE_SMS",
+     "READ_SMS",
+     "WRITE_SMS",
+     "SEND_SMS",
+     "SEND_RESPOND_VIA_MESSAGE",
+     "SET_TIME",
+     "SET_TIME_ZONE",
+     "ACCESS_WIFI_STATE",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "MODIFY_PHONE_STATE",
+     "ACCESS_IMS_CALL_SERVICE",
+     "DEVICE_POWER",
+     "DISABLE_KEYGUARD",
+     "INTERNET",
+     "PROCESS_OUTGOING_CALLS",
+     "ACCESS_COARSE_LOCATION",
+     "WRITE_APN_SETTINGS",
+     "BROADCAST_SMS",
+     "BROADCAST_WAP_PUSH",
+     "CHANGE_WIFI_STATE",
+     "ACCESS_NETWORK_STATE",
+     "CHANGE_NETWORK_STATE",
+     "RECEIVE_BOOT_COMPLETED",
+     "SHUTDOWN",
+     "RECORD_AUDIO",
+     "PERFORM_CDMA_PROVISIONING",
+     "USE_SIP",
+     "REBOOT",
+     "UPDATE_LOCK",
+     "INTERACT_ACROSS_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "com.android.smspush.WAPPUSH_MANAGER_BIND",
+     "MANAGE_USERS",
+     "UPDATE_APP_OPS_STATS",
+     "MANAGE_APP_OPS_MODES",
+     "CONNECTIVITY_INTERNAL",
+     "SET_PREFERRED_APPLICATIONS",
+     "READ_SEARCH_INDEXABLES",
+     "DUMP",
+     "REGISTER_CALL_PROVIDER",
+     "REGISTER_SIM_SUBSCRIPTION",
+     "BIND_IMS_SERVICE",
+     "BIND_CARRIER_SERVICES",
+     "BIND_CARRIER_MESSAGING_SERVICE",
+     "BIND_EUICC_SERVICE",
+     "WRITE_EMBEDDED_SUBSCRIPTIONS",
+     "READ_SYNC_SETTINGS",
+     "WRITE_SYNC_SETTINGS",
+     "AUTHENTICATE_ACCOUNTS",
+     "MANAGE_ACCOUNTS",
+     "GET_ACCOUNTS",
+     "com.android.voicemail.permission.ADD_VOICEMAIL",
+     "com.android.voicemail.permission.WRITE_VOICEMAIL",
+     "com.android.voicemail.permission.READ_VOICEMAIL",
+     "BIND_VISUAL_VOICEMAIL_SERVICE",
+     "LOCAL_MAC_ADDRESS",
+     "CHANGE_COMPONENT_ENABLED_STATE",
+     "CHANGE_DEVICE_IDLE_TEMP_WHITELIST",
+     "READ_BLOCKED_NUMBERS",
+     "WRITE_BLOCKED_NUMBERS",
+     "NETWORK_SETTINGS",
+     "STOP_APP_SWITCHES",
+     "UPDATE_DEVICE_STATS",
+     "MANAGE_NETWORK_POLICY",
+     "READ_NETWORK_USAGE_HISTORY",
+     "BIND_TELEPHONY_DATA_SERVICE",
+     "PACKAGE_USAGE_STATS",
+     "READ_PRECISE_PHONE_STATE",
+     "MANAGE_ROLE_HOLDERS"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/TeleService\/TeleService.apk",
+    "apk_size": 12351489,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.shell",
+    "label": "Shell",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 2000,
+    "shared_user_id": "android.uid.shell",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "GET_RUNTIME_PERMISSIONS",
+     "SEND_SMS",
+     "READ_SMS",
+     "CALL_PHONE",
+     "READ_PHONE_STATE",
+     "READ_PRECISE_PHONE_STATE",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "READ_CALENDAR",
+     "WRITE_CALENDAR",
+     "READ_USER_DICTIONARY",
+     "WRITE_USER_DICTIONARY",
+     "ACCESS_FINE_LOCATION",
+     "ACCESS_LOCATION_EXTRA_COMMANDS",
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "BLUETOOTH",
+     "LOCAL_MAC_ADDRESS",
+     "EXPAND_STATUS_BAR",
+     "DISABLE_KEYGUARD",
+     "MANAGE_NETWORK_POLICY",
+     "MANAGE_USB",
+     "USE_RESERVED_DISK",
+     "FOREGROUND_SERVICE",
+     "REAL_GET_TASKS",
+     "CHANGE_CONFIGURATION",
+     "REORDER_TASKS",
+     "REMOVE_TASKS",
+     "SET_ANIMATION_SCALE",
+     "SET_PREFERRED_APPLICATIONS",
+     "WRITE_SETTINGS",
+     "WRITE_SECURE_SETTINGS",
+     "READ_DEVICE_CONFIG",
+     "WRITE_DEVICE_CONFIG",
+     "BROADCAST_STICKY",
+     "MANAGE_ACCESSIBILITY",
+     "SET_DEBUG_APP",
+     "SET_PROCESS_LIMIT",
+     "SET_ALWAYS_FINISH",
+     "DUMP",
+     "SIGNAL_PERSISTENT_PROCESSES",
+     "KILL_BACKGROUND_PROCESSES",
+     "FORCE_BACK",
+     "BATTERY_STATS",
+     "PACKAGE_USAGE_STATS",
+     "INTERNAL_SYSTEM_WINDOW",
+     "INJECT_EVENTS",
+     "RETRIEVE_WINDOW_CONTENT",
+     "SET_ACTIVITY_WATCHER",
+     "READ_INPUT_STATE",
+     "SET_ORIENTATION",
+     "INSTALL_PACKAGES",
+     "MOVE_PACKAGE",
+     "CLEAR_APP_USER_DATA",
+     "CLEAR_APP_CACHE",
+     "ACCESS_INSTANT_APPS",
+     "DELETE_CACHE_FILES",
+     "DELETE_PACKAGES",
+     "MANAGE_ROLLBACKS",
+     "TEST_MANAGE_ROLLBACKS",
+     "ACCESS_SURFACE_FLINGER",
+     "READ_FRAME_BUFFER",
+     "DEVICE_POWER",
+     "POWER_SAVER",
+     "INSTALL_LOCATION_PROVIDER",
+     "BACKUP",
+     "FORCE_STOP_PACKAGES",
+     "STOP_APP_SWITCHES",
+     "ACCESS_CONTENT_PROVIDERS_EXTERNALLY",
+     "GRANT_RUNTIME_PERMISSIONS",
+     "REVOKE_RUNTIME_PERMISSIONS",
+     "INSTALL_GRANT_RUNTIME_PERMISSIONS",
+     "WHITELIST_RESTRICTED_PERMISSIONS",
+     "SET_KEYBOARD_LAYOUT",
+     "GET_DETAILED_TASKS",
+     "SET_SCREEN_COMPATIBILITY",
+     "READ_EXTERNAL_STORAGE",
+     "WRITE_EXTERNAL_STORAGE",
+     "WRITE_MEDIA_STORAGE",
+     "INTERACT_ACROSS_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "CREATE_USERS",
+     "MANAGE_DEVICE_ADMINS",
+     "ACCESS_LOWPAN_STATE",
+     "CHANGE_LOWPAN_STATE",
+     "READ_LOWPAN_CREDENTIAL",
+     "BLUETOOTH_STACK",
+     "GET_ACCOUNTS",
+     "RETRIEVE_WINDOW_TOKEN",
+     "FRAME_STATS",
+     "BIND_APPWIDGET",
+     "UPDATE_APP_OPS_STATS",
+     "MODIFY_APPWIDGET_BIND_PERMISSIONS",
+     "CHANGE_APP_IDLE_STATE",
+     "CHANGE_DEVICE_IDLE_TEMP_WHITELIST",
+     "MOUNT_UNMOUNT_FILESYSTEMS",
+     "MOUNT_FORMAT_FILESYSTEMS",
+     "MODIFY_PHONE_STATE",
+     "NETWORK_SCAN",
+     "REGISTER_CALL_PROVIDER",
+     "REGISTER_CONNECTION_MANAGER",
+     "REGISTER_SIM_SUBSCRIPTION",
+     "GET_APP_OPS_STATS",
+     "MANAGE_APP_OPS_MODES",
+     "VIBRATE",
+     "MANAGE_ACTIVITY_STACKS",
+     "START_TASKS_FROM_RECENTS",
+     "START_ACTIVITIES_FROM_BACKGROUND",
+     "ACTIVITY_EMBEDDING",
+     "CONNECTIVITY_INTERNAL",
+     "CHANGE_COMPONENT_ENABLED_STATE",
+     "MANAGE_AUTO_FILL",
+     "MANAGE_CONTENT_CAPTURE",
+     "MANAGE_CONTENT_SUGGESTIONS",
+     "MANAGE_APP_PREDICTIONS",
+     "NETWORK_SETTINGS",
+     "CHANGE_WIFI_STATE",
+     "SET_TIME",
+     "SET_TIME_ZONE",
+     "DISABLE_HIDDEN_API_CHECKS",
+     "MANAGE_ROLE_HOLDERS",
+     "OBSERVE_ROLE_HOLDERS",
+     "STATUS_BAR_SERVICE",
+     "STATUS_BAR",
+     "SUBSTITUTE_NOTIFICATION_APP_NAME",
+     "REQUEST_NOTIFICATION_ASSISTANT_SERVICE",
+     "WAKE_LOCK",
+     "CHANGE_OVERLAY_PACKAGES",
+     "RESTRICTED_VR_ACCESS",
+     "MANAGE_BIND_INSTANT_SERVICE",
+     "SET_HARMFUL_APP_WARNINGS",
+     "MANAGE_SENSORS",
+     "MANAGE_AUDIO_POLICY",
+     "MANAGE_CAMERA",
+     "MANAGE_BLUETOOTH_WHEN_WIRELESS_CONSENT_REQUIRED",
+     "MANAGE_WIFI_WHEN_WIRELESS_CONSENT_REQUIRED",
+     "INSTALL_DYNAMIC_SYSTEM",
+     "CONTROL_KEYGUARD",
+     "SUSPEND_APPS",
+     "OBSERVE_APP_USAGE",
+     "READ_CLIPBOARD_IN_BACKGROUND",
+     "ENABLE_TEST_HARNESS_MODE",
+     "MANAGE_COMPANION_DEVICES",
+     "MANAGE_APPOPS",
+     "MANAGE_TEST_NETWORKS",
+     "PACKET_KEEPALIVE_OFFLOAD",
+     "CONTROL_KEYGUARD_SECURE_NOTIFICATIONS",
+     "SET_WALLPAPER",
+     "SET_WALLPAPER_COMPONENT",
+     "CACHE_CONTENT",
+     "BIND_EXPLICIT_HEALTH_CHECK_SERVICE",
+     "INTERACT_ACROSS_PROFILES"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/Shell\/Shell.apk",
+    "apk_size": 393393,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.filled.themepicker",
+    "label": "Filled",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10001,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackFilledThemePicker\/IconPackFilledThemePickerOverlay.apk",
+    "apk_size": 21731,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.wallpaperbackup",
+    "label": "com.android.wallpaperbackup",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:27+0000",
+    "last_update": "2021-08-21T06:09:27+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/app\/WallpaperBackup\/WallpaperBackup.apk",
+    "apk_size": 20894,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.blockednumber",
+    "label": "Blocked Numbers Storage",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:31+0000",
+    "last_update": "2021-08-21T06:09:31+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10050,
+    "shared_user_id": "android.uid.shared",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/BlockedNumberProvider\/BlockedNumberProvider.apk",
+    "apk_size": 323998,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.userdictionary",
+    "label": "User Dictionary",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:28+0000",
+    "last_update": "2021-08-21T06:09:28+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10050,
+    "shared_user_id": "android.uid.shared",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/UserDictionaryProvider\/UserDictionaryProvider.apk",
+    "apk_size": 41374,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.emergency",
+    "label": "Emergency information",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10095,
+    "shared_user_id": "com.android.emergency.uid",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "CALL_PHONE",
+     "CALL_PRIVILEGED",
+     "READ_CONTACTS",
+     "MANAGE_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "READ_CALL_LOG"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/EmergencyInfo\/EmergencyInfo.apk",
+    "apk_size": 7004892,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.systemui.navbar.gestural",
+    "label": "Gestural Navigation Bar",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10047,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/NavigationBarModeGestural\/NavigationBarModeGesturalOverlay.apk",
+    "apk_size": 16734,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.location.fused",
+    "label": "Fused Location",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:34+0000",
+    "last_update": "2021-08-21T06:09:34+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1000,
+    "shared_user_id": "android.uid.system",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "ACCESS_FINE_LOCATION",
+     "INSTALL_LOCATION_PROVIDER",
+     "INTERACT_ACROSS_USERS_FULL"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/FusedLocation\/FusedLocation.apk",
+    "apk_size": 33182,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.orchid",
+    "label": "Orchid",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10046,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorOrchid\/AccentColorOrchidOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.deskclock",
+    "label": "Clock",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": true,
+    "target_sdk": 28,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10109,
+    "flags": [],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "WAKE_LOCK",
+     "VIBRATE",
+     "DISABLE_KEYGUARD"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/DeskClock\/DeskClock.apk",
+    "apk_size": 6178327,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.systemui",
+    "label": "System UI",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:19:29+0000",
+    "last_update": "2021-08-21T06:19:29+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10102,
+    "shared_user_id": "android.uid.systemui",
+    "flags": [
+     "persistent"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "READ_EXTERNAL_STORAGE",
+     "WRITE_MEDIA_STORAGE",
+     "WAKE_LOCK",
+     "INJECT_EVENTS",
+     "DUMP",
+     "WRITE_SETTINGS",
+     "READ_DEVICE_CONFIG",
+     "STATUS_BAR_SERVICE",
+     "STATUS_BAR",
+     "EXPAND_STATUS_BAR",
+     "REMOTE_AUDIO_PLAYBACK",
+     "MANAGE_USERS",
+     "READ_PROFILE",
+     "READ_CONTACTS",
+     "CONFIGURE_WIFI_DISPLAY",
+     "WRITE_SECURE_SETTINGS",
+     "GET_APP_OPS_STATS",
+     "USE_RESERVED_DISK",
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "BLUETOOTH_PRIVILEGED",
+     "ACCESS_COARSE_LOCATION",
+     "ACCESS_NETWORK_STATE",
+     "CHANGE_NETWORK_STATE",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "ACCESS_WIFI_STATE",
+     "CHANGE_WIFI_STATE",
+     "OVERRIDE_WIFI_CONFIG",
+     "MANAGE_NETWORK_POLICY",
+     "CONNECTIVITY_INTERNAL",
+     "NETWORK_SETTINGS",
+     "TETHER_PRIVILEGED",
+     "READ_NETWORK_USAGE_HISTORY",
+     "REQUEST_NETWORK_SCORES",
+     "CONTROL_VPN",
+     "PEERS_MAC_ADDRESS",
+     "MANAGE_USB",
+     "CONTROL_DISPLAY_BRIGHTNESS",
+     "DEVICE_POWER",
+     "MOUNT_UNMOUNT_FILESYSTEMS",
+     "MASTER_CLEAR",
+     "VIBRATE",
+     "MANAGE_SENSOR_PRIVACY",
+     "REAL_GET_TASKS",
+     "GET_DETAILED_TASKS",
+     "REORDER_TASKS",
+     "REMOVE_TASKS",
+     "STOP_APP_SWITCHES",
+     "SET_SCREEN_COMPATIBILITY",
+     "START_ANY_ACTIVITY",
+     "START_ACTIVITIES_FROM_BACKGROUND",
+     "INTERACT_ACROSS_USERS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "GET_TOP_ACTIVITY_INFO",
+     "MANAGE_ACTIVITY_STACKS",
+     "START_ACTIVITY_AS_CALLER",
+     "START_TASKS_FROM_RECENTS",
+     "GET_INTENT_SENDER_INTENT",
+     "INTERNAL_SYSTEM_WINDOW",
+     "SYSTEM_ALERT_WINDOW",
+     "READ_FRAME_BUFFER",
+     "MANAGE_APP_TOKENS",
+     "REGISTER_WINDOW_MANAGER_LISTENERS",
+     "SET_ORIENTATION",
+     "DISABLE_KEYGUARD",
+     "MONITOR_INPUT",
+     "READ_DREAM_STATE",
+     "WRITE_DREAM_STATE",
+     "com.android.alarm.permission.SET_ALARM",
+     "WRITE_EMBEDDED_SUBSCRIPTIONS",
+     "CONTROL_KEYGUARD",
+     "MODIFY_PHONE_STATE",
+     "GET_ACCOUNTS",
+     "MANAGE_ACCOUNTS",
+     "BIND_DEVICE_ADMIN",
+     "CHANGE_COMPONENT_ENABLED_STATE",
+     "MEDIA_CONTENT_CONTROL",
+     "ACCESS_KEYGUARD_SECURE_STORAGE",
+     "TRUST_LISTENER",
+     "USE_BIOMETRIC_INTERNAL",
+     "USE_FINGERPRINT",
+     "RESET_FINGERPRINT_LOCKOUT",
+     "MANAGE_BIOMETRIC",
+     "MANAGE_SLICE_PERMISSIONS",
+     "CONTROL_KEYGUARD_SECURE_NOTIFICATIONS",
+     "GET_RUNTIME_PERMISSIONS",
+     "SET_WALLPAPER",
+     "CAMERA",
+     "MANAGE_MEDIA_PROJECTION",
+     "FOREGROUND_SERVICE",
+     "RECORD_AUDIO",
+     "ACCESS_VOICE_INTERACTION_SERVICE",
+     "CHANGE_DEVICE_IDLE_TEMP_WHITELIST",
+     "TABLET_MODE",
+     "com.android.systemui.permission.SELF",
+     "BIND_QUICK_SETTINGS_TILE",
+     "MODIFY_DAY_NIGHT_MODE",
+     "UPDATE_APP_OPS_STATS",
+     "BATTERY_STATS",
+     "MANAGE_PROFILE_AND_DEVICE_OWNERS",
+     "RECEIVE_MEDIA_RESOURCE_USAGE",
+     "MANAGE_NOTIFICATIONS",
+     "ACCESS_VR_MANAGER",
+     "SUBSTITUTE_NOTIFICATION_APP_NAME",
+     "RESET_SHORTCUT_MANAGER_THROTTLING",
+     "MODIFY_THEME_OVERLAY",
+     "MODIFY_ACCESSIBILITY_DATA",
+     "CHANGE_ACCESSIBILITY_VOLUME",
+     "BIND_RESOLVER_RANKER_SERVICE",
+     "ACCESS_INSTANT_APPS",
+     "CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS",
+     "CHANGE_OVERLAY_PACKAGES",
+     "WATCH_APPOPS",
+     "MANAGE_DEBUGGING",
+     "HIDE_NON_SYSTEM_OVERLAY_WINDOWS",
+     "CONTROL_DISPLAY_COLOR_TRANSFORMS",
+     "READ_CALL_LOG"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/priv-app\/SystemUI\/SystemUI.apk",
+    "apk_size": 19682524,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.color.purple",
+    "label": "Purple",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10043,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/AccentColorPurple\/AccentColorPurpleOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.bluetoothmidiservice",
+    "label": "Bluetooth MIDI Service",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:09:16+0000",
+    "last_update": "2021-08-21T06:09:16+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10074,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "BLUETOOTH"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/BluetoothMidiService\/BluetoothMidiService.apk",
+    "apk_size": 29086,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.permissioncontroller",
+    "label": "Permission controller",
+    "version": "29 system image",
+    "version_code": 290000000,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:04+0000",
+    "last_update": "2021-08-21T06:16:04+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10068,
+    "flags": [],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "MANAGE_USERS",
+     "GRANT_RUNTIME_PERMISSIONS",
+     "REVOKE_RUNTIME_PERMISSIONS",
+     "ADJUST_RUNTIME_PERMISSIONS_POLICY",
+     "WHITELIST_RESTRICTED_PERMISSIONS",
+     "INTERACT_ACROSS_USERS_FULL",
+     "OBSERVE_GRANT_REVOKE_PERMISSIONS",
+     "UPDATE_APP_OPS_STATS",
+     "MANAGE_APP_OPS_MODES",
+     "GET_APP_OPS_STATS",
+     "KILL_UID",
+     "MANAGE_APP_OPS_RESTRICTIONS",
+     "RECEIVE_BOOT_COMPLETED",
+     "HIDE_NON_SYSTEM_OVERLAY_WINDOWS",
+     "MANAGE_ROLE_HOLDERS",
+     "OBSERVE_ROLE_HOLDERS",
+     "SET_PREFERRED_APPLICATIONS",
+     "ACCESS_SHARED_LIBRARIES",
+     "com.android.permissioncontroller.permission.MANAGE_ROLES_FROM_CONTROLLER",
+     "ACCESS_INSTANT_APPS",
+     "REQUEST_INCIDENT_REPORT_APPROVAL",
+     "APPROVE_INCIDENT_REPORTS",
+     "READ_DEVICE_CONFIG",
+     "OPEN_ACCESSIBILITY_DETAILS_SETTINGS",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "SUBSTITUTE_NOTIFICATION_APP_NAME"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/PermissionController\/PermissionController.apk",
+    "apk_size": 6055635,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.traceur",
+    "label": "System Tracing",
+    "version": "1.0",
+    "version_code": 2,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:17+0000",
+    "last_update": "2021-08-21T06:16:17+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10076,
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [
+     "starts_on_boot"
+    ],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "STATUS_BAR",
+     "FOREGROUND_SERVICE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/Traceur\/Traceur.apk",
+    "apk_size": 6998762,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.bluetooth",
+    "label": "Bluetooth",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:36+0000",
+    "last_update": "2021-08-21T06:17:36+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 1002,
+    "shared_user_id": "android.uid.bluetooth",
+    "flags": [
+     "allow_backup"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "RECEIVE_BOOT_COMPLETED",
+     "ACCESS_BLUETOOTH_SHARE",
+     "ACCESS_COARSE_LOCATION",
+     "INTERNET",
+     "BLUETOOTH",
+     "BLUETOOTH_ADMIN",
+     "BLUETOOTH_PRIVILEGED",
+     "BLUETOOTH_MAP",
+     "DUMP",
+     "WAKE_LOCK",
+     "WRITE_EXTERNAL_STORAGE",
+     "READ_EXTERNAL_STORAGE",
+     "READ_CONTACTS",
+     "WRITE_CONTACTS",
+     "READ_CALL_LOG",
+     "WRITE_CALL_LOG",
+     "READ_PRIVILEGED_PHONE_STATE",
+     "WRITE_SETTINGS",
+     "NFC_HANDOVER_STATUS",
+     "WRITE_SECURE_SETTINGS",
+     "WRITE_APN_SETTINGS",
+     "NET_ADMIN",
+     "CALL_PRIVILEGED",
+     "MODIFY_AUDIO_SETTINGS",
+     "NET_TUNNELING",
+     "ACCESS_NETWORK_STATE",
+     "CHANGE_NETWORK_STATE",
+     "CONNECTIVITY_INTERNAL",
+     "TETHER_PRIVILEGED",
+     "MODIFY_PHONE_STATE",
+     "INTERACT_ACROSS_USERS_FULL",
+     "BLUETOOTH_STACK",
+     "INTERACT_ACROSS_USERS",
+     "MANAGE_USERS",
+     "GET_ACCOUNTS",
+     "com.android.gallery3d.permission.GALLERY_PROVIDER",
+     "RECEIVE_SMS",
+     "SEND_SMS",
+     "READ_SMS",
+     "WRITE_SMS",
+     "MEDIA_CONTENT_CONTROL",
+     "UPDATE_APP_OPS_STATS",
+     "MANAGE_APP_OPS_MODES",
+     "VIBRATE",
+     "DEVICE_POWER",
+     "REAL_GET_TASKS",
+     "MODIFY_AUDIO_ROUTING",
+     "UPDATE_DEVICE_STATS",
+     "PACKAGE_USAGE_STATS",
+     "READ_PROFILE"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/Bluetooth\/Bluetooth.apk",
+    "apk_size": 4084460,
+    "signers": [
+     {
+      "sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-04-15T22:40:50+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.wallpaperpicker",
+    "label": "com.android.wallpaperpicker",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 23,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:17:33+0000",
+    "last_update": "2021-08-21T06:17:33+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10110,
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "SET_WALLPAPER"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/product\/app\/WallpaperPicker\/WallpaperPicker.apk",
+    "apk_size": 354953,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.providers.contacts",
+    "label": "Contacts Storage",
+    "version": "10",
+    "version_code": 29,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:20+0000",
+    "last_update": "2021-08-21T06:16:20+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10050,
+    "shared_user_id": "android.uid.shared",
+    "flags": [],
+    "declares": [],
+    "permissions_granted": [
+     "BIND_DIRECTORY_SEARCH",
+     "GET_ACCOUNTS",
+     "GET_ACCOUNTS_PRIVILEGED",
+     "INTERACT_ACROSS_USERS",
+     "MANAGE_USERS",
+     "PROCESS_PHONE_ACCOUNT_REGISTRATION",
+     "READ_CONTACTS",
+     "READ_PHONE_STATE",
+     "READ_SYNC_SETTINGS",
+     "SEND_CALL_LOG_CHANGE",
+     "UPDATE_APP_OPS_STATS",
+     "WRITE_CONTACTS",
+     "USE_RESERVED_DISK",
+     "READ_DEVICE_CONFIG"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/priv-app\/ContactsProvider\/ContactsProvider.apk",
+    "apk_size": 1004451,
+    "signers": [
+     {
+      "sha256": "28bbfe4a7b97e74681dc55c2fbb6ccb8d6c74963733f6af6ae74d8c3a6e879fd",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-07-23T21:57:59+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.captiveportallogin",
+    "label": "CaptivePortalLogin",
+    "version": "2019-09",
+    "version_code": 290000000,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:14:27+0000",
+    "last_update": "2021-08-21T06:14:27+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10083,
+    "flags": [
+     "allow_backup",
+     "cleartext_traffic"
+    ],
+    "declares": [],
+    "permissions_granted": [
+     "INTERNET",
+     "ACCESS_NETWORK_STATE",
+     "ACCESS_WIFI_STATE",
+     "MAINLINE_NETWORK_STACK"
+    ],
+    "special_access": {},
+    "apk_path": "\/system\/app\/CaptivePortalLogin\/CaptivePortalLogin.apk",
+    "apk_size": 380108,
+    "signers": [
+     {
+      "sha256": "e1dbadce60dc080d15b58a014b0dcf9400e24de23fa00b287a5a982bfebda2ee",
+      "subject": "CN=com.android.networkstack,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2019-02-12T01:46:20+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon.roundedrect",
+    "label": "Rounded Rectangle",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10019,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconShapeRoundedRect\/IconShapeRoundedRectOverlay.apk",
+    "apk_size": 12638,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.internal.systemui.navbar.gestural_narrow_back",
+    "label": "Gestural Navigation Bar",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:52+0000",
+    "last_update": "2021-08-21T06:16:52+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10009,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/NavigationBarModeGesturalNarrowBack\/NavigationBarModeGesturalOverlayNarrowBack.apk",
+    "apk_size": 16734,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.rounded.settings",
+    "label": "Rounded",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10012,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackRoundedSettings\/IconPackRoundedSettingsOverlay.apk",
+    "apk_size": 84348,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   },
+   {
+    "package": "com.android.theme.icon_pack.circular.android",
+    "label": "Circular",
+    "version": "1.0",
+    "version_code": 1,
+    "system": true,
+    "updated_system": false,
+    "enabled": true,
+    "has_launcher_icon": false,
+    "target_sdk": 29,
+    "min_sdk": 29,
+    "first_install": "2021-08-21T06:16:51+0000",
+    "last_update": "2021-08-21T06:16:51+0000",
+    "installer": {
+     "installing": null
+    },
+    "uid": 10033,
+    "flags": [
+     "allow_backup",
+     "no_code"
+    ],
+    "declares": [],
+    "permissions_granted": [],
+    "special_access": {},
+    "apk_path": "\/product\/overlay\/IconPackCircularAndroid\/IconPackCircularAndroidOverlay.apk",
+    "apk_size": 84201,
+    "signers": [
+     {
+      "sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+      "subject": "1.2.840.113549.1.9.1=#1613616e64726f696440616e64726f69642e636f6d,CN=Android,OU=Android,O=Android,L=Mountain View,ST=California,C=US",
+      "not_before": "2008-02-29T01:33:46+0000"
+     }
+    ]
+   }
+  ],
+  "errors": [],
+  "scan_ms": 2862
+ }
+}
